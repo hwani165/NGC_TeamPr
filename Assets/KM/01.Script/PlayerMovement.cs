@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Dash Settings")]
     [SerializeField] private float dashForce = 20f;
     [SerializeField] private float dashDuration = 0.2f;
-
+//realVer
     private Rigidbody2D _rbCompo;
     private Vector2 _moveVec;
     private bool _isGrounded;
