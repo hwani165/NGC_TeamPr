@@ -45,7 +45,6 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        // 수평 이동
         Vector2 velocity = _rbCompo.linearVelocity;
         velocity.x = _moveVec.x * speed;
         _rbCompo.linearVelocityX = velocity.x;
