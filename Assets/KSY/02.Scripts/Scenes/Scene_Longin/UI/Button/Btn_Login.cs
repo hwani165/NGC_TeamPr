@@ -10,5 +10,7 @@ public class Btn_Login : MonoBehaviour
     {
         string id = input_ID.text;
         string pw = input_Pw.text;
+
+        BackendManager.Instance.Login(id,pw);
     }
 }
