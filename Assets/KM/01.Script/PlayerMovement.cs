@@ -29,25 +29,26 @@ public class PlayerMovement : MonoBehaviour
         _rbCompo = GetComponent<Rigidbody2D>();
         _rbCompo.gravityScale = 1f;
     }
-
+    private bool CanDash = true;
     private void FixedUpdate()
     {
         OnGround();
-
-        if (_isDashing)
+        GroundDash();
+        if (!_isDashing)
         {
-            _rbCompo.linearVelocity = _dashDirection * dashForce;
-            _dashTimer -= Time.fixedDeltaTime;
-            if (_dashTimer <= 0f)
-            {
-                _isDashing = false;
-            }
-            return;
+            GetComponent<SpriteRenderer>().color = new Color(1,1,1,1);
         }
-
-        Vector2 velocity = _rbCompo.linearVelocity;
-        velocity.x = _moveVec.x * speed;
-        _rbCompo.linearVelocityX = velocity.x;
+        AirDash();
+        if (!_isDashing)
+        {
+            Vector2 velocity = _rbCompo.linearVelocity;
+            velocity.x = _moveVec.x * speed;
+            _rbCompo.linearVelocityX = velocity.x;
+        }
+        if (Keyboard.current.sKey.wasPressedThisFrame && !_isDashing && !_isGrounded)
+            {
+                _rbCompo.AddForce(Vector2.down * gravity * 2f, ForceMode2D.Impulse);
+            }
     }
 
     private void OnGround()
@@ -64,31 +65,75 @@ public class PlayerMovement : MonoBehaviour
     public void OnJump()
     {
         Debug.Log(_isGrounded);
-        if (_isGrounded && !_isDashing)
+        if (_isGrounded)
         {
             _rbCompo.linearVelocityY = jumpForce;
+            CanDash = true;
+        }
+    }
+    private void GroundDash()
+    {
+        if (_isDashing && _isGrounded)
+        {
+            _rbCompo.AddForce(new Vector2(_dashDirection.x,0) * dashForce,ForceMode2D.Impulse);
+            _dashTimer -= Time.fixedDeltaTime;
+            if (_dashTimer <= 0f)
+            {
+                _isDashing = false;
+            }
+            return;
+        }
+    }
+
+    private void AirDash()
+    {
+        if (_isDashing && !_isGrounded)
+        {
+            _rbCompo.linearVelocity = _dashDirection * dashForce / 1.25f;
+            _dashTimer -= Time.fixedDeltaTime;
+            if (_dashTimer <= 0f)
+            {
+                _isDashing = false;
+            }
+            GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.5f);
+            return;
         }
     }
 
     public void OnDash(InputValue value)
     {
-        if (_isDashing) return;
-
-        Vector2 inputDir = _moveVec.normalized;
-
-        if (!_isGrounded)
+        if (CanDash)
         {
-            if (inputDir == Vector2.zero)
-                inputDir = Vector2.down; 
-        }
-        else
-        {
-            inputDir = new Vector2(Mathf.Sign(_moveVec.x), 0);
-        }
+            if (!_isGrounded)
+            {
+                //무적 판정 매서드 꼭 넣기
+                _rbCompo.linearVelocityX = 0;
+                CanDash = false;
+            }
+            else
+            {
+                CanDash = true;
+                _rbCompo.linearVelocity = Vector2.zero;
+            }
+            if (_isDashing) return;
 
-        _dashDirection = inputDir.normalized;
-        _isDashing = true;
-        _dashTimer = dashDuration;
+            Vector2 inputDir = _moveVec.normalized;
+
+            if (!_isGrounded)
+            {
+                if (inputDir == Vector2.zero)
+                    inputDir = Vector2.down;
+            }
+            else
+            {
+                inputDir = new Vector2(Mathf.Sign(_moveVec.x), 0);
+            }
+
+            _dashDirection = inputDir.normalized;
+            _isDashing = true;
+            Debug.Log(_dashDirection);
+            _dashTimer = dashDuration;
+        }
     }
 
 #if UNITY_EDITOR
