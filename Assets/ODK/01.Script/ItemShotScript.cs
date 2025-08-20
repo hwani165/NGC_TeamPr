@@ -1,5 +1,7 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ItemShotScript : MonoBehaviour
 {
@@ -7,10 +9,12 @@ public class ItemShotScript : MonoBehaviour
     [SerializeField] private GameObject holdObject;
     private Rigidbody2D rb;
 
-    [SerializeField] private float shootPower = 80f;
+    [SerializeField] private float shootPower = 60f;
     [SerializeField] private float upwardForce = 30f;
     [SerializeField] private float playerRecoil = 40f;
-
+    [SerializeField] private GameObject chargeUiObject;
+    [SerializeField] private Image chargeImage;
+    private float charge = 0f;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -18,23 +22,47 @@ public class ItemShotScript : MonoBehaviour
 
     void Update()
     {
-        // �߻� �Է� üũ
-        if ((Input.GetKeyDown(KeyCode.UpArrow) ||
-             Input.GetKeyDown(KeyCode.DownArrow) ||
-             Input.GetKeyDown(KeyCode.LeftArrow) ||
-             Input.GetKeyDown(KeyCode.RightArrow)) && holdObject != null)
+
+
+        if (Input.GetKey(KeyCode.E))
         {
-            StartCoroutine(Shoot());
+            
+            chargeUiObject.SetActive(true);
+            if (charge > 3f)
+            {
+                charge = 3f;
+                return;
+            }
+            if (charge >= 2.5f)
+            {
+                chargeImage.color = Color.red;
+            }
+            else
+            {
+                chargeImage.color = Color.white;
+            }
+            
+            chargeImage.fillAmount = charge / 3f;
+            charge += Time.deltaTime + ((2f - charge) * Time.deltaTime);
+            
+
+
+        }
+        else if(charge > 0f)
+        {
+            Shoot();
+            charge = 0f;
+            chargeUiObject.gameObject.SetActive(false);
         }
     }
 
     private Vector2 GetInputDirection()
     {
         Vector2 dir = Vector2.zero;
-        if (Input.GetKey(KeyCode.LeftArrow)) dir.x -= 1f;
-        if (Input.GetKey(KeyCode.RightArrow)) dir.x += 1f;
-        if (Input.GetKey(KeyCode.UpArrow)) dir.y += 1f;
-        if (Input.GetKey(KeyCode.DownArrow)) dir.y -= 1f;
+        if (Input.GetKey(KeyCode.LeftArrow)/* || Input.GetKey(KeyCode.A)*/) dir.x -= 1f;
+        if (Input.GetKey(KeyCode.RightArrow)/* || Input.GetKey(KeyCode.D)*/) dir.x += 1f;
+        if (Input.GetKey(KeyCode.UpArrow)/* || Input.GetKey(KeyCode.W)*/) dir.y += 1f;
+        if (Input.GetKey(KeyCode.DownArrow)/* || Input.GetKey(KeyCode.S)*/) dir.y -= 1f;
 
         if (dir != Vector2.zero) dir.Normalize();
         return dir;
@@ -45,7 +73,7 @@ public class ItemShotScript : MonoBehaviour
         Item holditem = collision.gameObject.GetComponent<Item>();
         if (holditem == null) return;
 
-        // �̹� �� �������̸� �浹 ����
+        
         if (holditem.owner == gameObject)
         {
             Collider2D myCol = GetComponent<Collider2D>();
@@ -54,7 +82,7 @@ public class ItemShotScript : MonoBehaviour
             return;
         }
 
-        // ������ ���� ���� ����
+        
         if (holditem.owner == null && !holditem.iscooldown && !holditem.isshooting)
         {
             // ���� ��� �ִ� ������ ó��
@@ -78,35 +106,41 @@ public class ItemShotScript : MonoBehaviour
         }
     }
 
-    private IEnumerator Shoot()
+    private void Shoot()
     {
-        if (holdObject == null) yield break;
-
-
+        if (holdObject == null) return;
+        Vector2 dir = GetInputDirection();
         Item itemScript = holdObject.GetComponent<Item>();
         itemScript.isshooting = true;
         Rigidbody2D hrb = holdObject.GetComponent<Rigidbody2D>();
-        // �θ� ���� & ���� ��ġ�� �̵�
+        if (charge >= 2.5)
+        {
+            itemScript.Eat();
+            holdObject = null;
+            return;
+        }
+        else if (dir == Vector2.zero)
+        {
+            return;
+        }
+        holdObject.GetComponent<Item>().preowner = transform;
         holdObject.transform.parent = null;
         holdObject.transform.position = transform.position + (Vector3)(GetInputDirection() * 1.25f);
 
         
         itemScript.CooldownActive();
-        yield return new WaitForSeconds(0.02f);
         hrb.simulated = true;
         hrb.linearVelocity = Vector2.zero;
-        Vector2 dir = GetInputDirection();
-        if (dir == Vector2.zero) dir = Vector2.right;
+        
+        
 
-        // �߻�
-        hrb.AddForce(dir * shootPower + new Vector2(0, upwardForce), ForceMode2D.Impulse);
+        hrb.AddForce(dir * shootPower * charge + (dir.y == 0 ? new Vector2(0, upwardForce) : new Vector2(0,0)), ForceMode2D.Impulse);
+        hrb.angularVelocity += Random.Range(-180f, 180f);
         rb.linearVelocity = Vector2.zero;
-        rb.angularVelocity = dir.x * 20;
-        // �÷��̾� �ݵ�
         rb.AddForce(-dir * playerRecoil, ForceMode2D.Impulse);
 
-        // ��ٿ� & �տ��� ����
         
         holdObject = null;
+        
     }
 }

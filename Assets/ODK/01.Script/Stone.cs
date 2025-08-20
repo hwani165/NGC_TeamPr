@@ -11,7 +11,7 @@ public class Stone : Item
 
         if (target.GetComponent<Entity>() != null)
         {
-            target.GetComponent<Entity>().Attack(transform, damage, knockbackmulti);
+            target.GetComponent<Entity>().Attack(preowner, damage, knockbackmulti);
         }
         Destroy(gameObject);
         yield return null;

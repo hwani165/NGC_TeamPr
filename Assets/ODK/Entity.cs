@@ -11,6 +11,6 @@ public class Entity : MonoBehaviour
         CurrentHp -= damage;
         hpbar.SetHP();
 
-        GetComponent<Rigidbody2D>().AddForce(new Vector2(transform.position.normalized.x - tra.position.normalized.x * knockback *30,knockback * 20));
+        GetComponent<Rigidbody2D>().AddForce(new Vector2(transform.position.normalized.x - tra.position.normalized.x * knockback *5,knockback * 10),ForceMode2D.Impulse);
     }
 }

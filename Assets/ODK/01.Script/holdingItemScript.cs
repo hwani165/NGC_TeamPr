@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public abstract class Item : MonoBehaviour
 {
@@ -10,22 +11,26 @@ public abstract class Item : MonoBehaviour
     [SerializeField] protected LayerMask targetLayer;
     [SerializeField] protected LayerMask groundLayer;
     public GameObject owner;
-
+    public Transform preowner;
     public void Awake()
     {
         rigidbody = GetComponent<Rigidbody2D>();
     }
-
-    protected virtual void OnCollisionEnter2D(Collision2D collision)
+    protected virtual void OnCollisionStay2D(Collision2D collision)
     {
         int layer = collision.gameObject.layer;
-
         if (((1 << layer) & groundLayer) != 0 && isshooting && !iscooldown)
         {
             isshooting = false;
             owner = null;
             StartCoroutine(Attacking(collision.gameObject));
         }
+    }
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
+    {
+        int layer = collision.gameObject.layer;
+
+        
 
         if (((1 << layer) & targetLayer) != 0 &&
             collision.gameObject != owner && isshooting)
@@ -35,6 +40,7 @@ public abstract class Item : MonoBehaviour
             StartCoroutine(Attacking(collision.gameObject));
         }
     }
+    
 
     public virtual IEnumerator Attacking(GameObject target)
     {
@@ -45,7 +51,13 @@ public abstract class Item : MonoBehaviour
         yield return null;
     }
 
-
+    public virtual void Eat()
+    {
+        owner.GetComponent<Entity>().Attack(transform, 10f, 0f);
+        isshooting = false;
+        owner = null;
+        Destroy(gameObject);
+    }
     public void CooldownActive()
     {
         StartCoroutine(HoldCooldown());

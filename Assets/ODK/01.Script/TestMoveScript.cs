@@ -40,8 +40,6 @@ public class T_PlayerMove : MonoBehaviour
         float acceleration = 30f;
         float groundDeceleration = 15f;
         float airDeceleration = 7.5f;
-
-        // 👉 A, D 키 이동
         if (CanMove)
         {
             if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
