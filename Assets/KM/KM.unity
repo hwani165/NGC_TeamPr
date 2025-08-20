@@ -386,8 +386,8 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 64
-  dashForce: 20
-  dashDuration: 0.2
+  dashForce: 10
+  dashDuration: 0.05
 --- !u!114 &1939079456
 MonoBehaviour:
   m_ObjectHideFlags: 0
