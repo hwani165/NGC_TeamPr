@@ -1,6 +1,7 @@
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class ItemShotScript : MonoBehaviour
@@ -68,42 +69,47 @@ public class ItemShotScript : MonoBehaviour
         return dir;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
-        Item holditem = collision.gameObject.GetComponent<Item>();
-        if (holditem == null) return;
 
-        
-        if (holditem.owner == gameObject)
+        if (Keyboard.current.sKey.isPressed)
         {
-            Collider2D myCol = GetComponent<Collider2D>();
-            Collider2D itemCol = holditem.GetComponent<Collider2D>();
-            Physics2D.IgnoreCollision(myCol, itemCol, true);
-            return;
-        }
+            Item holditem = collision.gameObject.GetComponent<Item>();
+            if (holditem == null) return;
 
-        
-        if (holditem.owner == null && !holditem.iscooldown && !holditem.isshooting)
-        {
-            // ���� ��� �ִ� ������ ó��
-            if (holdObject != null)
+
+            if (holditem.owner == gameObject)
             {
-                holdObject.GetComponent<Item>().owner = null;
-                Rigidbody2D oldRb = holdObject.GetComponent<Rigidbody2D>();
-                oldRb.simulated = true;
-                oldRb.transform.parent = null;
-                holdObject.GetComponent<Item>().CooldownActive();
+                Collider2D myCol = GetComponent<Collider2D>();
+                Collider2D itemCol = holditem.GetComponent<Collider2D>();
+                Physics2D.IgnoreCollision(myCol, itemCol, true);
+                return;
             }
 
-            // �� ������ ���
-            holdObject = holditem.gameObject;
-            holditem.owner = gameObject;
 
-            Rigidbody2D rbh = holditem.GetComponent<Rigidbody2D>();
-            rbh.simulated = false;
-            rbh.transform.parent = holdTransform;
-            holditem.transform.localPosition = Vector2.zero;
+            if (holditem.owner == null && !holditem.iscooldown && !holditem.isshooting)
+            {
+                // ���� ��� �ִ� ������ ó��
+                if (holdObject != null)
+                {
+                    holdObject.GetComponent<Item>().owner = null;
+                    Rigidbody2D oldRb = holdObject.GetComponent<Rigidbody2D>();
+                    oldRb.simulated = true;
+                    oldRb.transform.parent = null;
+                    holdObject.GetComponent<Item>().CooldownActive();
+                }
+
+                // �� ������ ���
+                holdObject = holditem.gameObject;
+                holditem.owner = gameObject;
+
+                Rigidbody2D rbh = holditem.GetComponent<Rigidbody2D>();
+                rbh.simulated = false;
+                rbh.transform.parent = holdTransform;
+                holditem.transform.localPosition = Vector2.zero;
+            }
         }
+        
     }
 
     private void Shoot()
@@ -115,6 +121,8 @@ public class ItemShotScript : MonoBehaviour
         Rigidbody2D hrb = holdObject.GetComponent<Rigidbody2D>();
         if (charge >= 2.5)
         {
+            itemScript.preowner = transform;
+            itemScript.shootingdir = Vector2.zero;
             itemScript.Eat();
             holdObject = null;
             return;
@@ -123,23 +131,30 @@ public class ItemShotScript : MonoBehaviour
         {
             return;
         }
+        
         holdObject.GetComponent<Item>().preowner = transform;
         holdObject.transform.parent = null;
+        
         holdObject.transform.position = transform.position + (Vector3)(GetInputDirection() * 1.25f);
 
         
         itemScript.CooldownActive();
         hrb.simulated = true;
-        hrb.linearVelocity = Vector2.zero;
-        
         
 
-        hrb.AddForce(dir * shootPower * charge + (dir.y == 0 ? new Vector2(0, upwardForce) : new Vector2(0,0)), ForceMode2D.Impulse);
-        hrb.angularVelocity += Random.Range(-180f, 180f);
+        itemScript.shootingdir = dir * charge;
+
+        if (!itemScript.thisisnoforceobject)
+        {
+            hrb.linearVelocity = Vector2.zero;
+            hrb.AddForce(dir * shootPower * charge + (dir.y == 0 ? new Vector2(0, upwardForce) : new Vector2(0, 0)), ForceMode2D.Impulse);
+            hrb.angularVelocity += Random.Range(-180f, 180f);
+        }
+        
         rb.linearVelocity = Vector2.zero;
         rb.AddForce(-dir * playerRecoil, ForceMode2D.Impulse);
 
-        
+        itemScript.Launching();
         holdObject = null;
         
     }

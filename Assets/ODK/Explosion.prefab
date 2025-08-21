@@ -103,11 +103,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  knockbackmulti: 2
+  knockbackmulti: 3
   lifetime: 0.2
   layermask:
     serializedVersion: 2
     m_Bits: 16
+  preowner: {fileID: 0}
 --- !u!58 &8821282594998924484
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
 public abstract class Item : MonoBehaviour
@@ -12,7 +13,9 @@ public abstract class Item : MonoBehaviour
     [SerializeField] protected LayerMask groundLayer;
     public GameObject owner;
     public Transform preowner;
-    public void Awake()
+    public Vector2 shootingdir;
+    public bool thisisnoforceobject = false;
+    public virtual void Awake()
     {
         rigidbody = GetComponent<Rigidbody2D>();
     }
@@ -41,7 +44,10 @@ public abstract class Item : MonoBehaviour
         }
     }
     
+    public virtual void Launching()
+    {
 
+    }
     public virtual IEnumerator Attacking(GameObject target)
     {
         foreach (var item in effect)
@@ -66,7 +72,7 @@ public abstract class Item : MonoBehaviour
     private IEnumerator HoldCooldown()
     {
         iscooldown = true;
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
         owner = null;
 
         iscooldown = false;

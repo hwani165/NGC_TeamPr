@@ -186,5 +186,7 @@ MonoBehaviour:
     m_Bits: 64
   owner: {fileID: 0}
   preowner: {fileID: 0}
+  shootingdir: {x: 0, y: 0}
+  thisisnoforceobject: 0
   damage: 5
-  knockbackmulti: 1
+  knockbackmulti: 2
