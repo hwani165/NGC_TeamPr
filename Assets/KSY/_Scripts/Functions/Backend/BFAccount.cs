@@ -5,22 +5,6 @@ using UnityEngine;
 
 public class BFAccount : MonoBehaviour
 {
-    public void Init()
-    {
-        Backend.Match.OnJoinMatchMakingServer = (JoinChannelEventArgs joinChannelEventArgs) =>
-        {
-            //매칭 서버 접속 성공 처리
-            if (joinChannelEventArgs.ErrInfo == ErrorInfo.Success)
-            {
-
-            }
-            //매칭 서버 접속 실패 처리
-            else
-            {
-
-            }
-        };
-    }
     public void Login(string id, string pw)
     {
         //매칭 서버에 접속을 성공/실패했을 때 호출되는 이벤트입니다.
