@@ -1,0 +1,11 @@
+namespace MyGame.Player;
+struct move_vec2 {
+  x:float;
+  y:float;
+}
+table movement {
+  move_vec:move_vec2;
+  is_dashing:bool;
+  is_grounded:bool;
+}
+root_type movement;
