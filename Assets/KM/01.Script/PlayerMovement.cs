@@ -1,3 +1,4 @@
+using BackEnd;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -32,22 +33,31 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        OnGround();
-
-        if (_isDashing)
+        if(Backend.Match.IsSuperGamer())
         {
-            _rbCompo.linearVelocity = _dashDirection * dashForce;
-            _dashTimer -= Time.fixedDeltaTime;
-            if (_dashTimer <= 0f)
+            //슈퍼 게이머 처리
+            OnGround();
+
+            if (_isDashing)
             {
-                _isDashing = false;
+                _rbCompo.linearVelocity = _dashDirection * dashForce;
+                _dashTimer -= Time.fixedDeltaTime;
+                if (_dashTimer <= 0f)
+                {
+                    _isDashing = false;
+                }
+                return;
             }
-            return;
+
+            Vector2 velocity = _rbCompo.linearVelocity;
+            velocity.x = _moveVec.x * speed;
+            _rbCompo.linearVelocityX = velocity.x;
+        }
+        else
+        {
+            //클라이언트 처리
         }
 
-        Vector2 velocity = _rbCompo.linearVelocity;
-        velocity.x = _moveVec.x * speed;
-        _rbCompo.linearVelocityX = velocity.x;
     }
 
     private void OnGround()
