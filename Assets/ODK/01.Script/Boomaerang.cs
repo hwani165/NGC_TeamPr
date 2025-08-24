@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using DG.Tweening;
+using System.Collections.Generic;
 
 public class Boomaerang : Item
 {
@@ -12,6 +13,9 @@ public class Boomaerang : Item
     public float range = 5f;
     private Vector2 originVector;
     private bool isboomeranged = false;
+    private float currentlifeTime = 2f;
+    public Sequence seq;
+    private HashSet<Entity> alreadyHit = new HashSet<Entity>();
     public override void Awake()
     {
 
@@ -23,6 +27,11 @@ public class Boomaerang : Item
         if (isboomeranged)
         {
             transform.Rotate(Vector3.forward * -1500 * Time.deltaTime);
+            currentlifeTime -= Time.deltaTime;
+            if (currentlifeTime <= 0f)
+            {
+                Destroy(gameObject);
+            }
         }
         //if (isshooting && !isboomeranged)
         //{
@@ -45,30 +54,40 @@ public class Boomaerang : Item
         {
             return;
         }
+        alreadyHit.Clear();
+        currentlifeTime = lifeTime;
         isboomeranged = true;
         originVector = transform.position;
-        Destroy(gameObject, lifeTime);
         GetComponent<Rigidbody2D>().gravityScale = 0f;
         GetComponent<BoxCollider2D>().isTrigger = true;
-        Sequence seq = DOTween.Sequence();
-
+        seq = DOTween.Sequence();
+        isshooting = false;
 
         seq.Append(transform.DOMove((Vector2)transform.position + (shootingdir * range), firstmovetime).SetEase(Ease.OutCubic));
         seq.AppendCallback(retuning);
+    }
+    public override void Grab()
+    {
+        base.Grab();
+        isboomeranged = false;
+
+        seq?.Kill(true);
+        transform.DOKill();
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
         int layer = collision.gameObject.layer;
-        if (((1 << layer) & targetLayer) != 0 && collision.gameObject != owner && isshooting)
+        if (((1 << layer) & targetLayer) != 0 && collision.gameObject.transform != preowner && isboomeranged)
         {
-            owner = null;
+            
             StartCoroutine(Attacking(collision.gameObject));
         }
     }
     void retuning()
     {
-        transform.DOMove(originVector, lastmovetime).SetEase(Ease.InCubic);
+        alreadyHit.Clear();
+        transform.DOMove(originVector - (shootingdir * range), lastmovetime).SetEase(Ease.InCubic);
     }
 
     public override IEnumerator Attacking(GameObject target)
@@ -77,7 +96,12 @@ public class Boomaerang : Item
 
         if (target.GetComponent<Entity>() != null)
         {
+            if (alreadyHit.Contains(target.GetComponent<Entity>()))
+            {
+                yield break;
+            }
             target.GetComponent<Entity>().Attack(preowner, damage, knockbackmulti);
+            alreadyHit.Add(target.GetComponent<Entity>());
         }
 
         yield return null;

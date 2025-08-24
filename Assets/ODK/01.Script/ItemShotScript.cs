@@ -69,6 +69,47 @@ public class ItemShotScript : MonoBehaviour
         return dir;
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (Keyboard.current.sKey.isPressed)
+        {
+            Item holditem = collision.gameObject.GetComponent<Item>();
+            if (holditem == null) return;
+
+
+            if (holditem.owner == gameObject)
+            {
+                Collider2D myCol = GetComponent<Collider2D>();
+                Collider2D itemCol = holditem.GetComponent<Collider2D>();
+                Physics2D.IgnoreCollision(myCol, itemCol, true);
+                return;
+            }
+
+
+            if (holditem.owner == null && !holditem.iscooldown && !holditem.isshooting)
+            {
+                if (holdObject != null)
+                {
+                    holdObject.GetComponent<Item>().owner = null;
+                    Rigidbody2D oldRb = holdObject.GetComponent<Rigidbody2D>();
+                    oldRb.simulated = true;
+                    oldRb.transform.parent = null;
+                    holdObject.GetComponent<Item>().CooldownActive();
+                }
+
+                // �� ������ ���
+                holdObject = holditem.gameObject;
+                holditem.owner = gameObject;
+                holditem.Grab();
+                Rigidbody2D rbh = holditem.GetComponent<Rigidbody2D>();
+                rbh.simulated = false;
+                rbh.transform.parent = holdTransform;
+                holditem.transform.localPosition = Vector2.zero;
+            }
+        }
+
+    }
+
     private void OnCollisionStay2D(Collision2D collision)
     {
 
@@ -102,11 +143,12 @@ public class ItemShotScript : MonoBehaviour
                 // �� ������ ���
                 holdObject = holditem.gameObject;
                 holditem.owner = gameObject;
-
+                
                 Rigidbody2D rbh = holditem.GetComponent<Rigidbody2D>();
                 rbh.simulated = false;
                 rbh.transform.parent = holdTransform;
                 holditem.transform.localPosition = Vector2.zero;
+                
             }
         }
         

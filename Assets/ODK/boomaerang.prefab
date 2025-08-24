@@ -188,6 +188,7 @@ MonoBehaviour:
   preowner: {fileID: 0}
   shootingdir: {x: 0, y: 0}
   thisisnoforceobject: 1
+  thisownerfading: 1
   damage: 10
   knockbackmulti: 2
   firstmovetime: 0.75

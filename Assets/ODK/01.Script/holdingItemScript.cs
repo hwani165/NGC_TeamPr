@@ -15,6 +15,7 @@ public abstract class Item : MonoBehaviour
     public Transform preowner;
     public Vector2 shootingdir;
     public bool thisisnoforceobject = false;
+    public bool thisownerfading = true;
     public virtual void Awake()
     {
         rigidbody = GetComponent<Rigidbody2D>();
@@ -48,6 +49,10 @@ public abstract class Item : MonoBehaviour
     {
 
     }
+    public virtual void Grab()
+    {
+
+    }
     public virtual IEnumerator Attacking(GameObject target)
     {
         foreach (var item in effect)
@@ -73,7 +78,7 @@ public abstract class Item : MonoBehaviour
     {
         iscooldown = true;
         yield return new WaitForSeconds(0.1f);
-        owner = null;
+        if (thisownerfading) owner = null;
 
         iscooldown = false;
     }
