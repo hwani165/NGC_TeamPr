@@ -6,7 +6,7 @@ namespace SDW
     public class Block : MonoBehaviour
     {
         [SerializeField] private LayerMask breakableLayer; // 블록이 파괴될 수 있는 레이어
-        [SerializeField] private bool breakable = true;
+        [SerializeField] private bool breakable = true; // 블록 파괴 가능 여부
         [SerializeField] private Rigidbody2D childBlock;  // 바로 아래 블록
 
         private int blockLayer; // 블록 레이어

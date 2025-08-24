@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
 {
-    [SerializeField] private float _minCameraSize = 7f;
-    [SerializeField] private float _maxCameraSize = 10f;
+    [SerializeField] private float _minCameraSize = 6.5f;
+    [SerializeField] private float _maxCameraSize = 8f;
     [SerializeField] private float _speed = 5f;
     [SerializeField] private float _basu = 0.5f;
 

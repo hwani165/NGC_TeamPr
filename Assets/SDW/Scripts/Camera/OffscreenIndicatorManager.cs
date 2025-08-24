@@ -32,16 +32,20 @@ public class OffscreenIndicatorManager : MonoBehaviour
 
     void UpdateIndicator(Transform player, RectTransform indicator)
     {
+        // 플레이어가 화면 안에 있는지 확인
         Vector3 viewportPos = mainCamera.WorldToViewportPoint(player.position);
 
+        // 화면 밖에 있으면 true
         bool isOffscreen = viewportPos.x < 0 || viewportPos.x > 1 || viewportPos.y < 0 || viewportPos.y > 1;
 
+        // 화면 안에 있으면 Indicator 비활성화
         if (!isOffscreen)
         {
             indicator.gameObject.SetActive(false);
             return;
         }
 
+        // 화면 밖에 있으면 Indicator 활성화
         indicator.gameObject.SetActive(true);
 
         // 화면 중심 기준 방향
