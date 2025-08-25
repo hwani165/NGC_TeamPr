@@ -3,17 +3,23 @@ using System.Collections;
 
 public class FallingPlatform : MonoBehaviour
 {
+    [Header("레이어")]
+    [SerializeField] private LayerMask PlayerLayerMask;
+
+    [Header("지속시간 & 색 설정")]
     [SerializeField] private float durationTime = 2f;
     [SerializeField] private Color blinkColor = Color.red; // 깜빡일 색상
 
     private Rigidbody2D rb;
     private SpriteRenderer sr;
+    private int PlayerLayer;
     private float initialDuration;
     private bool start = false;
     private bool isBlinking = false;
 
     private void Start()
     {
+        PlayerLayer = Mathf.RoundToInt(Mathf.Log(PlayerLayerMask.value, 2));
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         initialDuration = durationTime;
@@ -27,6 +33,8 @@ public class FallingPlatform : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if(collision.gameObject.layer != PlayerLayer)
+            return;
         start = true;
 
         // 처음부터 아주 느리게 깜빡이기 시작
@@ -42,12 +50,13 @@ public class FallingPlatform : MonoBehaviour
         }
         else
         {
-            StopAllCoroutines(); // 깜빡임 중지
+            durationTime = 0f;
+            StopAllCoroutines();
             StartCoroutine(Fall());
         }
     }
 
-    IEnumerator Blink()
+    private IEnumerator Blink()
     {
         isBlinking = true;
         Color originalColor = sr.color;
@@ -73,10 +82,10 @@ public class FallingPlatform : MonoBehaviour
         isBlinking = false;
     }
 
-    IEnumerator Fall()
+    private IEnumerator Fall()
     {
-        rb.isKinematic = false;
-        yield return new WaitForSeconds(2f);
+        rb.gravityScale = 1f; // 중력 적용
+        yield return new WaitForSeconds(0.5f); // 0.5초 후에 파괴
         Destroy(gameObject);
     }
 }
