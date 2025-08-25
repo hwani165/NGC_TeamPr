@@ -3,7 +3,7 @@ using BackEnd;
 using BackEnd.Tcp;
 using UnityEngine;
 
-public class BFAccount : MonoBehaviour
+public class BackendFunctionsAccount : MonoBehaviour
 {
     public void Login(string id, string pw)
     {

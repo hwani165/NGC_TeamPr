@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class ServerManager : SingletonBehaviour<ServerManager>
 {
-    private BFInGame bfInGame;
-    private BFAccount bfAccount;
-    private BFMatch bfMatch;
+    private BackendFunctionInGame bfInGame;
+    private BackendFunctionsAccount bfAccount;
+    private BackendFunctionMatch bfMatch;
 
     private void Awake()
     {
@@ -17,20 +17,20 @@ public class ServerManager : SingletonBehaviour<ServerManager>
     {
         if (bfInGame == null && !TryGetComponent(out bfInGame))
         {
-            gameObject.AddComponent<BFInGame>();
-            bfInGame = GetComponent<BFInGame>();
+            gameObject.AddComponent<BackendFunctionInGame>();
+            bfInGame = GetComponent<BackendFunctionInGame>();
         }
 
         if (bfAccount == null && !TryGetComponent(out bfAccount))
         {
-            gameObject.AddComponent<BFAccount>();
-            bfAccount = GetComponent<BFAccount>();
+            gameObject.AddComponent<BackendFunctionsAccount>();
+            bfAccount = GetComponent<BackendFunctionsAccount>();
         }
 
         if (bfMatch == null && !TryGetComponent(out bfMatch))
         {
-            gameObject.AddComponent<BFMatch>();
-            bfMatch = GetComponent<BFMatch>();
+            gameObject.AddComponent<BackendFunctionMatch>();
+            bfMatch = GetComponent<BackendFunctionMatch>();
         }
     }
     public bool TryInitialize()
@@ -64,14 +64,16 @@ public class ServerManager : SingletonBehaviour<ServerManager>
     {
         return bfAccount.Signup(id,pw);
     }
-
     public int TryUpdateNickName(string nickName)
     {
         return bfAccount.UpdateNickname(nickName);
     }
-
     public void FindMatch(Action OnEnterFindMatch, Action OnFindedMatch, Action OnMatchCanceled)
     {
         bfMatch.FindMatch(OnEnterFindMatch, OnFindedMatch, OnMatchCanceled);
+    }
+    public void UpdatePlayer(Vector2 inputMoveVec, bool inputIsGrounded, bool inputCanDash, bool inputIsDashing)
+    {
+        bfInGame.SendDataPlayerMovement(inputMoveVec, inputIsGrounded, inputCanDash, inputIsDashing);
     }
 }

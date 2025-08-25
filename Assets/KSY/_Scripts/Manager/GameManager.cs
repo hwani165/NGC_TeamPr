@@ -31,6 +31,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     }
     public void EnterInGame()
     {
+        Debug.Log("LoadScene InGame");
         SceneManager.LoadScene("InGame");
     }
     public void ExitAccountMenu()

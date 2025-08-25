@@ -2,7 +2,7 @@ using System;
 using BackEnd;
 using BackEnd.Tcp;
 using UnityEngine;
-public class BFMatch : MonoBehaviour
+public class BackendFunctionMatch : MonoBehaviour
 {
     public void FindMatch(Action OnEnterFindMatch, Action OnFindedMatch, Action OnMatchCanceled)
     {
@@ -68,6 +68,9 @@ public class BFMatch : MonoBehaviour
             //霸烙规 立加 己傍 贸府
             if (args.ErrInfo == ErrorCode.Success)
             {
+                Backend.Match.OnSessionOffline = (MatchInGameSessionEventArgs args) => {
+                    GameManager.Instance.EnterAccountMenu();
+                };
                 GameManager.Instance.EnterInGame();
             }
             //霸烙规 立加 角菩 贸府
