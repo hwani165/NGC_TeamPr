@@ -12,6 +12,9 @@ namespace SDW
         private int blockLayer; // 블록 레이어
         private Joint2D joint;
 
+        // network data
+        private bool isfall = false;
+
         private void Awake()
         {
             blockLayer = Mathf.RoundToInt(Mathf.Log(breakableLayer.value, 2));
@@ -21,7 +24,6 @@ namespace SDW
         private void Hit()
         {
             if (!breakable) return;
-
             // 아래 블록의 모든 Joint 삭제
             if (childBlock != null)
             {
@@ -41,6 +43,10 @@ namespace SDW
         private void OnCollisionEnter2D(Collision2D collision)
         {
             if(collision.gameObject.layer != blockLayer) return;
+
+            #region network data
+            isfall = true;
+            #endregion
 
             Hit();
         }

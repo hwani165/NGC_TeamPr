@@ -15,6 +15,10 @@ public class Spawner : MonoBehaviour
     private float currentTimer;
     private int randomPoint;
 
+    // network data
+    static public sbyte itemX;
+    private sbyte spawnX;
+
     private void Start()
     {
         maxItemCount = maxCount;
@@ -36,7 +40,9 @@ public class Spawner : MonoBehaviour
                 Instantiate(Objects[Random.Range(0, Objects.Length)],
                             spawnerPoints[randomPoint].transform.position,
                             Quaternion.identity);
-
+                #region network data
+                spawnX = (sbyte)Mathf.RoundToInt(spawnerPoints[randomPoint].transform.position.x);
+                #endregion
                 itemCount++;
             }
         }
