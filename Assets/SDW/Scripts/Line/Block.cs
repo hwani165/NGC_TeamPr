@@ -6,11 +6,14 @@ namespace SDW
     public class Block : MonoBehaviour
     {
         [SerializeField] private LayerMask breakableLayer; // 블록이 파괴될 수 있는 레이어
-        [SerializeField] private bool breakable = true;
+        [SerializeField] private bool breakable = true; // 블록 파괴 가능 여부
         [SerializeField] private Rigidbody2D childBlock;  // 바로 아래 블록
 
         private int blockLayer; // 블록 레이어
         private Joint2D joint;
+
+        // network data
+        private bool isfall = false;
 
         private void Awake()
         {
@@ -21,7 +24,6 @@ namespace SDW
         private void Hit()
         {
             if (!breakable) return;
-
             // 아래 블록의 모든 Joint 삭제
             if (childBlock != null)
             {
@@ -41,6 +43,10 @@ namespace SDW
         private void OnCollisionEnter2D(Collision2D collision)
         {
             if(collision.gameObject.layer != blockLayer) return;
+
+            #region network data
+            isfall = true;
+            #endregion
 
             Hit();
         }

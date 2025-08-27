@@ -17,6 +17,10 @@ public class FallingPlatform : MonoBehaviour
     private bool start = false;
     private bool isBlinking = false;
 
+    //network data
+    private bool isstep = false;
+    private bool isfall = false;
+
     private void Start()
     {
         PlayerLayer = Mathf.RoundToInt(Mathf.Log(PlayerLayerMask.value, 2));
@@ -36,6 +40,9 @@ public class FallingPlatform : MonoBehaviour
         if(collision.gameObject.layer != PlayerLayer)
             return;
         start = true;
+        #region network data
+        isstep = true;
+        #endregion
 
         // 처음부터 아주 느리게 깜빡이기 시작
         if (!isBlinking)
@@ -84,6 +91,9 @@ public class FallingPlatform : MonoBehaviour
 
     private IEnumerator Fall()
     {
+        #region network data
+        isfall = true;
+        #endregion
         rb.gravityScale = 1f; // 중력 적용
         yield return new WaitForSeconds(0.5f); // 0.5초 후에 파괴
         Destroy(gameObject);
