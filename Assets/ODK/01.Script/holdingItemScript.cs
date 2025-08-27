@@ -15,6 +15,7 @@ public abstract class Item : MonoBehaviour
     public Transform preowner;
     public Vector2 shootingdir;
     public bool thisisnoforceobject = false;
+    public bool thisownerfading = true;
     public virtual void Awake()
     {
         rigidbody = GetComponent<Rigidbody2D>();
@@ -26,6 +27,7 @@ public abstract class Item : MonoBehaviour
         {
             isshooting = false;
             owner = null;
+            Instantiate(effect[0], transform.position, Quaternion.identity);
             StartCoroutine(Attacking(collision.gameObject));
         }
     }
@@ -40,11 +42,16 @@ public abstract class Item : MonoBehaviour
         {
             isshooting = false;
             owner = null;
+            Instantiate(effect[0], transform.position, Quaternion.identity);
             StartCoroutine(Attacking(collision.gameObject));
         }
     }
     
     public virtual void Launching()
+    {
+
+    }
+    public virtual void Grab()
     {
 
     }
@@ -61,6 +68,7 @@ public abstract class Item : MonoBehaviour
     {
         owner.GetComponent<Entity>().Attack(transform, 10f, 0f);
         isshooting = false;
+        Instantiate(effect[0], owner.transform.position, Quaternion.identity);
         owner = null;
         Destroy(gameObject);
     }
@@ -73,7 +81,7 @@ public abstract class Item : MonoBehaviour
     {
         iscooldown = true;
         yield return new WaitForSeconds(0.1f);
-        owner = null;
+        if (thisownerfading) owner = null;
 
         iscooldown = false;
     }
