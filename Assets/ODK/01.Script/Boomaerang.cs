@@ -80,7 +80,7 @@ public class Boomaerang : Item
         int layer = collision.gameObject.layer;
         if (((1 << layer) & targetLayer) != 0 && collision.gameObject.transform != preowner && isboomeranged)
         {
-            
+            Instantiate(effect[0], collision.transform.position, Quaternion.identity);
             StartCoroutine(Attacking(collision.gameObject));
         }
     }
