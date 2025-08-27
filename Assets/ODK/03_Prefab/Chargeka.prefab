@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 9206428774507335267}
   - component: {fileID: 2689270796443451734}
   m_Layer: 6
-  m_Name: boomaerang
+  m_Name: Chargeka
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 5
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.390566, g: 0.40703171, b: 1, a: 1}
+  m_Color: {r: 0, g: 1, b: 0.94308615, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -178,7 +178,7 @@ MonoBehaviour:
   iscooldown: 0
   isshooting: 0
   effect:
-  - {fileID: 4126250750794429402, guid: 3bc2df18ce6655140833b795a1c3dbc0, type: 3}
+  - {fileID: 4126250750794429402, guid: f8ce55ccc75752d44bc9b360fb08369f, type: 3}
   targetLayer:
     serializedVersion: 2
     m_Bits: 16
@@ -190,11 +190,12 @@ MonoBehaviour:
   shootingdir: {x: 0, y: 0}
   thisisnoforceobject: 1
   thisownerfading: 1
-  easeType: 9
+  easeType: 1
   lasteaseType: 8
-  damage: 7.5
-  knockbackmulti: 2
-  firstmovetime: 0.75
-  lastmovetime: 1
-  lifeTime: 1.75
-  range: 4
+  damage: 50
+  knockbackmulti: 1
+  firstmovetime: 12
+  lastmovetime: 0
+  lifeTime: 12
+  range: 60
+  thisnotalreadyHit: 0

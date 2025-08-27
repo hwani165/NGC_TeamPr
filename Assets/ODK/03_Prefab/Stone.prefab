@@ -190,5 +190,5 @@ MonoBehaviour:
   shootingdir: {x: 0, y: 0}
   thisisnoforceobject: 0
   thisownerfading: 1
-  damage: 5
+  damage: 7.5
   knockbackmulti: 2
