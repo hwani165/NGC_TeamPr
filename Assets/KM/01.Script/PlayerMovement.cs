@@ -19,11 +19,22 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody2D _rbCompo;
     private Vector2 _moveVec;
+
     private bool _isGrounded;
+    #region NetWorkData
+    //점프를 했는가? (Is Jumping Now? <bool>)
+    private bool _isJumpNow = false;
+    //대쉬를 하고 있는가?(Is Dashing Now? <bool>)
     private bool _isDashing;
-    private float _dashTimer;
+    //대쉬할 방향(Dash Direction<Vec2>)
     private Vector2 _dashDirection;
-    private bool CanDash = true;
+    //대쉬를 사용했는가? (Use Dash? <bool>)
+    private bool CanDash = false;
+    //이동하고 있는 방향 (Now Move.X Direction <Sbyte>)
+    private sbyte nowMoveDirection;
+    #endregion
+
+    private float _dashTimer;
 
     private void Start()
     {
@@ -47,7 +58,11 @@ public class PlayerMovement : MonoBehaviour
             velocity.x = _moveVec.x * speed;
             _rbCompo.linearVelocityX = velocity.x;
         }
-        if (Keyboard.current.sKey.wasPressedThisFrame && !_isGrounded)
+    }
+
+    private void Update()
+    {
+        if (Keyboard.current.sKey.wasPressedThisFrame && _isGrounded)
         {
             _rbCompo.AddForce(Vector2.down * gravity * 2f, ForceMode2D.Impulse);
         }
@@ -56,24 +71,38 @@ public class PlayerMovement : MonoBehaviour
     private void OnGround()
     {
         Collider2D hit = Physics2D.OverlapBox((Vector2)transform.position + groundCheckVec, groundCheckVecSize, 0, groundMask);
-        _isGrounded = hit != null;
+        _isGrounded = hit == null;
 
-        if (_isGrounded)
+        if (!_isGrounded)
         {
             currentJumpCount = maxJumpCount;
-            CanDash = true;
+            _isJumpNow = false;
+            CanDash = false;
         }
     }
 
     public void OnMove(InputValue value)
     {
         _moveVec = value.Get<Vector2>();
+        if (_moveVec.x >= 0.1f)
+        {
+            nowMoveDirection = 1;
+        }
+        else if (_moveVec.x <= -0.1f)
+        {
+            nowMoveDirection = -1;
+        }
+        else
+        {
+            nowMoveDirection = 0;
+        }
     }
 
     public void OnJump()
     {
         if (currentJumpCount > 0)
         {
+            _isJumpNow = true;
             _rbCompo.linearVelocityY = jumpForce;
             currentJumpCount--;
         }
@@ -81,7 +110,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void GroundDash()
     {
-        if (_isDashing && _isGrounded)
+        if (_isDashing && !_isGrounded)
         {
             _rbCompo.AddForce(new Vector2(_dashDirection.x,0) * dashForce,ForceMode2D.Impulse);
             _dashTimer -= Time.fixedDeltaTime;
@@ -95,7 +124,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void AirDash()
     {
-        if (_isDashing && !_isGrounded)
+        if (_isDashing && _isGrounded)
         {
             _rbCompo.linearVelocity = _dashDirection * dashForce / 2f;
             _dashTimer -= Time.fixedDeltaTime;
@@ -112,24 +141,24 @@ public class PlayerMovement : MonoBehaviour
     {
         if (currentJumpCount <= 0) return;
 
-        if (CanDash)
+        if (!CanDash)
         {
-            if (!_isGrounded)
+            if (_isGrounded)
             {
                 currentJumpCount--;
                 _rbCompo.linearVelocityX = 0;
-                CanDash = false;
+                CanDash = true;
             }
             else
             {
-                CanDash = true;
+                CanDash = false;
                 _rbCompo.linearVelocity = Vector2.zero;
             }
             if (_isDashing) return;
 
             Vector2 inputDir = _moveVec.normalized;
 
-            if (!_isGrounded)
+            if (_isGrounded)
             {
                 if (inputDir == Vector2.zero)
                     inputDir = Vector2.down;
