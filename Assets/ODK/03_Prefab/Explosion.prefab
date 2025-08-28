@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 15
-  knockbackmulti: 3
+  knockbackmulti: 2.5
   lifetime: 0.2
   layermask:
     serializedVersion: 2
