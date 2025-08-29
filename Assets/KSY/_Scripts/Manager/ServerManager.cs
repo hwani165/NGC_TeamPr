@@ -1,13 +1,34 @@
 using System;
+using System.Collections.Generic;
 using BackEnd;
+using BackEnd.Tcp;
+using Google.FlatBuffers;
+using InputData.Platform;
+using InputData.Player;
+using NUnit.Framework;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem.Utilities;
+using UnityEngine.Rendering.Universal;
+public enum MatchEventType
+{
+    None = 0,
+    //매칭 시작시
+    OnEnterFindingMatch,
+    //매칭 성사시
+    OnFindedMatch,
+    //매칭 캔슬시
+    OnMatchCanceled
 
+}
 public class ServerManager : SingletonBehaviour<ServerManager>
 {
-    private BackendFunctionInGame bfInGame;
-    private BackendFunctionsAccount bfAccount;
-    private BackendFunctionMatch bfMatch;
-
+    private BackendFunctionInGame _bfInGame;
+    private BackendFunctionsAccount _bfAccount;
+    private BackendFunctionMatch _bfMatch;
+    private UserData _myData = new UserData();
+    private UserData _otherData = new UserData();
+    public MatchUserGameRecord otherInfo;
     private void Awake()
     {
         base.Awake();
@@ -15,23 +36,88 @@ public class ServerManager : SingletonBehaviour<ServerManager>
     }
     private void InitBF()
     {
-        if (bfInGame == null && !TryGetComponent(out bfInGame))
+        if (_bfInGame == null && !TryGetComponent(out _bfInGame))
         {
             gameObject.AddComponent<BackendFunctionInGame>();
-            bfInGame = GetComponent<BackendFunctionInGame>();
+            _bfInGame = GetComponent<BackendFunctionInGame>();
         }
 
-        if (bfAccount == null && !TryGetComponent(out bfAccount))
+        if (_bfAccount == null && !TryGetComponent(out _bfAccount))
         {
             gameObject.AddComponent<BackendFunctionsAccount>();
-            bfAccount = GetComponent<BackendFunctionsAccount>();
+            _bfAccount = GetComponent<BackendFunctionsAccount>();
         }
 
-        if (bfMatch == null && !TryGetComponent(out bfMatch))
+        if (_bfMatch == null && !TryGetComponent(out _bfMatch))
         {
             gameObject.AddComponent<BackendFunctionMatch>();
-            bfMatch = GetComponent<BackendFunctionMatch>();
+            _bfMatch = GetComponent<BackendFunctionMatch>();
         }
+    }
+    public void InitOtherData()
+    {
+        Debug.Log("Sucsee Other Data");
+        var otherInfo = this.otherInfo;
+
+        string nickname = otherInfo.m_nickname;
+
+        //받아왔던 데이터를 할당.
+        _otherData.nickname = nickname;
+
+        //데이터 초기화를 표시
+        _otherData.hasInit = true;
+    }
+    public void InitMyData()
+    {
+        Debug.Log("Sucsee My Data");
+        //서버에서 내 계정에 맞는 데이터를 가져옴
+        var bro_GetUserInfo = Backend.BMember.GetUserInfo();
+
+        //받아온 데이터에서 닉네임을 가져옴
+        string nickname = bro_GetUserInfo.GetReturnValuetoJSON()["row"]["nickname"].ToString();
+
+        //받아온 데이터를 할당.
+        _myData.nickname = nickname;
+
+        //자주 데이터를 쓰는 곳에 자원 절약을 위해 할당해놈
+        _bfMatch.myNickname = nickname;
+
+        //데이터 초기화를 표시
+        _myData.hasInit = true;
+    }
+    public UserData? GetMyData()
+    {
+        //초기화된 값일 경우 반환. 아닐 경우 null 반환
+        if (_myData.hasInit == false)
+        {
+            return null;
+        }
+        else
+        {
+            Debug.Log("Success : return my Data");
+            return _myData;
+        }
+    }
+    public UserData? GetOtherData()
+    {
+        //초기화된 값일 경우 반환. 아닐 경우 null 반환
+        if (_otherData.hasInit == false) 
+        { 
+            return null; 
+        }
+        else
+        {
+            Debug.Log("Success : return other Data");
+            return _otherData;
+        }
+    }
+    public void SnedData(byte[] bff)
+    {
+        _bfInGame.SnedData(bff);
+    }
+    public void ReceiveData<T>(byte[] bff, T messageType, IReceivable Receiver) where T : struct
+    {
+        _bfInGame.ReceiveData(bff, messageType, Receiver);
     }
     public bool TryInitialize()
     {
@@ -50,30 +136,66 @@ public class ServerManager : SingletonBehaviour<ServerManager>
     }
     public bool TryReconnect()
     {
-        return bfMatch.TryReconnect();
+        return _bfMatch.TryReconnect();
     }
     public void Login(string id, string pw)
     {
-        bfAccount.Login(id,pw);
+        _bfAccount.Login(id,pw);
     }
     public void Login(string id, string pw, Action<bool> OnTryMatchServer, Action<int> OnTryLogin)
     {
-        bfAccount.Login(id, pw, OnTryMatchServer, OnTryLogin);
+        _bfAccount.Login(id, pw, OnTryMatchServer, OnTryLogin);
     }
     public int TrySignup(string id, string pw)
     {
-        return bfAccount.Signup(id,pw);
+        return _bfAccount.Signup(id,pw);
     }
-    public int TryUpdateNickName(string nickName)
+    public int TryUpdateNickname(string nickName)
     {
-        return bfAccount.UpdateNickname(nickName);
+        return _bfAccount.UpdateNickname(nickName);
     }
-    public void FindMatch(Action OnEnterFindMatch, Action OnFindedMatch, Action OnMatchCanceled)
+    public void FindMatch()
     {
-        bfMatch.FindMatch(OnEnterFindMatch, OnFindedMatch, OnMatchCanceled);
+        _bfMatch.FindMatch();
     }
-    public void UpdatePlayer(Vector2 inputMoveVec, bool inputIsGrounded, bool inputCanDash, bool inputIsDashing)
+    public void AddMatchEvent(MatchEventType t, Action eventHandler)
     {
-        bfInGame.SendDataPlayerMovement(inputMoveVec, inputIsGrounded, inputCanDash, inputIsDashing);
+       switch(t)
+        {
+            case MatchEventType.None:
+                {
+                    Debug.Log("Error");
+                    break;
+                }
+            case MatchEventType.OnEnterFindingMatch:
+                {
+                    _bfMatch.OnEnterFindingMatch += eventHandler;
+                    break;
+                }
+            case MatchEventType.OnFindedMatch:
+                {
+                    _bfMatch.OnFindedMatch += eventHandler;
+                    break;
+                }
+            case MatchEventType.OnMatchCanceled:
+                {
+                    _bfMatch.OnMatchCanceled += eventHandler;
+                    break;
+                }
+        }
+    }
+    public byte[] SerializationPlatformStateData(bool hasPlatformBroken, bool isOnTimerPlatform)
+    {
+        return _bfInGame.SerializationPlatformStateData(hasPlatformBroken, isOnTimerPlatform);
+    }
+    public byte[] SerializationPlayerItemData(bool hasItem, bool isShootingItem)
+    {
+        return _bfInGame.SerializationPlayerItemData(hasItem, isShootingItem);
+    }
+    public byte[] SerializationPlayerMovementData(sbyte dataMoveX, bool dataIsGrounded, bool dataCanDash, bool dataIsDashing)
+    {
+        return _bfInGame.SerializationPlayerMovementData(dataMoveX, dataIsGrounded, dataCanDash, dataIsDashing);
     }
 }
+
+

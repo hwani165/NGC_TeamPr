@@ -13,6 +13,9 @@ public class BackendFunctionsAccount : MonoBehaviour
             if (joinChannelEventArgs.ErrInfo == ErrorInfo.Success)
             {
                 //매칭 서버 접속 성공 처리
+                //서버로부터 계정의 정보를 가져와 UserData에 할당
+                //MainMenu로 이동
+                ServerManager.Instance.InitMyData();
                 GameManager.Instance.EnterMainMenu();
             }
             else
@@ -33,7 +36,10 @@ public class BackendFunctionsAccount : MonoBehaviour
             Backend.Match.JoinMatchMakingServer(out ErrorInfo isSuccess);
         }
         //로그인 실패 처리
-        else { }
+        else 
+        {
+            Debug.LogError("로그인에 실패했습니다");
+        }
     }
     public void Login(string id, string pw, Action<bool> OnTryEnterMatchServer, Action<int> OnTryLogin)
     {

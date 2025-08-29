@@ -1,0 +1,21 @@
+namespace InputData.Platform;
+
+struct PlatformInfo{
+	id:byte;
+}
+
+table PlatformState {
+	platform_state:ubyte;
+}
+
+union PlatformMessageType{
+	state:PlatformState
+}
+
+table PlatformMessage{
+	data:PlatformMessageType;
+	sender_info:PlatformInfo;
+}
+
+file_identifier "PFDT";
+root_type PlatformMessage;

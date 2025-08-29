@@ -1,10 +1,21 @@
-namespace MyGame.Player;
-struct MoveVec {
-  x:byte;
-  y:byte;
+namespace InputData.Player;
+
+table Movement {
+  movement_state:ubyte;
+  move_x:byte;
 }
-table inputPlayerMovement {
-  moveVec:MoveVec;
-  movementState:ubyte;
+
+table ItemAction{
+	action_state:ubyte;
 }
-root_type inputPlayerMovement;
+
+union PlayerMessageType{
+	item_action:ItemAction,
+	movement:Movement
+}
+
+table PlayerMessage{
+	data:PlayerMessageType;
+}
+file_identifier "PLDT";
+root_type PlayerMessage;

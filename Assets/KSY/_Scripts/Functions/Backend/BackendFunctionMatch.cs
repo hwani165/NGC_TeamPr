@@ -1,10 +1,14 @@
 using System;
+using System.Linq;
 using BackEnd;
 using BackEnd.Tcp;
 using UnityEngine;
 public class BackendFunctionMatch : MonoBehaviour
 {
-    public void FindMatch(Action OnEnterFindMatch, Action OnFindedMatch, Action OnMatchCanceled)
+    //event
+    public string myNickname = null; 
+    public event Action OnEnterFindingMatch, OnFindedMatch, OnMatchCanceled;
+    public void FindMatch()
     {
         //유저가 매칭을 신청, 취소 했을 때 그리고 매칭이 성사되었을 때 호출되는 이벤트 핸들러입니다.
         Backend.Match.OnMatchMakingResponse = (MatchMakingResponseEventArgs args) => {
@@ -12,12 +16,14 @@ public class BackendFunctionMatch : MonoBehaviour
             //매칭 신청 처리
             if (args.ErrInfo == ErrorCode.Match_InProgress) 
             {
-                OnEnterFindMatch?.Invoke();
+                Debug.Log("매칭이 시작되었습니다.");
+                OnEnterFindingMatch?.Invoke();
             }
 
             //매칭 성사 처리
             if (args.MatchCardIndate != null && args.RoomInfo != null) 
             {
+                Debug.Log("매칭이 성사되었습니다.");
                 OnFindedMatch?.Invoke();
 
                 string serverAddress = args.RoomInfo.m_inGameServerEndPoint.m_address;
@@ -62,12 +68,46 @@ public class BackendFunctionMatch : MonoBehaviour
     }
     public void JoinInGameServer(string serverAddress, ushort serverPort, string roomToken, bool isReconnecting)
     {
-        //유저가 게임방 접속에 성공했을 때 입장한 유저에게만 최초 1회 호출되는 이벤트 핸들러입니다. (+ 재접속시에도 호출됨)
+        //유저가 게임방에 입장할 때마다 호출되는 이벤트입니다.
+        //+ 자기 자신에게도 호출됨.
+        Backend.Match.OnMatchInGameAccess += (MatchInGameSessionEventArgs args) => {
+
+            //나의 입장 수신이라면 반환
+            if (args.GameRecord.m_nickname == myNickname)
+            {
+                return;
+            }
+
+            Debug.Log($"{args.GameRecord.m_nickname} != {myNickname}");
+
+            //아니라면 상대방 정보를 가져옴
+            MatchUserGameRecord otherInfo = args.GameRecord;
+            ServerManager.Instance.otherInfo = otherInfo;
+        };
+
+        //유저가 게임방 접속에 성공했을 때 입장한 유저에게만 최초 1회 호출되는 이벤트 핸들러입니다.
+        //자신을 포함하여 현재 게임방에 접속해 있는 유저들의 세션 정보와 매칭 기록이 포함되어 있습니다.
+        //인게임 서버에 재접속했을 때도 호출됩니다.
         Backend.Match.OnSessionListInServer += (MatchInGameSessionListEventArgs args) => {
+
+            //오류 방지를 위해 중복된 값을 제거한 채 리스트로 데이터를 반환 
+            var Gamerecords = args.GameRecords.Distinct().ToList<MatchUserGameRecord>();
+
+            //만약 가져온 유저 데이터의 개수가 2개가 아닐 경우, 오류가 발생한 것이기 때문에 실행하지 않고 넘어감.
+            if(Gamerecords.Count == 2)
+            {
+                //상대방 정보를 가져옴
+                MatchUserGameRecord otherInfo = Gamerecords.Find((r) => r.m_nickname != myNickname);
+
+                Debug.Log($"{otherInfo.m_nickname} != {myNickname}");
+
+                ServerManager.Instance.otherInfo = otherInfo;
+            }
 
             //게임방 접속 성공 처리
             if (args.ErrInfo == ErrorCode.Success)
             {
+                //게임방에서 접속이 끊겼을 경우 처리
                 Backend.Match.OnSessionOffline = (MatchInGameSessionEventArgs args) => {
                     GameManager.Instance.EnterAccountMenu();
                 };

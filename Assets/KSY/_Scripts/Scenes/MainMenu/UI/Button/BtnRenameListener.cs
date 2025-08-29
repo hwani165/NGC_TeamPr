@@ -9,7 +9,7 @@ public class BtnRenameListener : MonoBehaviour
         string nickname = inputNickname.text;
 
         //닉네임 변경 시도
-        int statusCode = ServerManager.Instance.TryUpdateNickName(nickname);
+        int statusCode = ServerManager.Instance.TryUpdateNickname(nickname);
 
         switch(statusCode)
         {

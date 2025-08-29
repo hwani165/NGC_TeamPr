@@ -1,44 +1,50 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static BackendFunctionInGame;
 
-public class KSY_PlayerMovement : MonoBehaviour
+public class OtherMovement : MonoBehaviour, IReceivable
 {
     [SerializeField] private float speed = 10f;
-    [SerializeField] private float jumpForce = 4f; //12
+    [SerializeField] private float jumpForce = 12f;
     [SerializeField] private float gravity = 9.8f;
 
     [SerializeField] private Vector2 groundCheckVecSize;
     [SerializeField] private Vector2 groundCheckVec;
     [SerializeField] private LayerMask groundMask;
 
-    [SerializeField] private float dashForce = 5f; //20
-    [SerializeField] private float dashDuration = 0.2f;
-
-    [SerializeField] private int maxJumpCount = 3;
-    private int currentJumpCount;
+    [SerializeField] private float dashForce = 20f;
 
     private Rigidbody2D _rbCompo;
     private Vector2 _moveVec;
-    private bool _isGrounded;
-    private bool _isDashing;
-    private float _dashTimer;
-    private Vector2 _dashDirection;
-    private bool CanDash = true;
 
+    #region NetWorkData
+    //점프를 했는가? (Is Jumping Now? <bool>)
+    private bool _isGrounded;
+    //대쉬를 하고 있는가?(Is Dashing Now? <bool>)
+    private bool _isDashing;
+    //대쉬할 방향(Dash Direction<Vec2>)
+    private Vector2 _dashDirection;
+    //대쉬를 사용했는가? (Use Dash? <bool>)
+    private bool CanDash = false;
+    //이동하고 있는 방향 (Now Move.X Direction <Sbyte>)
+    private sbyte nowMoveDirection;
+    #endregion
     private void Start()
     {
         _rbCompo = GetComponent<Rigidbody2D>();
         _rbCompo.gravityScale = 1f;
-        currentJumpCount = maxJumpCount;
-    }
 
-    private void FixedUpdate()
+        //클라이언트가 SendDataToInGameRoom 함수로 서버로 보낸 메시지를 게임방에 접속한 모든 클라이언트에게
+        //브로드캐스팅 했을 때 호출되는 이벤트입니다.
+    }
+    private void Update()
     {
+        Jump();
         OnGround();
         GroundDash();
         if (!_isDashing)
         {
-            GetComponent<SpriteRenderer>().color = new Color(1,1,1,1);
+            GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
         }
         AirDash();
         if (!_isDashing)
@@ -47,94 +53,63 @@ public class KSY_PlayerMovement : MonoBehaviour
             velocity.x = _moveVec.x * speed;
             _rbCompo.linearVelocityX = velocity.x;
         }
-        if (Keyboard.current.sKey.wasPressedThisFrame && !_isGrounded)
-        {
-            _rbCompo.AddForce(Vector2.down * gravity * 2f, ForceMode2D.Impulse);
-        }
-
-        
     }
 
     private void OnGround()
     {
         Collider2D hit = Physics2D.OverlapBox((Vector2)transform.position + groundCheckVec, groundCheckVecSize, 0, groundMask);
-        //_isGrounded = hit != null;
-        _isGrounded = true;
+        _isGrounded = hit == null;
 
-        if (_isGrounded)
+        if (!_isGrounded)
         {
-            currentJumpCount = maxJumpCount;
-            CanDash = true;
+            CanDash = false;
         }
     }
-
-    public void OnMove(InputValue value)
+    private void Jump()
     {
-        _moveVec = value.Get<Vector2>();
-        Debug.Log("gogo");
-        ServerManager.Instance.UpdatePlayer(_moveVec, _isGrounded, CanDash, _isDashing); //서버로 데이터 송신
+        if(!_isGrounded)
+        _rbCompo.linearVelocityY = jumpForce;
     }
-
-    public void OnJump()
-    {
-        if (currentJumpCount > 0)
-        {
-            _rbCompo.linearVelocityY = jumpForce;
-            currentJumpCount--;
-        }
-    }
-
     private void GroundDash()
-    {
-        if (_isDashing && _isGrounded)
-        {
-            _rbCompo.AddForce(new Vector2(_dashDirection.x,0) * dashForce,ForceMode2D.Impulse);
-            _dashTimer -= Time.fixedDeltaTime;
-            if (_dashTimer <= 0f)
-            {
-                _isDashing = false;
-            }
-            return;
-        }
-    }
-
-    private void AirDash()
     {
         if (_isDashing && !_isGrounded)
         {
-            _rbCompo.linearVelocity = _dashDirection * dashForce / 2f;
-            _dashTimer -= Time.fixedDeltaTime;
-            if (_dashTimer <= 0f)
-            {
-                _isDashing = false;
-            }
-            GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.5f);
+            _rbCompo.AddForce(new Vector2(_dashDirection.x, 0) * dashForce, ForceMode2D.Impulse);
+            _isDashing = false;
+            
             return;
         }
     }
-
+    private void AirDash()
+    {
+        if (_isDashing && _isGrounded)
+        {
+            _rbCompo.linearVelocity = _dashDirection * dashForce / 2f;
+            _isDashing = false;
+            
+            GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);
+            return;
+        }
+    }
     public void OnDash(InputValue value)
     {
-        if (currentJumpCount <= 0) return;
-
-        if (CanDash)
+        if (!CanDash)
         {
-            if (!_isGrounded)
+            if (_isGrounded)
             {
-                currentJumpCount--;
                 _rbCompo.linearVelocityX = 0;
-                CanDash = false;
+                CanDash = true;
             }
             else
             {
-                CanDash = true;
+                CanDash = false;
                 _rbCompo.linearVelocity = Vector2.zero;
             }
             if (_isDashing) return;
 
             Vector2 inputDir = _moveVec.normalized;
 
-            if (!_isGrounded)
+            if (_isGrounded)
             {
                 if (inputDir == Vector2.zero)
                     inputDir = Vector2.down;
@@ -146,8 +121,28 @@ public class KSY_PlayerMovement : MonoBehaviour
 
             _dashDirection = inputDir.normalized;
             _isDashing = true;
-            _dashTimer = dashDuration;
         }
+    }
+    public void ApplyData(byte byteData)
+    {
+        Debug.Log($"byteData : {byteData}");
+
+        //대쉬를 했는가?
+        bool isDash = (byteData & (byte)flagPlayerMovementState.IsDashing) != 0;
+
+        //대쉬하고 있는가?
+        bool isRunning = (byteData & (byte)flagPlayerMovementState.IsRunning) != 0;
+
+        //점프를 하고 있는가?
+        bool isJumping = (byteData & (byte)flagPlayerMovementState.IsJumping) != 0;
+    }
+    public void ApplyData(sbyte sbyteData)
+    {
+        Debug.Log($"moveDir : {sbyteData}");
+
+        //전달받은 이동방향을 적용
+        float moveX = sbyteData;
+        _moveVec.x = moveX;
     }
 
 #if UNITY_EDITOR

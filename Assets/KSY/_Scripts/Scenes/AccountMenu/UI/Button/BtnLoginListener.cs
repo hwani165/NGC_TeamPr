@@ -39,6 +39,7 @@ public class BtnLoginListener : MonoBehaviour
         //로그인 성공 처리
         if(statusCode == 200)
         {
+            ServerManager.Instance.InitMyData();
             GameManager.Instance.EnterMainMenu();
         }
     }

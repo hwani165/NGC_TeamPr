@@ -56,7 +56,7 @@ public class BtnSignupListener : MonoBehaviour
         }
 
         //닉네임 변경 시도
-        int updateNicknameStatuscode = ServerManager.Instance.TryUpdateNickName(nickname);
+        int updateNicknameStatuscode = ServerManager.Instance.TryUpdateNickname(nickname);
 
         switch (updateNicknameStatuscode)
         {
