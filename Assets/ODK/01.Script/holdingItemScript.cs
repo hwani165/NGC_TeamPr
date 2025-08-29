@@ -27,6 +27,7 @@ public abstract class Item : MonoBehaviour
         {
             isshooting = false;
             owner = null;
+            Instantiate(effect[0], transform.position, Quaternion.identity);
             StartCoroutine(Attacking(collision.gameObject));
         }
     }
@@ -41,6 +42,7 @@ public abstract class Item : MonoBehaviour
         {
             isshooting = false;
             owner = null;
+            Instantiate(effect[0], transform.position, Quaternion.identity);
             StartCoroutine(Attacking(collision.gameObject));
         }
     }
@@ -64,8 +66,9 @@ public abstract class Item : MonoBehaviour
 
     public virtual void Eat()
     {
-        owner.GetComponent<Entity>().Attack(transform, 10f, 0f);
+        owner.GetComponent<Entity>().Attack(transform, 10, 0f);
         isshooting = false;
+        Instantiate(effect[0], owner.transform.position, Quaternion.identity);
         owner = null;
         Destroy(gameObject);
     }

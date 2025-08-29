@@ -2,9 +2,11 @@ using System.Collections;
 using UnityEngine;
 using DG.Tweening;
 using System.Collections.Generic;
-
+using Unity.VisualScripting;
 public class Boomaerang : Item
 {
+    [SerializeField] private Ease easeType = Ease.OutCubic;
+    [SerializeField] private Ease lasteaseType = Ease.InCubic;
     public float damage = 5;
     public float knockbackmulti = 1;
     public float firstmovetime = 1f;
@@ -13,8 +15,9 @@ public class Boomaerang : Item
     public float range = 5f;
     private Vector2 originVector;
     private bool isboomeranged = false;
+    [SerializeField] private bool thisnotalreadyHit = false;
     private float currentlifeTime = 2f;
-    public Sequence seq;
+    public DG.Tweening.Sequence seq;
     private HashSet<Entity> alreadyHit = new HashSet<Entity>();
     public override void Awake()
     {
@@ -63,7 +66,7 @@ public class Boomaerang : Item
         seq = DOTween.Sequence();
         isshooting = false;
 
-        seq.Append(transform.DOMove((Vector2)transform.position + (shootingdir * range), firstmovetime).SetEase(Ease.OutCubic));
+        seq.Append(transform.DOMove((Vector2)transform.position + (shootingdir * range), firstmovetime).SetEase(easeType));
         seq.AppendCallback(retuning);
     }
     public override void Grab()
@@ -80,14 +83,14 @@ public class Boomaerang : Item
         int layer = collision.gameObject.layer;
         if (((1 << layer) & targetLayer) != 0 && collision.gameObject.transform != preowner && isboomeranged)
         {
-            
+            Instantiate(effect[0], collision.transform.position, Quaternion.identity);
             StartCoroutine(Attacking(collision.gameObject));
         }
     }
     void retuning()
     {
         alreadyHit.Clear();
-        transform.DOMove(originVector - (shootingdir * range), lastmovetime).SetEase(Ease.InCubic);
+        transform.DOMove(originVector - (shootingdir * range), lastmovetime).SetEase(lasteaseType);
     }
 
     public override IEnumerator Attacking(GameObject target)
@@ -101,7 +104,9 @@ public class Boomaerang : Item
                 yield break;
             }
             target.GetComponent<Entity>().Attack(preowner, damage, knockbackmulti);
-            alreadyHit.Add(target.GetComponent<Entity>());
+
+            if (thisnotalreadyHit)
+                alreadyHit.Add(target.GetComponent<Entity>());
         }
 
         yield return null;
