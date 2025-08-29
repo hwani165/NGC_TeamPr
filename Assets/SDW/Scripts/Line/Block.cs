@@ -40,9 +40,9 @@ namespace SDW
             Destroy(gameObject);
         }
 
-        private void OnCollisionEnter2D(Collision2D collision)
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            if(collision.gameObject.layer != blockLayer) return;
+            if (collision.gameObject.layer != blockLayer) return;
 
             #region network data
             isfall = true;
