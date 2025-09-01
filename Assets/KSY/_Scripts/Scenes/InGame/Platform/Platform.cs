@@ -12,4 +12,9 @@ public class Platform : MonoBehaviour, IReceiver
     {
         throw new NotImplementedException("If you want to use this method, you must override it.");
     }
+    public void ApplySbyteData(sbyte sbyteData1, sbyte sbyteData2, sbyte sbyteData3)
+    {
+        throw new NotImplementedException("If you want to use this method, you must override it.");
+    }
 }
+

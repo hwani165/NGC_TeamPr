@@ -78,7 +78,7 @@ public class BackendFunctionMatch : MonoBehaviour
                 return;
             }
 
-            Debug.Log($"{args.GameRecord.m_nickname} != {myNickname}");
+            //Debug.Log($"{args.GameRecord.m_nickname} != {myNickname}");
 
             //아니라면 상대방 정보를 가져옴
             MatchUserGameRecord otherInfo = args.GameRecord;
@@ -99,7 +99,7 @@ public class BackendFunctionMatch : MonoBehaviour
                 //상대방 정보를 가져옴
                 MatchUserGameRecord otherInfo = Gamerecords.Find((r) => r.m_nickname != myNickname);
 
-                Debug.Log($"{otherInfo.m_nickname} != {myNickname}");
+                //Debug.Log($"{otherInfo.m_nickname} != {myNickname}");
 
                 ServerManager.Instance.otherInfo = otherInfo;
             }

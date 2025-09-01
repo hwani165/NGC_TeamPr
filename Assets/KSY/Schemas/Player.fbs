@@ -3,6 +3,8 @@ namespace InputData.Player;
 table Movement {
   movement_state:ubyte;
   move_x:byte;
+  dash_x:byte;
+  dash_y:byte;
 }
 
 table ItemAction{

@@ -192,9 +192,9 @@ public class ServerManager : SingletonBehaviour<ServerManager>
     {
         return _bfInGame.SerializationPlayerItemData(hasItem, isShootingItem);
     }
-    public byte[] SerializationPlayerMovementData(sbyte dataMoveX, bool dataIsGrounded, bool dataCanDash, bool dataIsDashing)
+    public byte[] SerializationPlayerMovementData(Vector2 dashDir,sbyte dataMoveX, bool dataIsGrounded, bool dataCanDash, bool dataIsDashing)
     {
-        return _bfInGame.SerializationPlayerMovementData(dataMoveX, dataIsGrounded, dataCanDash, dataIsDashing);
+        return _bfInGame.SerializationPlayerMovementData(dashDir,dataMoveX, dataIsGrounded, dataCanDash, dataIsDashing);
     }
 }
 

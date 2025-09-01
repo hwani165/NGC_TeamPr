@@ -21,19 +21,27 @@ public struct Movement : IFlatbufferObject
 
   public byte MovementState { get { int o = __p.__offset(4); return o != 0 ? __p.bb.Get(o + __p.bb_pos) : (byte)0; } }
   public sbyte MoveX { get { int o = __p.__offset(6); return o != 0 ? __p.bb.GetSbyte(o + __p.bb_pos) : (sbyte)0; } }
+  public sbyte DashX { get { int o = __p.__offset(8); return o != 0 ? __p.bb.GetSbyte(o + __p.bb_pos) : (sbyte)0; } }
+  public sbyte DashY { get { int o = __p.__offset(10); return o != 0 ? __p.bb.GetSbyte(o + __p.bb_pos) : (sbyte)0; } }
 
   public static Offset<InputData.Player.Movement> CreateMovement(FlatBufferBuilder builder,
       byte movement_state = 0,
-      sbyte move_x = 0) {
-    builder.StartTable(2);
+      sbyte move_x = 0,
+      sbyte dash_x = 0,
+      sbyte dash_y = 0) {
+    builder.StartTable(4);
+    Movement.AddDashY(builder, dash_y);
+    Movement.AddDashX(builder, dash_x);
     Movement.AddMoveX(builder, move_x);
     Movement.AddMovementState(builder, movement_state);
     return Movement.EndMovement(builder);
   }
 
-  public static void StartMovement(FlatBufferBuilder builder) { builder.StartTable(2); }
+  public static void StartMovement(FlatBufferBuilder builder) { builder.StartTable(4); }
   public static void AddMovementState(FlatBufferBuilder builder, byte movementState) { builder.AddByte(0, movementState, 0); }
   public static void AddMoveX(FlatBufferBuilder builder, sbyte moveX) { builder.AddSbyte(1, moveX, 0); }
+  public static void AddDashX(FlatBufferBuilder builder, sbyte dashX) { builder.AddSbyte(2, dashX, 0); }
+  public static void AddDashY(FlatBufferBuilder builder, sbyte dashY) { builder.AddSbyte(3, dashY, 0); }
   public static Offset<InputData.Player.Movement> EndMovement(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<InputData.Player.Movement>(o);
@@ -48,6 +56,8 @@ static public class MovementVerify
     return verifier.VerifyTableStart(tablePos)
       && verifier.VerifyField(tablePos, 4 /*MovementState*/, 1 /*byte*/, 1, false)
       && verifier.VerifyField(tablePos, 6 /*MoveX*/, 1 /*sbyte*/, 1, false)
+      && verifier.VerifyField(tablePos, 8 /*DashX*/, 1 /*sbyte*/, 1, false)
+      && verifier.VerifyField(tablePos, 10 /*DashY*/, 1 /*sbyte*/, 1, false)
       && verifier.VerifyTableEnd(tablePos);
   }
 }

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static BackendFunctionInGame;
@@ -9,9 +8,9 @@ public class OtherMovement : Player
     [SerializeField] private float jumpForce = 12f;
     [SerializeField] private float gravity = 9.8f;
 
-    /*[SerializeField]*/ private Vector2 groundCheckVecSize = new Vector2(0.5f, 1.05f);
+    [SerializeField] private Vector2 groundCheckVecSize = new Vector2(0.5f, 1.05f);
     [SerializeField] private Vector2 groundCheckVec;
-    /*[SerializeField]*/ private LayerMask groundMask;
+    [SerializeField] private LayerMask groundMask;
 
     [SerializeField] private float dashForce = 20f;
     [SerializeField] private float dashDuration = 0.2f;
@@ -22,16 +21,17 @@ public class OtherMovement : Player
     private bool _isGrounded;
     #region NetWorkData
     //점프를 했는가? (Is Jumping Now? <bool>)
-    private bool _isJumping = false;
+    private bool _usingJump = false;
     //대쉬를 하고 있는가?(Is Dashing Now? <bool>)
-    private bool _isRunning;
+    private bool _isDashing;
     //대쉬할 방향(Dash Direction<Vec2>)
-    private Vector2 _dashDirection;
+    private Vector2 _dashDir;
     //대쉬를 사용했는가? (Use Dash? <bool>)
-    private bool _isDashing = false;
+    private bool CanDash = false;
     //이동하고 있는 방향 (Now Move.X Direction <Sbyte>)
-    private sbyte nowMoveDir;
     #endregion
+
+    private float _dashTimer;
 
     private void Start()
     {
@@ -40,17 +40,38 @@ public class OtherMovement : Player
         groundMask = LayerMask.GetMask("Ground");
         groundCheckVecSize = new Vector2(0.5f, 1.05f);
     }
+
+    //private void FixedUpdate()
+    //{
+    //    OnGround();
+    //    GroundDash();
+    //    AirDash();
+    //    if (!_isDashing)
+    //    {
+    //        Vector2 velocity = _rbCompo.linearVelocity;
+    //        velocity.x = _moveVec.x * speed;
+    //        _rbCompo.linearVelocityX = velocity.x;
+    //    }
+    //}
+
     private void Update()
     {
+        //if (Keyboard.current.sKey.wasPressedThisFrame && _isGrounded)
+        //{
+        //    _rbCompo.AddForce(Vector2.down * gravity * 1.5f, ForceMode2D.Impulse);
+        //}
+
         OnGround();
-        //대쉬중이 아니고 달리기 중이 아닐 때 기본적인 움직임 실시
-        if (!_isDashing && _isRunning)
+        GroundDash();
+        AirDash();
+        if (!_isDashing)
         {
             Vector2 velocity = _rbCompo.linearVelocity;
             velocity.x = _moveVec.x * speed;
             _rbCompo.linearVelocityX = velocity.x;
         }
     }
+
     private void OnGround()
     {
         Collider2D hit = Physics2D.OverlapBox((Vector2)transform.position + groundCheckVec, groundCheckVecSize, 0, groundMask);
@@ -58,38 +79,60 @@ public class OtherMovement : Player
 
         if (_isGrounded)
         {
-            _isJumping = false;
-            _isDashing = false;
+            _usingJump = false;
+            CanDash = false;
         }
     }
     public void OnJump()
     {
+        _usingJump = true;
         _rbCompo.linearVelocityY = jumpForce;
-        _isJumping = true;
     }
+
     private void GroundDash()
     {
-        _rbCompo.AddForce(new Vector2(_dashDirection.x, 0) * dashForce, ForceMode2D.Impulse); 
+        if (_isDashing && _isGrounded)
+        {
+            _rbCompo.AddForce(new Vector2(_dashDir.x, 0) * dashForce, ForceMode2D.Impulse);
+            _dashTimer -= Time.fixedDeltaTime;
+            if (_dashTimer <= 0f)
+            {
+                _isDashing = false;
+            }
+            return;
+        }
     }
 
     private void AirDash()
     {
-        _rbCompo.linearVelocity = _dashDirection * dashForce / 2f;
+        if (_isDashing && !_isGrounded)
+        {
+            _rbCompo.linearVelocity = _dashDir * dashForce / 2f;
+            _dashTimer -= Time.fixedDeltaTime;
+            if (_dashTimer <= 0f)
+            {
+                _isDashing = false;
+            }
+            GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);
+            return;
+        }
     }
 
     public void OnDash()
     {
-        if (!_isDashing)
+        if (!CanDash)
         {
             if (_isGrounded)
             {
                 _rbCompo.linearVelocityX = 0;
+                CanDash = true;
             }
             else
             {
+                CanDash = false;
                 _rbCompo.linearVelocity = Vector2.zero;
             }
-            if (_isRunning) return;
+            if (_isDashing) return;
 
             Vector2 inputDir = _moveVec.normalized;
 
@@ -103,40 +146,49 @@ public class OtherMovement : Player
                 inputDir = new Vector2(Mathf.Sign(_moveVec.x), 0);
             }
 
-            _dashDirection = inputDir.normalized;
+            _dashDir = inputDir.normalized;
+            _isDashing = true;
+            _dashTimer = dashDuration;
         }
     }
-    public override void ApplyByteData(byte byteData)
+
+    public override void ApplyByteData(byte state)
     {
+        Debug.Log("Start ApplyByteData");
+
         //대쉬를 했는가?
-        bool isDashing = (byteData & (byte)flagPlayerMovementState.IsDashing) != 0;
-        _isDashing = isDashing;
-        if (isDashing)
+        bool usingDash = (state & (byte)flagPlayerMovementState.UsingDash) != 0;
+        CanDash = usingDash;
+        if (!_isDashing && usingDash)
         {
-            Debug.Log($"isDash : {isDashing}");
+            Debug.Log($"isDash : {usingDash}");
             OnDash();
             GroundDash();
             AirDash();
         }
 
         //달리고 있는가?
-        bool isRunning = (byteData & (byte)flagPlayerMovementState.IsRunning) != 0;
-        _isRunning = isRunning;
+        bool isDashing = (state & (byte)flagPlayerMovementState.IsDashing) != 0;
+        _isDashing = isDashing;
 
         //점프를 하고 있는가?
-        bool isJumping = (byteData & (byte)flagPlayerMovementState.IsJumping) != 0;
-        if (_isGrounded == true && isJumping == true)
+        bool isJumping = (state & (byte)flagPlayerMovementState.IsJumping) != 0;
+        if (_isGrounded && isJumping)
         {
             Debug.Log($"isjumping : {isJumping}");
             OnJump();
         }
+
+        Debug.Log("End ApplyByteData");
     }
 
-    public override void ApplySbyteData(sbyte sbyteData)
+    public override void ApplySbyteData(sbyte moveX, sbyte dashX, sbyte dashY)
     {
-        Debug.Log("moveX");
-        float moveX = sbyteData;
-        _moveVec.x = moveX;
+        Debug.Log("Start ApplySbyteData");
+        float _moveX = moveX;
+        _moveVec.x = _moveX;
+        _dashDir = new Vector2(dashX, dashY);
+        Debug.Log("End ApplySbyteData");
     }
 
 #if UNITY_EDITOR

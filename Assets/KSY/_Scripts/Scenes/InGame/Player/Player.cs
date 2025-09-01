@@ -1,11 +1,8 @@
 using System;
 using BackEnd;
-using BackEnd.Quobject.EngineIoClientDotNet.Parser;
 using BackEnd.Tcp;
-using InputData.Platform;
 using InputData.Player;
 using TMPro;
-using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -32,7 +29,7 @@ public class Player : MonoBehaviour, IReceiver
         //나의 플레이어라면
         if (_nickname == ServerManager.Instance.GetMyData().Value.nickname)
         {
-            Debug.Log("Success : Set MyMovement");
+            //Debug.Log("Success : Set MyMovement");
 
             //입력을 받는 movement 추가
             _myMovement = gameObject.AddComponent<MyMovement>();
@@ -46,7 +43,7 @@ public class Player : MonoBehaviour, IReceiver
         }
         else
         {
-            Debug.Log("Success : Set OtherMovement");
+            //Debug.Log("Success : Set OtherMovement");
 
             //아니라면 수신받는 movement 추가
             _otherMovement = gameObject.AddComponent<OtherMovement>();
@@ -55,12 +52,12 @@ public class Player : MonoBehaviour, IReceiver
         //만약 내가 other (수신만 받는 객체)라면
         if (_otherMovement != null)
         {
-            Debug.Log("Backend.Match.OnMatchRelay");
+            //Debug.Log("Backend.Match.OnMatchRelay");
 
             //메세지가 브로드 캐스팅 되었을 때 호출 (자기자신 포함)
             Backend.Match.OnMatchRelay += (MatchRelayEventArgs args) =>
             {
-                DebugUI.text = $"sender : {args.From.NickName}\nreceiver : {_nickname}";
+                //DebugUI.text = $"sender : {args.From.NickName}\nreceiver : {_nickname}";
 
                 if (args.From.NickName == _nickname)
                 {
@@ -94,7 +91,7 @@ public class Player : MonoBehaviour, IReceiver
     }
     public void GetUserData(UserData userData)
     {
-        Debug.Log($"Player Data Set : {userData}");
+        //Debug.Log($"Player Data Set : {userData}");
         //userData 할당
         _myData = userData;
 
@@ -113,5 +110,8 @@ public class Player : MonoBehaviour, IReceiver
     public virtual void ApplySbyteData(sbyte sbyteData)
     {
         throw new NotImplementedException("If you want to use this method, you must override it.");
+    }
+    public virtual void ApplySbyteData(sbyte sbyteData1, sbyte sbyteData2, sbyte sbyteData3)
+    {
     }
 }
