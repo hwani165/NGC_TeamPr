@@ -16,11 +16,11 @@ public struct PlatformInfo : IFlatbufferObject
   public void __init(int _i, ByteBuffer _bb) { __p = new Struct(_i, _bb); }
   public PlatformInfo __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-  public sbyte Id { get { return __p.bb.GetSbyte(__p.bb_pos + 0); } }
+  public byte Id { get { return __p.bb.Get(__p.bb_pos + 0); } }
 
-  public static Offset<InputData.Platform.PlatformInfo> CreatePlatformInfo(FlatBufferBuilder builder, sbyte Id) {
+  public static Offset<InputData.Platform.PlatformInfo> CreatePlatformInfo(FlatBufferBuilder builder, byte Id) {
     builder.Prep(1, 1);
-    builder.PutSbyte(Id);
+    builder.PutByte(Id);
     return new Offset<InputData.Platform.PlatformInfo>(builder.Offset);
   }
 }

@@ -1,7 +1,8 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
+using static BackendFunctionInGame;
 
-public class FallingPlatform : MonoBehaviour
+public class FallingPlatform : Platform
 {
     [Header("레이어")]
     [SerializeField] private LayerMask PlayerLayerMask;
@@ -97,5 +98,16 @@ public class FallingPlatform : MonoBehaviour
         rb.gravityScale = 1f; // 중력 적용
         yield return new WaitForSeconds(0.5f); // 0.5초 후에 파괴
         Destroy(gameObject);
+    }
+
+    public override void ApplyByteData(byte byteData)
+    {
+        byte state = byteData;
+
+        isstep = (state & (byte)flagPlatformState.IsOnTimerPlatform) != 0;
+        isfall = (state & (byte)flagPlatformState.IsFall) != 0;
+
+        //private bool isstep = false;
+        //private bool isfall = false;
     }
 }

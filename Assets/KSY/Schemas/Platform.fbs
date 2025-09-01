@@ -1,7 +1,7 @@
 namespace InputData.Platform;
 
 struct PlatformInfo{
-	id:byte;
+	id:ubyte;
 }
 
 table PlatformState {

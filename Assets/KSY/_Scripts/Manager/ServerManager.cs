@@ -115,9 +115,9 @@ public class ServerManager : SingletonBehaviour<ServerManager>
     {
         _bfInGame.SnedData(bff);
     }
-    public void ReceiveData<T>(byte[] bff, T messageType, IReceivable Receiver) where T : struct
+    public void ReceiveData(ByteBuffer bff, IReceiver Receiver)
     {
-        _bfInGame.ReceiveData(bff, messageType, Receiver);
+        _bfInGame.ReceiveData(bff, Receiver);
     }
     public bool TryInitialize()
     {
@@ -184,9 +184,9 @@ public class ServerManager : SingletonBehaviour<ServerManager>
                 }
         }
     }
-    public byte[] SerializationPlatformStateData(bool hasPlatformBroken, bool isOnTimerPlatform)
+    public byte[] SerializationPlatformStateData(byte id, bool hasPlatformBroken, bool isOnTimerPlatform)
     {
-        return _bfInGame.SerializationPlatformStateData(hasPlatformBroken, isOnTimerPlatform);
+        return _bfInGame.SerializationPlatformStateData(id, hasPlatformBroken, isOnTimerPlatform);
     }
     public byte[] SerializationPlayerItemData(bool hasItem, bool isShootingItem)
     {
