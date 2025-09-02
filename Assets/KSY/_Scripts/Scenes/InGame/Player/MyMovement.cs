@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class MyMovement : Player, ISender
+public class MyMovement : Player
 {
     [SerializeField] private float speed = 10f;
     [SerializeField] private float jumpForce = 12f;
@@ -18,23 +18,24 @@ public class MyMovement : Player, ISender
     private int currentJumpCount;
 
     private Rigidbody2D _rbCompo;
-    private Vector2 _moveVec;
+    private Vector2 _moveVec = Vector2.zero;
 
     private bool _isGrounded;
+
     #region NetWorkData
     //점프를 했는가? (Is Jumping Now? <bool>)
-    private bool _usingJump = false;
+    public bool UsingJump = false;
     //대쉬를 하고 있는가?(Is Dashing Now? <bool>)
-    private bool _isDashing;
+    public bool IsDashing = false;
     //대쉬할 방향(Dash Direction<Vec2>)
-    private Vector2 _dashDir;
+    public Vector2 DashDir = Vector2.zero;
     //대쉬를 사용했는가? (Use Dash? <bool>)
-    private bool _usingDash = false;
+    public bool UsingDash = false;
     //이동하고 있는 방향 (Now Move.X Direction <Sbyte>)
-    private sbyte _moveX;
+    public sbyte MoveX = 0;
     #endregion
 
-    private float _dashTimer;
+    private float _dashTimer = 0;
 
     private void Start()
     {
@@ -50,7 +51,7 @@ public class MyMovement : Player, ISender
         OnGround();
         GroundDash();
         AirDash();
-        if (!_isDashing)
+        if (!IsDashing)
         {
             Vector2 velocity = _rbCompo.linearVelocity;
             velocity.x = _moveVec.x * speed;
@@ -74,8 +75,8 @@ public class MyMovement : Player, ISender
         if (!_isGrounded)
         {
             currentJumpCount = maxJumpCount;
-            _usingJump = false;
-            _usingDash = false;
+            UsingJump = false;
+            UsingDash = false;
         }
     }
 
@@ -84,41 +85,41 @@ public class MyMovement : Player, ISender
         _moveVec = value.Get<Vector2>();
         if (_moveVec.x >= 0.1f)
         {
-            _moveX = 1;
+            MoveX = 1;
         }
         else if (_moveVec.x <= -0.1f)
         {
-            _moveX = -1;
+            MoveX = -1;
         }
         else
         {
-            _moveX = 0;
+            MoveX = 0;
         }
 
-        SendData();
+        base.SendData();
     }
 
     public void OnJump()
     {
         if (currentJumpCount > 0)
         {
-            _usingJump = true;
+            UsingJump = true;
             _rbCompo.linearVelocityY = jumpForce;
             currentJumpCount--;
 
-            SendData();
+            base.SendData();
         }
     }
 
     private void GroundDash()
     {
-        if (_isDashing && _isGrounded)
+        if (IsDashing && _isGrounded)
         {
-            _rbCompo.AddForce(new Vector2(_dashDir.x, 0) * dashForce, ForceMode2D.Impulse);
+            _rbCompo.AddForce(new Vector2(DashDir.x, 0) * dashForce, ForceMode2D.Impulse);
             _dashTimer -= Time.fixedDeltaTime;
             if (_dashTimer <= 0f)
             {
-                _isDashing = false;
+                IsDashing = false;
             }
             return;
         }
@@ -126,13 +127,13 @@ public class MyMovement : Player, ISender
 
     private void AirDash()
     {
-        if (_isDashing && !_isGrounded)
+        if (IsDashing && !_isGrounded)
         {
-            _rbCompo.linearVelocity = _dashDir * dashForce / 2f;
+            _rbCompo.linearVelocity = DashDir * dashForce / 2f;
             _dashTimer -= Time.fixedDeltaTime;
             if (_dashTimer <= 0f)
             {
-                _isDashing = false;
+                IsDashing = false;
             }
             GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);
             return;
@@ -143,23 +144,23 @@ public class MyMovement : Player, ISender
     {
         if (currentJumpCount <= 0) return;
 
-        if (!_usingDash)
+        if (!UsingDash)
         {
             if (_isGrounded)
             {
                 currentJumpCount--;
                 _rbCompo.linearVelocityX = 0;
-                _usingDash = true;
+                UsingDash = true;
             }
             else
             {
-                _usingDash = false;
+                UsingDash = false;
                 _rbCompo.linearVelocity = Vector2.zero;
             }
 
-            SendData();
+            base.SendData();
 
-            if (_isDashing) return;
+            if (IsDashing) return;
 
             Vector2 inputDir = _moveVec.normalized;
 
@@ -173,17 +174,13 @@ public class MyMovement : Player, ISender
                 inputDir = new Vector2(Mathf.Sign(_moveVec.x), 0);
             }
 
-            _dashDir = inputDir.normalized;
-            _isDashing = true;
+            DashDir = inputDir.normalized;
+            IsDashing = true;
             _dashTimer = dashDuration;
 
-            SendData();
+            base.SendData();
+
         }
-    }
-    public void SendData()
-    {
-        byte[] bff = ServerManager.Instance.SerializationPlayerMovementData(_dashDir, _moveX, _usingJump, _usingDash, _isDashing);
-        ServerManager.Instance.SnedData(bff);
     }
 
 #if UNITY_EDITOR

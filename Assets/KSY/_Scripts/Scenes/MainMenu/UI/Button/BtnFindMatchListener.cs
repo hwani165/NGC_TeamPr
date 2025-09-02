@@ -4,6 +4,6 @@ public class BtnFindMatchListener : MonoBehaviour
 {
    public void FindMatch()
     {
-        ServerManager.Instance.FindMatch();
+        Server.Instance.FindMatch();
     }
 }

@@ -17,5 +17,5 @@ table PlatformMessage{
 	sender_info:PlatformInfo;
 }
 
-file_identifier "PFDT";
+file_identifier "PLFM";
 root_type PlatformMessage;

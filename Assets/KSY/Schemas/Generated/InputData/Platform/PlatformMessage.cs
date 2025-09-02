@@ -16,8 +16,8 @@ public struct PlatformMessage : IFlatbufferObject
   public static void ValidateVersion() { FlatBufferConstants.FLATBUFFERS_25_2_10(); }
   public static PlatformMessage GetRootAsPlatformMessage(ByteBuffer _bb) { return GetRootAsPlatformMessage(_bb, new PlatformMessage()); }
   public static PlatformMessage GetRootAsPlatformMessage(ByteBuffer _bb, PlatformMessage obj) { return (obj.__assign(_bb.GetInt(_bb.Position) + _bb.Position, _bb)); }
-  public static bool PlatformMessageBufferHasIdentifier(ByteBuffer _bb) { return Table.__has_identifier(_bb, "PFDT"); }
-  public static bool VerifyPlatformMessage(ByteBuffer _bb) {Google.FlatBuffers.Verifier verifier = new Google.FlatBuffers.Verifier(_bb); return verifier.VerifyBuffer("PFDT", false, PlatformMessageVerify.Verify); }
+  public static bool PlatformMessageBufferHasIdentifier(ByteBuffer _bb) { return Table.__has_identifier(_bb, "PLFM"); }
+  public static bool VerifyPlatformMessage(ByteBuffer _bb) {Google.FlatBuffers.Verifier verifier = new Google.FlatBuffers.Verifier(_bb); return verifier.VerifyBuffer("PLFM", false, PlatformMessageVerify.Verify); }
   public void __init(int _i, ByteBuffer _bb) { __p = new Table(_i, _bb); }
   public PlatformMessage __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
@@ -34,8 +34,8 @@ public struct PlatformMessage : IFlatbufferObject
     int o = builder.EndTable();
     return new Offset<InputData.Platform.PlatformMessage>(o);
   }
-  public static void FinishPlatformMessageBuffer(FlatBufferBuilder builder, Offset<InputData.Platform.PlatformMessage> offset) { builder.Finish(offset.Value, "PFDT"); }
-  public static void FinishSizePrefixedPlatformMessageBuffer(FlatBufferBuilder builder, Offset<InputData.Platform.PlatformMessage> offset) { builder.FinishSizePrefixed(offset.Value, "PFDT"); }
+  public static void FinishPlatformMessageBuffer(FlatBufferBuilder builder, Offset<InputData.Platform.PlatformMessage> offset) { builder.Finish(offset.Value, "PLFM"); }
+  public static void FinishSizePrefixedPlatformMessageBuffer(FlatBufferBuilder builder, Offset<InputData.Platform.PlatformMessage> offset) { builder.FinishSizePrefixed(offset.Value, "PLFM"); }
 }
 
 

@@ -5,11 +5,13 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using static UnityEngine.EventSystems.EventTrigger;
 
-public class GameManager : SingletonBehaviour<GameManager>
+public class Game : SingletonBehaviour<Game>
 {
     public event Action OnEnterAccountMenu;
     public event Action OnEnterMainMenu;
     public event Action OnEnterInGame;
+
+    public Map Map;
 
     //씬이 다 로드되었다면 true
     private bool _accountMenuLoaded;
@@ -49,7 +51,15 @@ public class GameManager : SingletonBehaviour<GameManager>
                     }
                 case "InGame":
                     {
+                        //맵에 있는 플랫폼 모음 가져오기
+                        //if (!GameObject.Find("Map").TryGetComponent(out Map)) Map = GameObject.Find("Map").AddComponent<Map>();
                         _inGameLoaded = true;
+                        break;
+                    }
+                case "SDW_Map_1":
+                    {
+                        _inGameLoaded = true;
+                        if (!GameObject.Find("Map").TryGetComponent(out Map)) Map = GameObject.Find("Map").AddComponent<Map>();
                         break;
                     }
                 default:
@@ -64,8 +74,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         Backend.Match.OnMatchInGameStart = () => {
 
             //플레이어 데이터 초기화
-            Debug.Log("Try Init My Data, Other Data");
-            ServerManager.Instance.InitOtherData();
+            Server.Instance.InitOtherData();
 
             //씬이 다 로드되고나서 실행되도록 이벤트 등록
             if (_inGameLoaded)
@@ -81,7 +90,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         Player p1;  GameObject.Find("P1").TryGetComponent(out p1);
         
         //서버로부터 불러왔던 나의 데이터를 가져옴
-        UserData? myData = ServerManager.Instance.GetMyData();
+        UserData? myData = Server.Instance.GetMyData();
         
         //데이터가 제대로 불러와지지 않았다면 return;
         if (myData == null)
@@ -102,7 +111,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         Player p2; GameObject.Find("P2").TryGetComponent(out p2);
 
         //서버로부터 불러왔던 상대방 데이터를 가져옴
-        UserData? otherData = ServerManager.Instance.GetOtherData();
+        UserData? otherData = Server.Instance.GetOtherData();
 
         //데이터가 제대로 불러와지지 않았다면 return;
         if (otherData == null)
@@ -125,7 +134,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         Player p1; GameObject.Find("P1").TryGetComponent(out p1);
 
         //서버로부터 불러왔던 나의 데이터를 가져옴
-        UserData? myData = ServerManager.Instance.GetMyData();
+        UserData? myData = Server.Instance.GetMyData();
 
         //데이터가 제대로 불러와지지 않았다면 return;
         if (myData == null)
@@ -146,7 +155,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         Player p2; GameObject.Find("P2").TryGetComponent(out p2);
 
         //서버로부터 불러왔던 상대방 데이터를 가져옴
-        UserData? otherData = ServerManager.Instance.GetOtherData();
+        UserData? otherData = Server.Instance.GetOtherData();
 
         //데이터가 제대로 불러와지지 않았다면 return;
         if (otherData == null)
@@ -164,7 +173,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     private void Update()
     {
        Backend.Match.Poll();
-    }
+    }        //컴포넌트가 있다면 가져오고 아니라면 추가
     public void EnterAccountMenu()
     {
         SceneManager.LoadScene("AccountMenu");
@@ -176,7 +185,8 @@ public class GameManager : SingletonBehaviour<GameManager>
     public void EnterInGame()
     {
         //씬 로드
-        SceneManager.LoadScene("InGame");
+        //SceneManager.LoadScene("InGame");
+        SceneManager.LoadScene("SDW_Map_1");  
     }
     public void ExitAccountMenu()
     {

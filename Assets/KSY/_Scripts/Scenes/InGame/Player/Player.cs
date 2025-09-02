@@ -1,12 +1,14 @@
 using System;
 using BackEnd;
 using BackEnd.Tcp;
+using InputData.Platform;
 using InputData.Player;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Player : MonoBehaviour, IReceiver
+//Main Receiver
+public class Player : MonoBehaviour, IReceiver, ISender
 {
     //User Data
     private UserData _myData = new UserData();
@@ -17,22 +19,14 @@ public class Player : MonoBehaviour, IReceiver
     private MyMovement _myMovement;
     private OtherMovement _otherMovement;
     private string _actionMap = "Player";
-
-    //Debuging
-    public TextMeshProUGUI DebugUI;
-
-    //Network
-    byte[] receiveBff;
-
     public void Init()
     {
         //나의 플레이어라면
-        if (_nickname == ServerManager.Instance.GetMyData().Value.nickname)
+        if (_nickname == Server.Instance.GetMyData().Value.nickname)
         {
-            //Debug.Log("Success : Set MyMovement");
-
             //입력을 받는 movement 추가
             _myMovement = gameObject.AddComponent<MyMovement>();
+            Debug.Log($"_myMovement is not null : {_myMovement != null}");
 
             //인풋 시스템 세팅
             PlayerInput input = gameObject.AddComponent<PlayerInput>();
@@ -43,8 +37,6 @@ public class Player : MonoBehaviour, IReceiver
         }
         else
         {
-            //Debug.Log("Success : Set OtherMovement");
-
             //아니라면 수신받는 movement 추가
             _otherMovement = gameObject.AddComponent<OtherMovement>();
         }
@@ -52,8 +44,6 @@ public class Player : MonoBehaviour, IReceiver
         //만약 내가 other (수신만 받는 객체)라면
         if (_otherMovement != null)
         {
-            //Debug.Log("Backend.Match.OnMatchRelay");
-
             //메세지가 브로드 캐스팅 되었을 때 호출 (자기자신 포함)
             Backend.Match.OnMatchRelay += (MatchRelayEventArgs args) =>
             {
@@ -64,13 +54,24 @@ public class Player : MonoBehaviour, IReceiver
                     Debug.Log("Receive");
 
                     //수신 받은 데이터를 버퍼에 담기
-                    receiveBff = args.BinaryUserData;
+                    byte[] receiveBff = args.BinaryUserData;
                     var _receiveBff = new Google.FlatBuffers.ByteBuffer(receiveBff);
 
+                    Debug.Log($"PlayerMessageBufferHasIdentifier: {PlayerMessage.PlayerMessageBufferHasIdentifier(_receiveBff)}");
+                    Debug.Log($"PlatformMessageBufferHasIdentifier: {PlatformMessage.PlatformMessageBufferHasIdentifier(_receiveBff)}");
+
                     //플레이어 관련 데이터가 맞다면 수신 시도
-                    if (PlayerMessage.VerifyPlayerMessage(_receiveBff))
+                    if (PlayerMessage.PlayerMessageBufferHasIdentifier(_receiveBff))
                     {
-                        ServerManager.Instance.ReceiveData(_receiveBff, _otherMovement);
+                        Debug.Log("PlayerMessageBufferHasIdentifier");
+                        Debug.Log($"_otherMovement is not null : {_otherMovement != null}");
+                        Server.Instance.ReceiveData(_receiveBff, _otherMovement);
+                    }
+                    //플랫폼 관련 데이터라면 넘겨주기;
+                    else if(PlatformMessage.PlatformMessageBufferHasIdentifier(_receiveBff))
+                    {
+                        Debug.Log("PlatformMessageBufferHasIdentifier");
+                        Game.Instance.Map.MatchData(_receiveBff);
                     }
                 }
             };
@@ -113,5 +114,29 @@ public class Player : MonoBehaviour, IReceiver
     }
     public virtual void ApplySbyteData(sbyte sbyteData1, sbyte sbyteData2, sbyte sbyteData3)
     {
+        throw new NotImplementedException("If you want to use this method, you must override it.");
+    }
+    public virtual void SendData()
+    {
+        if (_myMovement == null) 
+        { 
+            _myMovement = GetComponent<MyMovement>();
+            Debug.Log($"_myMovement is not null : {_myMovement != null}");
+            Debug.Log($"_myMovement.DashDir is not null : {_myMovement.DashDir != null}");
+        }
+
+        Vector2 dashDir = _myMovement.DashDir;
+        sbyte moveX = _myMovement.MoveX;
+        bool usingJump = _myMovement.UsingJump;
+        bool usingDash = _myMovement.UsingDash;
+        bool isDashing = _myMovement.IsDashing;
+
+        byte[] bff = Server.Instance.SerializationPlayerMovementData(dashDir, moveX, usingJump, usingDash, isDashing);
+        Server.Instance.SnedData(bff);
+    }
+    public void SendData(bool boolenData)
+    {
+        throw new NotImplementedException("If you want to use this method, you must override it.");
+
     }
 }

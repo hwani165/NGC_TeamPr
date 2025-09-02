@@ -19,5 +19,5 @@ union PlayerMessageType{
 table PlayerMessage{
 	data:PlayerMessageType;
 }
-file_identifier "PLDT";
+file_identifier "PLYR";
 root_type PlayerMessage;

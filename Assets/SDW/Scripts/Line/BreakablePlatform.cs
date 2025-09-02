@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace SDW
 {
-    public class Block : MonoBehaviour
+    public class BreakablePlatform : Platform
     {
         [SerializeField] private LayerMask breakableLayer; // 블록이 파괴될 수 있는 레이어
         [SerializeField] private bool breakable = true; // 블록 파괴 가능 여부
@@ -13,8 +13,7 @@ namespace SDW
         private Joint2D joint;
 
         // network data
-        private bool isfall = false;
-
+        public bool IsBreaking = false;
         private void Awake()
         {
             blockLayer = Mathf.RoundToInt(Mathf.Log(breakableLayer.value, 2));
@@ -44,9 +43,9 @@ namespace SDW
         {
             if (collision.gameObject.layer != blockLayer) return;
 
-            #region network data
-            isfall = true;
-            #endregion
+            //부서졌는가?
+            IsBreaking = true;
+            SendData();
 
             Hit();
         }

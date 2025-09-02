@@ -1,15 +1,9 @@
 using System;
-using System.Collections.Generic;
 using BackEnd;
 using BackEnd.Tcp;
 using Google.FlatBuffers;
-using InputData.Platform;
-using InputData.Player;
-using NUnit.Framework;
-using UnityEditor;
+
 using UnityEngine;
-using UnityEngine.InputSystem.Utilities;
-using UnityEngine.Rendering.Universal;
 public enum MatchEventType
 {
     None = 0,
@@ -21,7 +15,7 @@ public enum MatchEventType
     OnMatchCanceled
 
 }
-public class ServerManager : SingletonBehaviour<ServerManager>
+public class Server : SingletonBehaviour<Server>
 {
     private BackendFunctionInGame _bfInGame;
     private BackendFunctionsAccount _bfAccount;
@@ -56,7 +50,6 @@ public class ServerManager : SingletonBehaviour<ServerManager>
     }
     public void InitOtherData()
     {
-        Debug.Log("Sucsee Other Data");
         var otherInfo = this.otherInfo;
 
         string nickname = otherInfo.m_nickname;
@@ -69,7 +62,6 @@ public class ServerManager : SingletonBehaviour<ServerManager>
     }
     public void InitMyData()
     {
-        Debug.Log("Sucsee My Data");
         //서버에서 내 계정에 맞는 데이터를 가져옴
         var bro_GetUserInfo = Backend.BMember.GetUserInfo();
 
@@ -94,7 +86,6 @@ public class ServerManager : SingletonBehaviour<ServerManager>
         }
         else
         {
-            Debug.Log("Success : return my Data");
             return _myData;
         }
     }
@@ -107,7 +98,6 @@ public class ServerManager : SingletonBehaviour<ServerManager>
         }
         else
         {
-            Debug.Log("Success : return other Data");
             return _otherData;
         }
     }
@@ -136,6 +126,7 @@ public class ServerManager : SingletonBehaviour<ServerManager>
     }
     public bool TryReconnect()
     {
+        Debug.Log("TryReconnect");
         return _bfMatch.TryReconnect();
     }
     public void Login(string id, string pw)
@@ -184,9 +175,9 @@ public class ServerManager : SingletonBehaviour<ServerManager>
                 }
         }
     }
-    public byte[] SerializationPlatformStateData(byte id, bool hasPlatformBroken, bool isOnTimerPlatform)
+    public byte[] SerializationPlatformStateData(byte id, bool isOnPlatform, bool isBrokenPlatform)
     {
-        return _bfInGame.SerializationPlatformStateData(id, hasPlatformBroken, isOnTimerPlatform);
+        return _bfInGame.SerializationPlatformStateData(id, isOnPlatform, isBrokenPlatform);
     }
     public byte[] SerializationPlayerItemData(bool hasItem, bool isShootingItem)
     {

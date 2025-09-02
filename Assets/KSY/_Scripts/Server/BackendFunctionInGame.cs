@@ -32,11 +32,11 @@ public class BackendFunctionInGame : MonoBehaviour
         //0
         None = 0b0000,
 
-        //1 
-        IsFall = 0b0001,
+        //1
+        IsOnPlatform = 0b0001,
 
         //2
-        IsOnTimerPlatform = 0b0010,
+        IsBrokenPlatform = 0b0010
     }
     [Flags]
     public enum flagPlayerItemState : byte
@@ -52,7 +52,7 @@ public class BackendFunctionInGame : MonoBehaviour
     }
 
     //데이터 직렬화
-    public byte[] SerializationPlatformStateData(byte id,bool hasPlatformBroken, bool isOnTimerPlatform)
+    public byte[] SerializationPlatformStateData(byte id, bool isOnPlatform, bool isBrokenPlatform)
     {
         //버퍼 재사용
         _platformStateBuilder.Clear();
@@ -60,22 +60,24 @@ public class BackendFunctionInGame : MonoBehaviour
         //비트 마스킹
         byte platformState = 0b0000;
 
-        if (hasPlatformBroken) platformState |= (byte)flagPlatformState.IsFall;
-        if (hasPlatformBroken) platformState |= (byte)flagPlatformState.IsOnTimerPlatform;
+        if (isOnPlatform) platformState |= (byte)flagPlatformState.IsOnPlatform;
+        if (isBrokenPlatform) platformState |= (byte)flagPlatformState.IsBrokenPlatform;
 
-        //오프셋 세팅 + 데이터 할당
+        //오프셋 세팅
+        Offset<PlatformState> offsetPlatformState = PlatformState.CreatePlatformState(_platformStateBuilder, platformState);
+
+        //StartPlatformMessage, 데이터 할당
         PlatformMessage.StartPlatformMessage(_platformStateBuilder);
-
-        Offset<PlatformState> offsetStateData = PlatformState.CreatePlatformState(_platformStateBuilder, platformState);
-        Offset<PlatformInfo> offsetInfoData = PlatformInfo.CreatePlatformInfo(_platformStateBuilder, id);
-
         PlatformMessage.AddDataType(_platformStateBuilder, PlatformMessageType.state);
-        PlatformMessage.AddSenderInfo(_platformStateBuilder, offsetInfoData);
+        PlatformMessage.AddData(_platformStateBuilder, offsetPlatformState.Value);
+        PlatformMessage.AddSenderInfo(_platformStateBuilder, PlatformInfo.CreatePlatformInfo(_platformStateBuilder,id));
 
+        //EndPlatformMessage, 총 데이터 오프셋 세팅
         Offset<PlatformMessage> offsetResultData = PlatformMessage.EndPlatformMessage(_platformStateBuilder);
 
         //스키마 버퍼화
-        PlatformMessage.FinishPlatformMessageBuffer(_platformStateBuilder, offsetResultData);
+        //PlatformMessage.FinishPlatformMessageBuffer(_platformStateBuilder, offsetResultData);
+        _platformStateBuilder.Finish(offsetResultData.Value, "PLFM");
         byte[] bff = _platformStateBuilder.SizedByteArray();
 
         return bff;
@@ -96,7 +98,7 @@ public class BackendFunctionInGame : MonoBehaviour
         Offset<PlayerMessage> offsetResultData = PlayerMessage.CreatePlayerMessage(_itemActionBuilder, PlayerMessageType.item_action, offsetActionData.Value);
 
         //스키마 버퍼화
-        _itemActionBuilder.Finish(offsetResultData.Value);
+        _itemActionBuilder.Finish(offsetResultData.Value, "PLYR");
         byte[] bff = _itemActionBuilder.SizedByteArray();
 
         return bff;
@@ -123,8 +125,11 @@ public class BackendFunctionInGame : MonoBehaviour
         Offset<PlayerMessage> offsetResultData = PlayerMessage.CreatePlayerMessage(_movementBuilder, PlayerMessageType.movement, offsetMovementData.Value);
 
         //스키마 버퍼화
-        _movementBuilder.Finish(offsetResultData.Value);
+        _movementBuilder.Finish(offsetResultData.Value, "PLYR");
+
         byte[] bff = _movementBuilder.SizedByteArray();
+
+        Debug.Log($"PlayerMessageBufferHasIdentifier: {PlayerMessage.PlayerMessageBufferHasIdentifier(new ByteBuffer(bff))}");
 
         return bff;
     }
@@ -142,8 +147,10 @@ public class BackendFunctionInGame : MonoBehaviour
         if (bff == null) return;
 
         //만약 플레이어 관련 메세지라면 처리
-        if (PlayerMessage.VerifyPlayerMessage(bff))
+        if (PlayerMessage.PlayerMessageBufferHasIdentifier(bff))
         {
+            Debug.Log("PlayerMessage.PlayerMessageBufferHasIdentifier == true");
+
             var message = PlayerMessage.GetRootAsPlayerMessage(bff);
             PlayerMessageType playerMessageType = message.DataType;
 
@@ -160,8 +167,10 @@ public class BackendFunctionInGame : MonoBehaviour
                         byte movementState = data.MovementState;
 
                         //데이터를 수신자에게 적용
+                        Debug.Log("Start Receiver");
                         Receiver.ApplySbyteData(moveX, dashX, dashY);
                         Receiver.ApplyByteData(movementState);
+                        Debug.Log("End Receiver");
                         break;
                     }
 
@@ -179,8 +188,9 @@ public class BackendFunctionInGame : MonoBehaviour
             }
         }
         //만약 플랫폼 관련 메세지라면 처리
-        else if (PlatformMessage.VerifyPlatformMessage(bff))
+        else if (PlatformMessage.PlatformMessageBufferHasIdentifier(bff))
         {
+            Debug.Log("PlatformMessage.PlatformMessageBufferHasIdentifier == true");
             var message = PlatformMessage.GetRootAsPlatformMessage(bff);
             PlatformMessageType platfomrMessageType = message.DataType;
 
@@ -189,7 +199,11 @@ public class BackendFunctionInGame : MonoBehaviour
             {
                 case PlatformMessageType.state:
                     {
-
+                        Debug.Log("Start PlatformMessageType.state");
+                        PlatformState data = message.DataAsstate();
+                        byte platformState = data.PlatformState_;
+                        Receiver.ApplyByteData(platformState);
+                        Debug.Log("End PlatformMessageType.state");
                         break;
                     }
                 default:

@@ -16,8 +16,8 @@ public struct PlayerMessage : IFlatbufferObject
   public static void ValidateVersion() { FlatBufferConstants.FLATBUFFERS_25_2_10(); }
   public static PlayerMessage GetRootAsPlayerMessage(ByteBuffer _bb) { return GetRootAsPlayerMessage(_bb, new PlayerMessage()); }
   public static PlayerMessage GetRootAsPlayerMessage(ByteBuffer _bb, PlayerMessage obj) { return (obj.__assign(_bb.GetInt(_bb.Position) + _bb.Position, _bb)); }
-  public static bool PlayerMessageBufferHasIdentifier(ByteBuffer _bb) { return Table.__has_identifier(_bb, "PLDT"); }
-  public static bool VerifyPlayerMessage(ByteBuffer _bb) {Google.FlatBuffers.Verifier verifier = new Google.FlatBuffers.Verifier(_bb); return verifier.VerifyBuffer("PLDT", false, PlayerMessageVerify.Verify); }
+  public static bool PlayerMessageBufferHasIdentifier(ByteBuffer _bb) { return Table.__has_identifier(_bb, "PLYR"); }
+  public static bool VerifyPlayerMessage(ByteBuffer _bb) {Google.FlatBuffers.Verifier verifier = new Google.FlatBuffers.Verifier(_bb); return verifier.VerifyBuffer("PLYR", false, PlayerMessageVerify.Verify); }
   public void __init(int _i, ByteBuffer _bb) { __p = new Table(_i, _bb); }
   public PlayerMessage __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
@@ -42,8 +42,8 @@ public struct PlayerMessage : IFlatbufferObject
     int o = builder.EndTable();
     return new Offset<InputData.Player.PlayerMessage>(o);
   }
-  public static void FinishPlayerMessageBuffer(FlatBufferBuilder builder, Offset<InputData.Player.PlayerMessage> offset) { builder.Finish(offset.Value, "PLDT"); }
-  public static void FinishSizePrefixedPlayerMessageBuffer(FlatBufferBuilder builder, Offset<InputData.Player.PlayerMessage> offset) { builder.FinishSizePrefixed(offset.Value, "PLDT"); }
+  public static void FinishPlayerMessageBuffer(FlatBufferBuilder builder, Offset<InputData.Player.PlayerMessage> offset) { builder.Finish(offset.Value, "PLYR"); }
+  public static void FinishSizePrefixedPlayerMessageBuffer(FlatBufferBuilder builder, Offset<InputData.Player.PlayerMessage> offset) { builder.FinishSizePrefixed(offset.Value, "PLYR"); }
 }
 
 

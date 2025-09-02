@@ -15,8 +15,8 @@ public class BackendFunctionsAccount : MonoBehaviour
                 //매칭 서버 접속 성공 처리
                 //서버로부터 계정의 정보를 가져와 UserData에 할당
                 //MainMenu로 이동
-                ServerManager.Instance.InitMyData();
-                GameManager.Instance.EnterMainMenu();
+                Server.Instance.InitMyData();
+                Game.Instance.EnterMainMenu();
             }
             else
             {

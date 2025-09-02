@@ -5,7 +5,7 @@ public class BtnRetryListener : MonoBehaviour
 {
     public void RetryInitialize()
     {
-        if(ServerManager.Instance.TryInitialize())
+        if(Server.Instance.TryInitialize())
         {
             UIManager.Instance.HideUI("RetryInitialize");
         }

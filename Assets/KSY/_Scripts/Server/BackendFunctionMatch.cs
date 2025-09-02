@@ -82,7 +82,7 @@ public class BackendFunctionMatch : MonoBehaviour
 
             //아니라면 상대방 정보를 가져옴
             MatchUserGameRecord otherInfo = args.GameRecord;
-            ServerManager.Instance.otherInfo = otherInfo;
+            Server.Instance.otherInfo = otherInfo;
         };
 
         //유저가 게임방 접속에 성공했을 때 입장한 유저에게만 최초 1회 호출되는 이벤트 핸들러입니다.
@@ -101,7 +101,7 @@ public class BackendFunctionMatch : MonoBehaviour
 
                 //Debug.Log($"{otherInfo.m_nickname} != {myNickname}");
 
-                ServerManager.Instance.otherInfo = otherInfo;
+                Server.Instance.otherInfo = otherInfo;
             }
 
             //게임방 접속 성공 처리
@@ -109,9 +109,9 @@ public class BackendFunctionMatch : MonoBehaviour
             {
                 //게임방에서 접속이 끊겼을 경우 처리
                 Backend.Match.OnSessionOffline = (MatchInGameSessionEventArgs args) => {
-                    GameManager.Instance.EnterAccountMenu();
+                    Game.Instance.EnterAccountMenu();
                 };
-                GameManager.Instance.EnterInGame();
+                Game.Instance.EnterInGame();
             }
             //게임방 접속 실패 처리
             else
@@ -150,12 +150,16 @@ public class BackendFunctionMatch : MonoBehaviour
     }
     public bool TryReconnect()
     {
+        Debug.Log("Start TryReconnect");
+
         bool isReconnecting = false;
         //재접속 여부 확인
         BackendReturnObject bro_isGameRoomActivate = Backend.Match.IsGameRoomActivate();
 
+        //Null 예외처리
+        if (bro_isGameRoomActivate == null) { return isReconnecting; }
         //진행중이었던 게임이 있었을 경우 처리
-        if (bro_isGameRoomActivate.StatusCode == 200)
+        else if (bro_isGameRoomActivate.StatusCode == 200)
         {
             //진행중이었던 게임방의 정보를 획득
             LitJson.JsonData roomInfo = bro_isGameRoomActivate.GetReturnValuetoJSON();
@@ -167,11 +171,14 @@ public class BackendFunctionMatch : MonoBehaviour
 
             //획득한 정보를 토대로 재접속 시도
             JoinInGameServer(serverAddress, serverPort, roomToken, isReconnecting);
+
+            Debug.Log("End TryReconnect");
             return isReconnecting;
         }
         //진행중이었던 게임이 없었을 경우 처리
         else
         {
+            Debug.Log("End TryReconnect");
             return isReconnecting;
         }
     }

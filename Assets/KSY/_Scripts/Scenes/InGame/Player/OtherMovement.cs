@@ -1,3 +1,4 @@
+using BackEnd;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static BackendFunctionInGame;
@@ -40,20 +41,6 @@ public class OtherMovement : Player
         groundMask = LayerMask.GetMask("Ground");
         groundCheckVecSize = new Vector2(0.5f, 1.05f);
     }
-
-    //private void FixedUpdate()
-    //{
-    //    OnGround();
-    //    GroundDash();
-    //    AirDash();
-    //    if (!_isDashing)
-    //    {
-    //        Vector2 velocity = _rbCompo.linearVelocity;
-    //        velocity.x = _moveVec.x * speed;
-    //        _rbCompo.linearVelocityX = velocity.x;
-    //    }
-    //}
-
     private void Update()
     {
         //if (Keyboard.current.sKey.wasPressedThisFrame && _isGrounded)
@@ -151,11 +138,8 @@ public class OtherMovement : Player
             _dashTimer = dashDuration;
         }
     }
-
     public override void ApplyByteData(byte state)
     {
-        Debug.Log("Start ApplyByteData");
-
         //대쉬를 했는가?
         bool usingDash = (state & (byte)flagPlayerMovementState.UsingDash) != 0;
         CanDash = usingDash;
@@ -178,17 +162,12 @@ public class OtherMovement : Player
             Debug.Log($"isjumping : {isJumping}");
             OnJump();
         }
-
-        Debug.Log("End ApplyByteData");
     }
-
     public override void ApplySbyteData(sbyte moveX, sbyte dashX, sbyte dashY)
     {
-        Debug.Log("Start ApplySbyteData");
         float _moveX = moveX;
         _moveVec.x = _moveX;
         _dashDir = new Vector2(dashX, dashY);
-        Debug.Log("End ApplySbyteData");
     }
 
 #if UNITY_EDITOR
