@@ -1,0 +1,10 @@
+namespace MyGame.Player;
+struct MoveVec {
+  x:byte;
+  y:byte;
+}
+table inputPlayerMovement {
+  moveVec:MoveVec;
+  movementState:ubyte;
+}
+root_type inputPlayerMovement;

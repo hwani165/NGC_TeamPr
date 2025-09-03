@@ -28,7 +28,7 @@ public class ExplosionScript : MonoBehaviour
 
                 if (collision.transform == preowner)
                 {
-                    player.Attack(preowner, damage / 2, knockbackmulti);
+                    player.Attack(preowner, damage / 1.5f, knockbackmulti);
                 }
                 else
                 {

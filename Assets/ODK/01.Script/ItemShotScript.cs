@@ -93,10 +93,12 @@ public class ItemShotScript : MonoBehaviour
                     holdObject.GetComponent<Item>().owner = null;
                     Rigidbody2D oldRb = holdObject.GetComponent<Rigidbody2D>();
                     oldRb.simulated = true;
+                    oldRb.gravityScale = 2.75f;
                     oldRb.transform.parent = null;
+                    oldRb.GetComponent<Collider2D>().isTrigger = false;
                     holdObject.GetComponent<Item>().CooldownActive();
                 }
-
+                
                 // �� ������ ���
                 holdObject = holditem.gameObject;
                 holditem.owner = gameObject;
@@ -104,6 +106,8 @@ public class ItemShotScript : MonoBehaviour
                 Rigidbody2D rbh = holditem.GetComponent<Rigidbody2D>();
                 rbh.simulated = false;
                 rbh.transform.parent = holdTransform;
+                rbh.gravityScale = 2.75f;
+                rbh.GetComponent<Collider2D>().isTrigger = false;
                 holditem.transform.localPosition = Vector2.zero;
             }
         }
@@ -137,6 +141,8 @@ public class ItemShotScript : MonoBehaviour
                     Rigidbody2D oldRb = holdObject.GetComponent<Rigidbody2D>();
                     oldRb.simulated = true;
                     oldRb.transform.parent = null;
+                    oldRb.gravityScale = 2.75f;
+                    oldRb.GetComponent<Collider2D>().isTrigger = false;
                     holdObject.GetComponent<Item>().CooldownActive();
                 }
 
@@ -147,6 +153,8 @@ public class ItemShotScript : MonoBehaviour
                 Rigidbody2D rbh = holditem.GetComponent<Rigidbody2D>();
                 rbh.simulated = false;
                 rbh.transform.parent = holdTransform;
+                rbh.gravityScale = 2.75f;
+                rbh.GetComponent<Collider2D>().isTrigger = false;
                 holditem.transform.localPosition = Vector2.zero;
                 
             }
