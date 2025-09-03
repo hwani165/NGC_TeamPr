@@ -33,7 +33,6 @@ public class OtherMovement : Player
     private bool _usingDownDash = false;
     #endregion
 
-
     private bool _startDashTimer = false;
     private float _dashTimer;
 
@@ -44,7 +43,7 @@ public class OtherMovement : Player
         groundMask = LayerMask.GetMask("Ground");
         groundCheckVecSize = new Vector2(0.5f, 1.05f);
     }
-    private void FxedUpdate()
+    private void FixedUpdate()
     {
         if (_startDashTimer)
         {
