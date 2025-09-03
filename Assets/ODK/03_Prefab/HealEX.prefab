@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 6955478661297748338}
   - component: {fileID: 8821282594998924484}
   - component: {fileID: 7938375741798333323}
-  m_Layer: 0
+  - component: {fileID: 8118552796461999360}
+  m_Layer: 31
   m_Name: HealEX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -172,3 +173,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &8118552796461999360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8299260641495768406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f23f10eaf576e74ab7ed4214a20cd8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

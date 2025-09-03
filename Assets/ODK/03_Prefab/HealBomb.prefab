@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 7192669531820239440}
   - component: {fileID: 7576049106488130047}
   - component: {fileID: 4137711643841175174}
-  m_Layer: 6
+  - component: {fileID: 1752336488842498954}
+  m_Layer: 31
   m_Name: HealBomb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -193,3 +194,15 @@ MonoBehaviour:
   damage: -20
   knockbackmulti: 0
   explosion: {fileID: 8299260641495768406, guid: bf69bb84027656448baa2e32a65f6d58, type: 3}
+--- !u!114 &1752336488842498954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2505702280169982577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f23f10eaf576e74ab7ed4214a20cd8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
