@@ -5,29 +5,29 @@ using Random = UnityEngine.Random;
 public class Spawner : MonoBehaviour
 {
     [Header("스폰 포인트 & 아이템")]
-    [SerializeField] private GameObject[] spawnerPoints;
-    [SerializeField] private GameObject[] Objects;
+    [SerializeField] private GameObject[] SpawnerPoints;
+    [SerializeField] private GameObject[] Items;
 
     [Header("스폰 타이머 & 최대 아이템 갯수")]
-    [SerializeField] private float spawnertimer;
-    [SerializeField] private int maxCount = 5;
+    [SerializeField] private float Spawnertimer;
+    [SerializeField] private int MaxCount = 5;
 
     [SerializeField] private Item spawnObject; 
 
-    private int itemCount;
-    private float currentTimer;
-    private int randomPoint;
+    private int _itemCount;
+    private float _currentTimer;
+    private int _randomPoint;
 
     public static Action OnItemSpawned;
     public static Action OnItemCollected;
 
     //network data
-    private sbyte spawnX;
+    private sbyte _spawnX;
 
     private void Start()
     {
-        itemCount = 0;
-        currentTimer = 0;
+        _itemCount = 0;
+        _currentTimer = 0;
     }
 
     private void OnEnable()
@@ -44,27 +44,27 @@ public class Spawner : MonoBehaviour
 
     private void Update()
     {
-        if (itemCount < maxCount)
+        if (_itemCount < MaxCount)
         {
-            currentTimer += Time.deltaTime;
-            if (currentTimer >= spawnertimer)
+            _currentTimer += Time.deltaTime;
+            if (_currentTimer >= Spawnertimer)
             {
-                currentTimer = 0;
-                randomPoint = Random.Range(0, spawnerPoints.Length);
+                _currentTimer = 0;
+                _randomPoint = Random.Range(0, SpawnerPoints.Length);
 
-                while (spawnerPoints[randomPoint] == null)
+                while (SpawnerPoints[_randomPoint] == null)
                 {
-                    randomPoint = Random.Range(0, spawnerPoints.Length);
+                    _randomPoint = Random.Range(0, SpawnerPoints.Length);
                 }
 
-                if (spawnerPoints[randomPoint] != null)
+                if (SpawnerPoints[_randomPoint] != null)
                 {
-                    Instantiate(Objects[Random.Range(0, Objects.Length)],
-                                spawnerPoints[randomPoint].transform.position,
+                    Instantiate(Items[Random.Range(0, Items.Length)],
+                                SpawnerPoints[_randomPoint].transform.position,
                                 Quaternion.identity);
 
                     #region network data
-                    spawnX = (sbyte)Mathf.RoundToInt(spawnerPoints[randomPoint].transform.position.x);
+                    _spawnX = (sbyte)Mathf.RoundToInt(SpawnerPoints[_randomPoint].transform.position.x);
                     #endregion
                 }
                 else
@@ -76,10 +76,10 @@ public class Spawner : MonoBehaviour
 
     private void IncreaseItemCount()
     {
-        itemCount++;
+        _itemCount++;
     }
     private void DecreaseItemCount()
     {
-        itemCount--;
+        _itemCount--;
     }
 }
