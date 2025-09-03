@@ -27,10 +27,12 @@ public class BtnLoginListener : MonoBehaviour
         string pw = input_Pw.text;
 
         //만약 재접속 할 게임이 있다면 재접속 시도
-        if (ServerManager.Instance.TryReconnect()) return;
+        Debug.Log($"Server.Instance : {Server.Instance == null}");
+
+        if (Server.Instance.TryReconnect()) return;
 
         //없다면 로그인 시도
-        ServerManager.Instance.Login(id, pw, OnTryEnterMatchServer, OnTryLogin);
+        Server.Instance.Login(id, pw, OnTryEnterMatchServer, OnTryLogin);
     }
 
     //정확한 기능을 메소드 이름으로 명시할 것
@@ -39,7 +41,8 @@ public class BtnLoginListener : MonoBehaviour
         //로그인 성공 처리
         if(statusCode == 200)
         {
-            GameManager.Instance.EnterMainMenu();
+            Server.Instance.InitMyData();
+            Game.Instance.EnterMainMenu();
         }
     }
 

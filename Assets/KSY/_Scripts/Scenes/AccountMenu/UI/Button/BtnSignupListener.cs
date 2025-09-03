@@ -23,7 +23,7 @@ public class BtnSignupListener : MonoBehaviour
         }
 
         //회원 가입 시도
-        int signup_statusCode = ServerManager.Instance.TrySignup(id, pw);
+        int signup_statusCode = Server.Instance.TrySignup(id, pw);
 
         switch(signup_statusCode)
         {
@@ -56,7 +56,7 @@ public class BtnSignupListener : MonoBehaviour
         }
 
         //닉네임 변경 시도
-        int updateNicknameStatuscode = ServerManager.Instance.TryUpdateNickName(nickname);
+        int updateNicknameStatuscode = Server.Instance.TryUpdateNickname(nickname);
 
         switch (updateNicknameStatuscode)
         {
