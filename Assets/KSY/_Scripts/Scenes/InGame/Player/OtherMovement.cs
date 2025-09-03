@@ -56,6 +56,7 @@ public class OtherMovement : Player
             _dashTimer = 0f;
         }
     }
+
     private void Update()
     {
 
@@ -129,25 +130,21 @@ public class OtherMovement : Player
     {
         if (!CanDash)
         {
+
+            Vector2 inputDir = _moveVec.normalized;
             if (_isGrounded)
             {
                 _rbCompo.linearVelocityX = 0;
-                CanDash = true;
-            }
-            else
-            {
-                CanDash = false;
-                _rbCompo.linearVelocity = Vector2.zero;
-            }
-            if (_isDashing) return;
-
-            Vector2 inputDir = _moveVec.normalized;
-
-            if (_isGrounded)
-            {
+                //CanDash = true;
                 if (inputDir == Vector2.zero)
                     inputDir = Vector2.down;
             }
+            else
+            {
+                //CanDash = false;
+                _rbCompo.linearVelocity = Vector2.zero;
+            }
+            if (_isDashing) return;
             else
             {
                 inputDir = new Vector2(Mathf.Sign(_moveVec.x), 0);
