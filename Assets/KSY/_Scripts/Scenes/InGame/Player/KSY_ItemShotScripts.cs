@@ -23,11 +23,8 @@ public class KSY_ItemShotScript : Player
 
     void Update()
     {
-
-
         if (Input.GetKey(KeyCode.E))
         {
-
             chargeUiObject.SetActive(true);
             if (charge > 3f)
             {
