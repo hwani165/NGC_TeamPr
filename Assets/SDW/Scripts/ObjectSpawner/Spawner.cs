@@ -12,7 +12,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] private float spawnertimer;
     [SerializeField] private int maxCount = 5;
 
-    [SerializeField] private Object spawnObject; 
+    [SerializeField] private Item spawnObject; 
 
     private int itemCount;
     private float currentTimer;
@@ -78,7 +78,6 @@ public class Spawner : MonoBehaviour
     {
         itemCount++;
     }
-
     private void DecreaseItemCount()
     {
         itemCount--;

@@ -82,4 +82,13 @@ public abstract class Item : MonoBehaviour
 
         iscooldown = false;
     }
+    private void OnEnable()
+    {
+        Spawner.OnItemSpawned?.Invoke();
+    }
+
+    private void OnDestroy()
+    {
+        Spawner.OnItemCollected?.Invoke();
+    }
 }
