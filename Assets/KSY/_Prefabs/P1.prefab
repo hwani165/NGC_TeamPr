@@ -88,8 +88,8 @@ GameObject:
   - component: {fileID: 2574269315622219437}
   - component: {fileID: 5651717063313339664}
   - component: {fileID: 8591585682855232804}
-  - component: {fileID: 8261762303643435075}
   - component: {fileID: -4473934440829137482}
+  - component: {fileID: 2015501472610377514}
   m_Layer: 10
   m_Name: P1
   m_TagString: Player
@@ -256,25 +256,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _nickname: 
   _inputSetting: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
---- !u!114 &8261762303643435075
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7011468713277402235}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae811b94a714f2843b12015b02b309a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  holdTransform: {fileID: 6507584662252668062}
-  holdObject: {fileID: 0}
-  shootPower: 60
-  upwardForce: 30
-  playerRecoil: 40
-  chargeUiObject: {fileID: 1817243801998839309}
-  chargeImage: {fileID: 4846448970477497535}
 --- !u!114 &-4473934440829137482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -288,6 +269,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hpbar: {fileID: 8565462404365364963}
+--- !u!114 &2015501472610377514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7011468713277402235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08d4c9f15155a0341b736c7c5ef968ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  holdTransform: {fileID: 6507584662252668062}
+  holdObject: {fileID: 0}
+  shootPower: 30
+  upwardForce: 20
+  playerRecoil: 40
+  chargeUiObject: {fileID: 1817243801998839309}
+  chargeImage: {fileID: 4846448970477497535}
 --- !u!1 &8812166200187830082
 GameObject:
   m_ObjectHideFlags: 0
