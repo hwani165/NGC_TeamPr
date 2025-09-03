@@ -100,7 +100,7 @@ public class OtherMovement : Player
             {
                 _isDashing = false;
             }
-            GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);
+            //air dash effect
             return;
         }
     }

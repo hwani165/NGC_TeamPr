@@ -6,6 +6,7 @@ using InputData.Player;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.Rendering.GPUSort;
 
 //Main Receiver
 public class Player : MonoBehaviour, IReceiver, ISender
@@ -45,50 +46,48 @@ public class Player : MonoBehaviour, IReceiver, ISender
         if (_otherMovement != null)
         {
             //메세지가 브로드 캐스팅 되었을 때 호출 (자기자신 포함)
-            Backend.Match.OnMatchRelay += (MatchRelayEventArgs args) =>
+            Backend.Match.OnMatchRelay += ReceiveData;
+        }
+    }
+
+    private void ReceiveData(MatchRelayEventArgs args)
+    {
+        if (args.From.NickName == _nickname)
+        {
+            Debug.Log("Receive");
+
+            //수신 받은 데이터를 버퍼에 담기
+            byte[] receiveBff = args.BinaryUserData;
+            var _receiveBff = new Google.FlatBuffers.ByteBuffer(receiveBff);
+
+            //Debug.Log($"PlayerMessageBufferHasIdentifier: {PlayerMessage.PlayerMessageBufferHasIdentifier(_receiveBff)}");
+            //Debug.Log($"PlatformMessageBufferHasIdentifier: {PlatformMessage.PlatformMessageBufferHasIdentifier(_receiveBff)}");
+
+            //플레이어 관련 데이터가 맞다면 수신 시도
+            if (PlayerMessage.PlayerMessageBufferHasIdentifier(_receiveBff))
             {
-                //DebugUI.text = $"sender : {args.From.NickName}\nreceiver : {_nickname}";
+                Server.Instance.ApplyData(_receiveBff, _otherMovement);
+            }
+            //플랫폼 관련 데이터라면 넘겨주기;
+            else if (PlatformMessage.PlatformMessageBufferHasIdentifier(_receiveBff))
+            {
+                //(송신한)수신 받을 플랫폼의 아이디를 찾음
+                var message = PlatformMessage.GetRootAsPlatformMessage(_receiveBff);
+                byte senderId = message.SenderInfo.Value.Id;
 
-                if (args.From.NickName == _nickname)
-                {
-                    Debug.Log("Receive");
+                //(송신한) 수신 받을 플랫폼을 아이디로 찾음
+                Platform platform = Game.Instance.Map.FindPlatform(senderId);
 
-                    //수신 받은 데이터를 버퍼에 담기
-                    byte[] receiveBff = args.BinaryUserData;
-                    var _receiveBff = new Google.FlatBuffers.ByteBuffer(receiveBff);
-
-                    Debug.Log($"PlayerMessageBufferHasIdentifier: {PlayerMessage.PlayerMessageBufferHasIdentifier(_receiveBff)}");
-                    Debug.Log($"PlatformMessageBufferHasIdentifier: {PlatformMessage.PlatformMessageBufferHasIdentifier(_receiveBff)}");
-
-                    //플레이어 관련 데이터가 맞다면 수신 시도
-                    if (PlayerMessage.PlayerMessageBufferHasIdentifier(_receiveBff))
-                    {
-                        Debug.Log("PlayerMessageBufferHasIdentifier");
-                        Debug.Log($"_otherMovement is not null : {_otherMovement != null}");
-                        Server.Instance.ReceiveData(_receiveBff, _otherMovement);
-                    }
-                    //플랫폼 관련 데이터라면 넘겨주기;
-                    else if(PlatformMessage.PlatformMessageBufferHasIdentifier(_receiveBff))
-                    {
-                        Debug.Log("PlatformMessageBufferHasIdentifier");
-                        Game.Instance.Map.MatchData(_receiveBff);
-                    }
-                }
-            };
+                //찾은 플랫폼에 수신받은 데이터를 적용함.
+                Server.Instance.ApplyData(_receiveBff, platform);
+            }
         }
     }
 
     //플레이어 시작 위치를 결정하고 정보를 넘김
     public void SetPos()
     {
-        if (Backend.Match.IsSuperGamer())
-        {
-            //플레이어 왼쪽 위치 선정
-        }
-        else
-        {
-            //플레이어 오른쪽 위치 선정
-        }
+        Game.Instance.Map.SetPos();
     }
     public void GetUserData(UserData userData)
     {

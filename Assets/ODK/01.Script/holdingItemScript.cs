@@ -1,8 +1,5 @@
 using System.Collections;
 using UnityEngine;
-//using UnityEngine.Rendering.Universal;
-//using static UnityEditor.Experimental.GraphView.GraphView;
-
 public abstract class Item : MonoBehaviour
 {
     public bool iscooldown = false;
