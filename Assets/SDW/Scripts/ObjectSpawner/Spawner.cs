@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Spawner : MonoBehaviour
 {
@@ -10,25 +12,39 @@ public class Spawner : MonoBehaviour
     [SerializeField] private float spawnertimer;
     [SerializeField] private int maxCount = 5;
 
-    static public int itemCount;
-    private int maxItemCount;
+    [SerializeField] private Object spawnObject; 
+
+    private int itemCount;
     private float currentTimer;
     private int randomPoint;
 
-    // network data
-    static public sbyte itemX;
+    public static Action OnItemSpawned;
+    public static Action OnItemCollected;
+
+    //network data
     private sbyte spawnX;
 
     private void Start()
     {
-        maxItemCount = maxCount;
         itemCount = 0;
         currentTimer = 0;
     }
 
+    private void OnEnable()
+    {
+        OnItemSpawned += IncreaseItemCount;
+        OnItemCollected += DecreaseItemCount;
+    }
+
+    private void OnDisable()
+    {
+        OnItemSpawned -= IncreaseItemCount;
+        OnItemCollected -= DecreaseItemCount;
+    }
+
     private void Update()
     {
-        if (itemCount < maxItemCount)
+        if (itemCount < maxCount)
         {
             currentTimer += Time.deltaTime;
             if (currentTimer >= spawnertimer)
@@ -36,16 +52,35 @@ public class Spawner : MonoBehaviour
                 currentTimer = 0;
                 randomPoint = Random.Range(0, spawnerPoints.Length);
 
-                // 랜덤한 위치에 오브젝트 생성
-                GameObject Obj = Instantiate(Objects[Random.Range(0, Objects.Length)],
-                            spawnerPoints[randomPoint].transform.position,
-                            Quaternion.identity);
-                Obj.AddComponent<Object>();
-                #region network data
-                spawnX = (sbyte)Mathf.RoundToInt(spawnerPoints[randomPoint].transform.position.x);
-                #endregion
-                itemCount++;
+                while (spawnerPoints[randomPoint] == null)
+                {
+                    randomPoint = Random.Range(0, spawnerPoints.Length);
+                }
+
+                if (spawnerPoints[randomPoint] != null)
+                {
+                    Instantiate(Objects[Random.Range(0, Objects.Length)],
+                                spawnerPoints[randomPoint].transform.position,
+                                Quaternion.identity);
+
+                    #region network data
+                    spawnX = (sbyte)Mathf.RoundToInt(spawnerPoints[randomPoint].transform.position.x);
+                    #endregion
+                }
+                else
+                {
+                }
             }
         }
+    }
+
+    private void IncreaseItemCount()
+    {
+        itemCount++;
+    }
+
+    private void DecreaseItemCount()
+    {
+        itemCount--;
     }
 }
