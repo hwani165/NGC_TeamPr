@@ -113,8 +113,14 @@ public class FallingPlatform : Platform
     //플랫폼 떨어지는 동작
     private IEnumerator Fall()
     {
-        rb.gravityScale = 1f; // 중력 적용
-        yield return new WaitForSeconds(0.5f); // 0.5초 후에 파괴
+        //쓸데없는 물리연산을 하지않기 위해서 잠궈놓았던 constraints를 해제함.
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+        //중력 적용
+        rb.gravityScale = 1f;
+
+        // 0.5초 후에 파괴
+        yield return new WaitForSeconds(0.5f); 
         Destroy(gameObject);
     }
 

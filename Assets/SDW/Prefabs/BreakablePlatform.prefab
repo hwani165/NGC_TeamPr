@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2933723299434433567}
   m_Layer: 0
-  m_Name: LinePlatform
+  m_Name: BreakablePlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
