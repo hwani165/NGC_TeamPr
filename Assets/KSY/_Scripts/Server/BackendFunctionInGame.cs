@@ -1,7 +1,7 @@
 using System;
 using BackEnd;
 using Google.FlatBuffers;
-using InputData.Platform;
+using InputData.Map;
 using InputData.Player;
 using UnityEngine;
 
@@ -64,20 +64,17 @@ public class BackendFunctionInGame : MonoBehaviour
         if (isBrokenPlatform) platformState |= (byte)flagPlatformState.IsBrokenPlatform;
 
         //오프셋 세팅
-        Offset<PlatformState> offsetPlatformState = PlatformState.CreatePlatformState(_platformStateBuilder, platformState);
+        Offset<PlatformState> offsetPlatformState = PlatformState.CreatePlatformState(_platformStateBuilder, id, platformState);
 
         //StartPlatformMessage, 데이터 할당
-        PlatformMessage.StartPlatformMessage(_platformStateBuilder);
-        PlatformMessage.AddDataType(_platformStateBuilder, PlatformMessageType.state);
-        PlatformMessage.AddData(_platformStateBuilder, offsetPlatformState.Value);
-        PlatformMessage.AddSenderInfo(_platformStateBuilder, PlatformInfo.CreatePlatformInfo(_platformStateBuilder,id));
+        MapMessage.CreateMapMessage(_platformStateBuilder, MapMessageType.platform_state, offsetPlatformState.Value);
 
         //EndPlatformMessage, 총 데이터 오프셋 세팅
-        Offset<PlatformMessage> offsetResultData = PlatformMessage.EndPlatformMessage(_platformStateBuilder);
+        Offset<MapMessage> offsetResultData = MapMessage.EndMapMessage(_platformStateBuilder);
 
         //스키마 버퍼화
         //PlatformMessage.FinishPlatformMessageBuffer(_platformStateBuilder, offsetResultData);
-        _platformStateBuilder.Finish(offsetResultData.Value, "PLFM");
+        _platformStateBuilder.Finish(offsetResultData.Value, "MAPP");
         byte[] bff = _platformStateBuilder.SizedByteArray();
 
         return bff;
@@ -147,7 +144,7 @@ public class BackendFunctionInGame : MonoBehaviour
         if (bff == null) return;
 
         //만약 플레이어 관련 메세지라면 처리
-        if (PlayerMessage.PlayerMessageBufferHasIdentifier(bff))
+        if (Receiver != null && PlayerMessage.PlayerMessageBufferHasIdentifier(bff))
         {
             Debug.Log("PlayerMessage.PlayerMessageBufferHasIdentifier == true");
 
@@ -187,23 +184,42 @@ public class BackendFunctionInGame : MonoBehaviour
                     }
             }
         }
-        //만약 플랫폼 관련 메세지라면 처리
-        else if (PlatformMessage.PlatformMessageBufferHasIdentifier(bff))
+        //만약 맵 관련 메세지라면 처리
+        else if (MapMessage.MapMessageBufferHasIdentifier(bff))
         {
-            Debug.Log("PlatformMessage.PlatformMessageBufferHasIdentifier == true");
-            var message = PlatformMessage.GetRootAsPlatformMessage(bff);
-            PlatformMessageType platfomrMessageType = message.DataType;
+            //수신받은 버퍼를 MapMessage로 형변환
+            var message = MapMessage.GetRootAsMapMessage(bff);
+            //수신받은 버퍼안에 담긴 enum값을 가져와 정확히 무슨 데이터를 보낸건지 확인.
+            MapMessageType platfomrMessageType = message.MapMessageTypeType;
 
-            //플랫폼 관련 메세지일 시 처리
             switch (platfomrMessageType)
             {
-                case PlatformMessageType.state:
+                //플랫폼의 상태와 관련된 메세지 처리
+                case MapMessageType.platform_state:
                     {
-                        Debug.Log("Start PlatformMessageType.state");
-                        PlatformState data = message.DataAsstate();
+                        //(송신한)수신 받을 플랫폼의 아이디를 찾음
+                        byte senderId = message.MapMessageTypeAsplatform_state().Id;
+
+                        //(송신한) 수신 받을 플랫폼을 아이디로 찾음
+                        Platform platform = Game.Instance.Map.FindPlatform(senderId);
+
+                        //MapMessage에서 데이터를 꺼내서 적용함.
+                        PlatformState data = message.MapMessageTypeAsplatform_state();
                         byte platformState = data.PlatformState_;
-                        Receiver.ApplyByteData(platformState);
-                        Debug.Log("End PlatformMessageType.state");
+                        platform.ApplyByteData(platformState);
+                        break;
+                    }
+                //아이템 스포너의 정보와 관련된 메세지 처리
+                case MapMessageType.spawner_info:
+                    {
+                        //씬에 있는 스포너를 가져옴
+                        Receiver = Game.Instance.Map.Spawner;
+
+                        SpawnerInfo data = message.MapMessageTypeAsspawner_info();
+                        sbyte spawnX = data.SpawnX;
+                        byte spawnItemIndex = data.SpawnItemIndex;
+                        Receiver.ApplyByteData(spawnItemIndex);
+                        Receiver.ApplySbyteData(spawnX);
                         break;
                     }
                 default:

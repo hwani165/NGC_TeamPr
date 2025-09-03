@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using BackEnd;
 using Google.FlatBuffers;
-using InputData.Platform;
+using InputData.Map;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -10,9 +10,13 @@ public class Map : MonoBehaviour
 {
     //¾À¿¡ ÀÖ´Â ¸ðµç ÇÃ·§ÆûÀ» ´ã´Â ¹è¿­
     private Dictionary<byte, Platform> _platfomrs;
+    public Spawner Spawner { get; private set; }
+
     [SerializeField ]private Transform[] _startPos = new Transform[2];
     private void Start()
     {
+        //¾À¿¡ ÀÖ´Â ½ºÆ÷³Ê¸¦ °¡Á®¿È
+        this.Spawner = GetComponent<Spawner>();
         //¾À¿¡ ÀÖ´Â ¸ðµç ÇÃ·§ÆûÀ» °¡Á®¿È
         Platform[] platforms = GetComponentsInChildren<Platform>();
 

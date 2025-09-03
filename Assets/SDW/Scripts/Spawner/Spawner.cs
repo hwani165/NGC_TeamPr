@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Spawner : MonoBehaviour
+public class Spawner : MonoBehaviour,IReceiver
 {
     [Header("스폰 포인트 & 아이템")]
     [SerializeField] private GameObject[] SpawnerPoints;
@@ -23,6 +23,7 @@ public class Spawner : MonoBehaviour
 
     //network data
     private sbyte _spawnX;
+    private byte _spawnItemIndex;
 
     private void Start()
     {
@@ -59,12 +60,18 @@ public class Spawner : MonoBehaviour
 
                 if (SpawnerPoints[_randomPoint] != null)
                 {
-                    Instantiate(Items[Random.Range(0, Items.Length)],
-                                SpawnerPoints[_randomPoint].transform.position,
-                                Quaternion.identity);
+                    //0번부터 아이템 배열의 길이까지 인덱스를 랜덤하게 구해서 랜덤한 아이템 객체를 가져옴
+                    byte randomPoint = (byte)Random.Range(0, Items.Length);
+                    GameObject _item = Items[randomPoint];
+                    //랜덤한 아이템 스폰 포인트의 위치를 가져옴
+                    Vector2 spawnPos = SpawnerPoints[_randomPoint].transform.position;
+                    //가져온 아이템을 스폰 포인트의 위치로 생성시킴.
+                    Instantiate(_item, spawnPos,Quaternion.identity);
 
                     #region network data
-                    _spawnX = (sbyte)Mathf.RoundToInt(SpawnerPoints[_randomPoint].transform.position.x);
+                    //RoundToInt : float 데이터 값을 가장 가까운 정수 자료형 값으로 바꿈.
+                    _spawnX = (sbyte)Mathf.RoundToInt(spawnPos.x);
+                    _spawnItemIndex = randomPoint;
                     #endregion
                 }
                 else
@@ -81,5 +88,20 @@ public class Spawner : MonoBehaviour
     private void DecreaseItemCount()
     {
         _itemCount--;
+    }
+
+    public void ApplyByteData(byte byteData)
+    {
+        _spawnItemIndex = byteData;
+    }
+
+    public void ApplySbyteData(sbyte sbyteData)
+    {
+        _spawnX = sbyteData;
+    }
+
+    public void ApplySbyteData(sbyte sbyteData1, sbyte sbyteData2, sbyte sbyteData3)
+    {
+        throw new NotImplementedException("If you want to use this method, you must override it.");
     }
 }

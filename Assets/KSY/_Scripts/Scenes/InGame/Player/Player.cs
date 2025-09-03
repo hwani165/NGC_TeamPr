@@ -1,7 +1,9 @@
 using System;
 using BackEnd;
+using BackEnd.Functions;
 using BackEnd.Tcp;
-using InputData.Platform;
+using Google.FlatBuffers;
+using InputData.Map;
 using InputData.Player;
 using TMPro;
 using UnityEngine;
@@ -56,7 +58,7 @@ public class Player : MonoBehaviour, IReceiver, ISender
 
             //수신 받은 데이터를 버퍼에 담기
             byte[] receiveBff = args.BinaryUserData;
-            var _receiveBff = new Google.FlatBuffers.ByteBuffer(receiveBff);
+            ByteBuffer _receiveBff = new ByteBuffer(receiveBff);
 
             //Debug.Log($"PlayerMessageBufferHasIdentifier: {PlayerMessage.PlayerMessageBufferHasIdentifier(_receiveBff)}");
             //Debug.Log($"PlatformMessageBufferHasIdentifier: {PlatformMessage.PlatformMessageBufferHasIdentifier(_receiveBff)}");
@@ -67,17 +69,10 @@ public class Player : MonoBehaviour, IReceiver, ISender
                 Server.Instance.ApplyData(_receiveBff, _otherMovement);
             }
             //플랫폼 관련 데이터라면 넘겨주기;
-            else if (PlatformMessage.PlatformMessageBufferHasIdentifier(_receiveBff))
+            else if (MapMessage.MapMessageBufferHasIdentifier(_receiveBff))
             {
-                //(송신한)수신 받을 플랫폼의 아이디를 찾음
-                var message = PlatformMessage.GetRootAsPlatformMessage(_receiveBff);
-                byte senderId = message.SenderInfo.Value.Id;
-
-                //(송신한) 수신 받을 플랫폼을 아이디로 찾음
-                Platform platform = Game.Instance.Map.FindPlatform(senderId);
-
                 //찾은 플랫폼에 수신받은 데이터를 적용함.
-                Server.Instance.ApplyData(_receiveBff, platform);
+                Server.Instance.ApplyData(_receiveBff, null);
             }
         }
     }
@@ -107,6 +102,10 @@ public class Player : MonoBehaviour, IReceiver, ISender
     {
         throw new NotImplementedException("If you want to use this method, you must override it.");
     }
+    public void SendData(bool boolenData)
+    {
+        throw new NotImplementedException("If you want to use this method, you must override it.");
+    }
     public virtual void SendData()
     {
         if (_myMovement == null) 
@@ -124,10 +123,5 @@ public class Player : MonoBehaviour, IReceiver, ISender
 
         byte[] bff = Server.Instance.SerializationPlayerMovementData(dashDir, moveX, usingJump, usingDash, isDashing);
         Server.Instance.SnedData(bff);
-    }
-    public void SendData(bool boolenData)
-    {
-        throw new NotImplementedException("If you want to use this method, you must override it.");
-
     }
 }
