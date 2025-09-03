@@ -7,7 +7,6 @@ public class Entity : MonoBehaviour
     [SerializeField] private HPBar hpbar;
     public void Attack(Transform tra, float damage, float knockback)
     {
-
         CurrentHp -= damage;
         hpbar.SetHP();
 

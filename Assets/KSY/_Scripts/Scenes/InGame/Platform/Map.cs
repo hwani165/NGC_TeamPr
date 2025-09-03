@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using BackEnd;
 using Google.FlatBuffers;
 using InputData.Platform;
 using Unity.VisualScripting;
@@ -9,7 +10,7 @@ public class Map : MonoBehaviour
 {
     //¾À¿¡ ÀÖ´Â ¸ðµç ÇÃ·§ÆûÀ» ´ã´Â ¹è¿­
     private Dictionary<byte, Platform> _platfomrs;
-    private List<Transform> _startPos = new List<Transform>(2);
+    [SerializeField ]private Transform[] _startPos = new Transform[2];
     private void Start()
     {
         //¾À¿¡ ÀÖ´Â ¸ðµç ÇÃ·§ÆûÀ» °¡Á®¿È
@@ -35,15 +36,32 @@ public class Map : MonoBehaviour
         return platform;
 
     }
-    internal void SetPos()
+    public void SetPlayerStartPos(Player p)
     {
-        if(BackEnd.Backend.Match.IsSuperGamer())
+        if(Backend.Match.IsSuperGamer())
         {
-            transform.position = _startPos[0].position;
+            if(_startPos[0] != null)
+            {
+                p.transform.position = _startPos[0].position;
+                _startPos[0] = null;
+            }
+            else
+            {
+                p.transform.position = _startPos[1].position;
+            }
+
         }
         else
         {
-            transform.position = _startPos[1].position;
+            if (_startPos[1] != null)
+            {
+                p.transform.position = _startPos[1].position;
+                _startPos[1] = null;
+            }
+            else
+            {
+                p.transform.position = _startPos[0].position;
+            }
         }
     }
 }

@@ -34,7 +34,6 @@ public class Player : MonoBehaviour, IReceiver, ISender
             input.actions = _inputSetting;
             input.defaultActionMap = _actionMap;
             input.actions.Enable();
-            input.actions.Enable();
         }
         else
         {
@@ -49,7 +48,6 @@ public class Player : MonoBehaviour, IReceiver, ISender
             Backend.Match.OnMatchRelay += ReceiveData;
         }
     }
-
     private void ReceiveData(MatchRelayEventArgs args)
     {
         if (args.From.NickName == _nickname)
@@ -82,12 +80,6 @@ public class Player : MonoBehaviour, IReceiver, ISender
                 Server.Instance.ApplyData(_receiveBff, platform);
             }
         }
-    }
-
-    //플레이어 시작 위치를 결정하고 정보를 넘김
-    public void SetPos()
-    {
-        Game.Instance.Map.SetPos();
     }
     public void GetUserData(UserData userData)
     {

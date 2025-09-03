@@ -125,6 +125,9 @@ public class Game : SingletonBehaviour<Game>
         //나의 플레이어 객체 세팅
         p1.Init();
 
+        //플레이어 위치 세팅
+        Map.SetPlayerStartPos(p1);
+
         //********상대방 데이터 처리********
 
         //씬에서 플레이어 오브젝트 P2를 찾음
@@ -143,8 +146,11 @@ public class Game : SingletonBehaviour<Game>
         //플레이어 객체에 데이터 할당
         p2.GetUserData((UserData)otherData);
 
-        //나의 플레이어 객체 세팅
+        //상대 플레이어 객체 세팅
         p2.Init();
+
+        //플레이어 위치 세팅
+        Map.SetPlayerStartPos(p2);
     }
     private void InitPlayer(Scene s, LoadSceneMode lsm)
     {
@@ -166,8 +172,11 @@ public class Game : SingletonBehaviour<Game>
         //플레이어 객체에 데이터 할당
         p1.GetUserData((UserData)myData);
 
-        //나의 플레이어 객체 세팅
+        //상대 플레이어 객체 세팅
         p1.Init();
+
+        //플레이어 위치 세팅
+        Map.SetPlayerStartPos(p1);
 
         //********상대방 데이터 처리********
 
@@ -187,8 +196,11 @@ public class Game : SingletonBehaviour<Game>
         //플레이어 객체에 데이터 할당
         p2.GetUserData((UserData)otherData);
 
-        //나의 플레이어 객체 세팅
+        //상대 플레이어 객체 세팅
         p2.Init();
+
+        //플레이어 위치 세팅
+        Map.SetPlayerStartPos(p2);
     }
     private void Update()
     {
@@ -204,12 +216,14 @@ public class Game : SingletonBehaviour<Game>
     }
     public void EnterInGame()
     {
-        //씬 로드
-        //SceneManager.LoadScene("InGame");
-
+        ////랜덤한 맵을 선정함.
         //int mapIndex = UnityEngine.Random.Range(0, 4);
-        //SceneManager.LoadScene(_maps[mapIndex]); 
-        SceneManager.LoadScene("SDW_Map_1"); 
+        ////선정한 맵의 이름을 가져옴
+        //string mapName = mapNames[mapIndex];
+        ////가져온 이름의 씬(맵)을 로드함.
+        //SceneManager.LoadScene(mapName);  
+
+        SceneManager.LoadScene("SDW_Map_1");
     }
     public void ExitAccountMenu()
     {
