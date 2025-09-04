@@ -193,13 +193,14 @@ MonoBehaviour:
   thisownerfading: 1
   easeType: 1
   lasteaseType: 8
-  damage: 35
+  damage: 60
   knockbackmulti: 1
   firstmovetime: 12
   lastmovetime: 0
   lifeTime: 12
   range: 60
   thisnotalreadyHit: 0
+  invisibleTime: 1
 --- !u!114 &-8650275406498028762
 MonoBehaviour:
   m_ObjectHideFlags: 0

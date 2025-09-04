@@ -103,8 +103,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad88d77cf324f62438d23fe69649cebd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: -30
-  knockbackmulti: 0
+  damage: -75
+  knockbackmulti: 3
   lifetime: 0.2
   layermask:
     serializedVersion: 2

@@ -191,8 +191,8 @@ MonoBehaviour:
   shootingdir: {x: 0, y: 0}
   thisisnoforceobject: 0
   thisownerfading: 1
-  damage: -15
-  knockbackmulti: 1
+  damage: -25
+  knockbackmulti: 3
 --- !u!114 &2420937989958648374
 MonoBehaviour:
   m_ObjectHideFlags: 0
