@@ -1,16 +1,13 @@
 fileFormatVersion: 2
-guid: 24e2162358e256540b97d63dc3d4c462
+guid: 3b6d1fae488e8d84aa122a943d3afdb1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 534167056533025034
-    second: gyutyfdrftygyu_0
+      213: 6840608515686607062
+    second: f6a34e23-e115-467e-a7cc-528303757ead-removebg-preview_0
   - first:
-      213: 5019560685981259365
-    second: gyutyfdrftygyu_1
-  - first:
-      213: 772241616309420664
-    second: gyutyfdrftygyu_2
+      213: 2288507232228434630
+    second: f6a34e23-e115-467e-a7cc-528303757ead-removebg-preview_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -43,7 +40,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -81,7 +78,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -106,45 +103,45 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: gyutyfdrftygyu_0
+      name: f6a34e23-e115-467e-a7cc-528303757ead-removebg-preview_0
       rect:
         serializedVersion: 2
-        x: 777
-        y: 131
-        width: 1303
-        height: 207
-      alignment: 9
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 358, y: 0, z: 372, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: a01fd579b1eb96700800000000000000
-      internalID: 534167056533025034
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: gyutyfdrftygyu_2
-      rect:
-        serializedVersion: 2
-        x: 39
-        y: 122
-        width: 731
-        height: 213
+        x: 22
+        y: 450
+        width: 181
+        height: 28
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 87285e498ad87ba00800000000000000
-      internalID: 772241616309420664
+      spriteID: 6d82301b339beee50800000000000000
+      internalID: 6840608515686607062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: f6a34e23-e115-467e-a7cc-528303757ead-removebg-preview_1
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 337
+        width: 152
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c263e2e33962cf10800000000000000
+      internalID: 2288507232228434630
       vertices: []
       indices: 
       edges: []
@@ -153,7 +150,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: b34924b3f4522ab47b624edc5acd97c6
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -162,10 +159,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      gyutyfdrftygyu_0: 534167056533025034
-      gyutyfdrftygyu_1: 5019560685981259365
-      gyutyfdrftygyu_2: 772241616309420664
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
