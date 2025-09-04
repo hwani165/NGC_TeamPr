@@ -10,7 +10,7 @@ public class Map : MonoBehaviour
 {
     //¾À¿¡ ÀÖ´Â ¸ðµç ÇÃ·§ÆûÀ» ´ã´Â ¹è¿­
     private Dictionary<byte, Platform> _platfomrs;
-    public Spawner Spawner { get; private set; }
+    [field:SerializeField]public Spawner Spawner { get; private set; }
 
     [SerializeField ]private Transform[] _startPos = new Transform[2];
     private void Start()
