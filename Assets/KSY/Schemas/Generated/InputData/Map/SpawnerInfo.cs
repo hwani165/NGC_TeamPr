@@ -19,21 +19,21 @@ public struct SpawnerInfo : IFlatbufferObject
   public void __init(int _i, ByteBuffer _bb) { __p = new Table(_i, _bb); }
   public SpawnerInfo __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-  public sbyte SpawnX { get { int o = __p.__offset(4); return o != 0 ? __p.bb.GetSbyte(o + __p.bb_pos) : (sbyte)0; } }
-  public byte SpawnItemIndex { get { int o = __p.__offset(6); return o != 0 ? __p.bb.Get(o + __p.bb_pos) : (byte)0; } }
+  public byte SpawnItemIndex { get { int o = __p.__offset(4); return o != 0 ? __p.bb.Get(o + __p.bb_pos) : (byte)0; } }
+  public byte SpawnPointIndex { get { int o = __p.__offset(6); return o != 0 ? __p.bb.Get(o + __p.bb_pos) : (byte)0; } }
 
   public static Offset<InputData.Map.SpawnerInfo> CreateSpawnerInfo(FlatBufferBuilder builder,
-      sbyte spawn_x = 0,
-      byte spawn_item_index = 0) {
+      byte spawn_item_index = 0,
+      byte spawn_point_index = 0) {
     builder.StartTable(2);
+    SpawnerInfo.AddSpawnPointIndex(builder, spawn_point_index);
     SpawnerInfo.AddSpawnItemIndex(builder, spawn_item_index);
-    SpawnerInfo.AddSpawnX(builder, spawn_x);
     return SpawnerInfo.EndSpawnerInfo(builder);
   }
 
   public static void StartSpawnerInfo(FlatBufferBuilder builder) { builder.StartTable(2); }
-  public static void AddSpawnX(FlatBufferBuilder builder, sbyte spawnX) { builder.AddSbyte(0, spawnX, 0); }
-  public static void AddSpawnItemIndex(FlatBufferBuilder builder, byte spawnItemIndex) { builder.AddByte(1, spawnItemIndex, 0); }
+  public static void AddSpawnItemIndex(FlatBufferBuilder builder, byte spawnItemIndex) { builder.AddByte(0, spawnItemIndex, 0); }
+  public static void AddSpawnPointIndex(FlatBufferBuilder builder, byte spawnPointIndex) { builder.AddByte(1, spawnPointIndex, 0); }
   public static Offset<InputData.Map.SpawnerInfo> EndSpawnerInfo(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<InputData.Map.SpawnerInfo>(o);
@@ -46,8 +46,8 @@ static public class SpawnerInfoVerify
   static public bool Verify(Google.FlatBuffers.Verifier verifier, uint tablePos)
   {
     return verifier.VerifyTableStart(tablePos)
-      && verifier.VerifyField(tablePos, 4 /*SpawnX*/, 1 /*sbyte*/, 1, false)
-      && verifier.VerifyField(tablePos, 6 /*SpawnItemIndex*/, 1 /*byte*/, 1, false)
+      && verifier.VerifyField(tablePos, 4 /*SpawnItemIndex*/, 1 /*byte*/, 1, false)
+      && verifier.VerifyField(tablePos, 6 /*SpawnPointIndex*/, 1 /*byte*/, 1, false)
       && verifier.VerifyTableEnd(tablePos);
   }
 }

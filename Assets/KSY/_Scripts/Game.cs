@@ -154,6 +154,8 @@ public class Game : SingletonBehaviour<Game>
     }
     private void InitPlayer(Scene s, LoadSceneMode lsm)
     {
+        Debug.Log($"InitPlayer -> SuperGameer : {Backend.Match.IsSuperGamer()}");
+
         //********내 데이터 처리********
 
         //씬에서 플레이어 오브젝트 P1을 찾음

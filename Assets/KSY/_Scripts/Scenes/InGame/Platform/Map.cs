@@ -16,7 +16,7 @@ public class Map : MonoBehaviour
     private void Start()
     {
         //¾À¿¡ ÀÖ´Â ½ºÆ÷³Ê¸¦ °¡Á®¿È
-        this.Spawner = GetComponent<Spawner>();
+        this.Spawner = GetComponentInChildren<Spawner>();
         //¾À¿¡ ÀÖ´Â ¸ðµç ÇÃ·§ÆûÀ» °¡Á®¿È
         Platform[] platforms = GetComponentsInChildren<Platform>();
 
@@ -42,7 +42,7 @@ public class Map : MonoBehaviour
     }
     public void SetPlayerStartPos(Player p)
     {
-        if(Backend.Match.IsSuperGamer())
+        if(Server.IsSuperGamer)
         {
             if(_startPos[0] != null)
             {

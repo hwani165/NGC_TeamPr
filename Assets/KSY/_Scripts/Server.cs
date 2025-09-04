@@ -22,7 +22,10 @@ public class Server : SingletonBehaviour<Server>
     private BackendFunctionMatch _bfMatch;
     private UserData _myData = new UserData();
     private UserData _otherData = new UserData();
-    public MatchUserGameRecord otherInfo;
+
+    public static bool IsSuperGamer { get; private set; } = false;
+
+    public MatchUserGameRecord OnterInfo;
     private void Awake()
     {
         base.Awake();
@@ -47,10 +50,15 @@ public class Server : SingletonBehaviour<Server>
             gameObject.AddComponent<BackendFunctionMatch>();
             _bfMatch = GetComponent<BackendFunctionMatch>();
         }
+
+        _bfMatch.EnterRoom += () =>
+        {
+            IsSuperGamer = Backend.Match.IsSuperGamer();
+        };
     }
     public void InitOtherData()
     {
-        var otherInfo = this.otherInfo;
+        var otherInfo = this.OnterInfo;
 
         string nickname = otherInfo.m_nickname;
 
@@ -101,9 +109,9 @@ public class Server : SingletonBehaviour<Server>
             return _otherData;
         }
     }
-    public void SnedData(byte[] bff)
+    public void Send(byte[] bff)
     {
-        _bfInGame.SnedData(bff);
+        _bfInGame.Send(bff);
     }
     public void ApplyData(ByteBuffer bff, IReceiver Receiver)
     {
@@ -160,17 +168,17 @@ public class Server : SingletonBehaviour<Server>
                 }
             case MatchEventType.OnEnterFindingMatch:
                 {
-                    _bfMatch.OnEnterFindingMatch += eventHandler;
+                    _bfMatch.EnterMatch += eventHandler;
                     break;
                 }
             case MatchEventType.OnFindedMatch:
                 {
-                    _bfMatch.OnFindedMatch += eventHandler;
+                    _bfMatch.SuccessMatch += eventHandler;
                     break;
                 }
             case MatchEventType.OnMatchCanceled:
                 {
-                    _bfMatch.OnMatchCanceled += eventHandler;
+                    _bfMatch.CanceledMatch += eventHandler;
                     break;
                 }
         }
@@ -178,6 +186,10 @@ public class Server : SingletonBehaviour<Server>
     public byte[] SerializationPlatformStateData(byte id, bool isOnPlatform, bool isBrokenPlatform)
     {
         return _bfInGame.SerializationPlatformStateData(id, isOnPlatform, isBrokenPlatform);
+    }
+    public byte[] SerializationSpawnerInfoData(byte spawnItemIndex,byte spawnPotinIndex)
+    {
+        return _bfInGame.SerializationSpawnerInfoData(spawnItemIndex, spawnPotinIndex);
     }
     public byte[] SerializationPlayerItemData(bool hasItem, bool isShootingItem)
     {

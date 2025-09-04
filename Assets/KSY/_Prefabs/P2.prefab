@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 787324754334117062}
   - component: {fileID: 2220046908556690962}
   - component: {fileID: 5380262441329352544}
-  m_Layer: 4
+  m_Layer: 10
   m_Name: Image (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 3198102627353605742}
   - component: {fileID: 2279171085781669095}
   - component: {fileID: 5013275565764473226}
-  m_Layer: 4
+  m_Layer: 10
   m_Name: "\uCCB4\uB825 \uBC14"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -163,7 +163,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8540998067217123679}
   - component: {fileID: 4811157847545508381}
-  m_Layer: 4
+  m_Layer: 10
   m_Name: HPBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -213,7 +213,7 @@ GameObject:
   - component: {fileID: 5510474548728275037}
   - component: {fileID: 4835155438916483014}
   - component: {fileID: 544151056560532324}
-  m_Layer: 4
+  m_Layer: 10
   m_Name: Canvas (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -315,7 +315,7 @@ GameObject:
   - component: {fileID: 1141368973461243165}
   - component: {fileID: 4562876295604155298}
   - component: {fileID: 7624561382162085287}
-  m_Layer: 4
+  m_Layer: 10
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -390,7 +390,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3654519403494134401}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Hold
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -423,7 +423,7 @@ GameObject:
   - component: {fileID: 2592903822293346185}
   - component: {fileID: 4518010719938508482}
   - component: {fileID: 582021742967525205}
-  m_Layer: 4
+  m_Layer: 10
   m_Name: Image (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -498,7 +498,7 @@ GameObject:
   - component: {fileID: 3897326077773752066}
   - component: {fileID: 1896013846452269488}
   - component: {fileID: 4159503574897073268}
-  m_Layer: 4
+  m_Layer: 10
   m_Name: HpBackGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -766,7 +766,7 @@ GameObject:
   - component: {fileID: 2537757523265852331}
   - component: {fileID: 4020047726317841749}
   - component: {fileID: 4542201267034174717}
-  m_Layer: 4
+  m_Layer: 10
   m_Name: SubHpBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -841,7 +841,7 @@ GameObject:
   - component: {fileID: 8961582595308715465}
   - component: {fileID: 8572381406766152542}
   - component: {fileID: 487651979495839040}
-  m_Layer: 4
+  m_Layer: 10
   m_Name: HpPBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}

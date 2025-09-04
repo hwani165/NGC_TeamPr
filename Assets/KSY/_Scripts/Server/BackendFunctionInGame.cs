@@ -8,8 +8,10 @@ using UnityEngine;
 public class BackendFunctionInGame : MonoBehaviour
 {
     private readonly FlatBufferBuilder _movementBuilder = new FlatBufferBuilder(32);
-    private readonly FlatBufferBuilder _platformStateBuilder = new FlatBufferBuilder(32);
     private readonly FlatBufferBuilder _itemActionBuilder = new FlatBufferBuilder(32);
+
+    private readonly FlatBufferBuilder _platformStateBuilder = new FlatBufferBuilder(32);
+    private readonly FlatBufferBuilder _spawnerInfoBuilder = new FlatBufferBuilder(32);
 
     [Flags]
     public enum flagPlayerMovementState : byte
@@ -66,16 +68,29 @@ public class BackendFunctionInGame : MonoBehaviour
         //오프셋 세팅
         Offset<PlatformState> offsetPlatformState = PlatformState.CreatePlatformState(_platformStateBuilder, id, platformState);
 
-        //StartPlatformMessage, 데이터 할당
-        MapMessage.CreateMapMessage(_platformStateBuilder, MapMessageType.platform_state, offsetPlatformState.Value);
-
-        //EndPlatformMessage, 총 데이터 오프셋 세팅
-        Offset<MapMessage> offsetResultData = MapMessage.EndMapMessage(_platformStateBuilder);
+        ////데이터 할당
+        Offset<MapMessage> offsetResult = MapMessage.CreateMapMessage(_platformStateBuilder, MapMessageType.platform_state, offsetPlatformState.Value);
 
         //스키마 버퍼화
-        //PlatformMessage.FinishPlatformMessageBuffer(_platformStateBuilder, offsetResultData);
-        _platformStateBuilder.Finish(offsetResultData.Value, "MAPP");
+        _platformStateBuilder.Finish(offsetResult.Value, "MAPP");
         byte[] bff = _platformStateBuilder.SizedByteArray();
+
+        return bff;
+    }
+    public byte[] SerializationSpawnerInfoData(byte spawnItemIndex, byte spawnPotinIndex)
+    {
+        //버퍼 재사용
+        _spawnerInfoBuilder.Clear();
+
+        //오프셋 세팅
+        Offset<SpawnerInfo> offsetSpawnerInfo = SpawnerInfo.CreateSpawnerInfo(_spawnerInfoBuilder, spawnItemIndex, spawnPotinIndex);
+
+        //StartPlatformMessage, 데이터 할당
+        Offset<MapMessage> offsetResult = MapMessage.CreateMapMessage(_spawnerInfoBuilder, MapMessageType.spawner_info, offsetSpawnerInfo.Value);
+
+        //스키마 버퍼화
+        _spawnerInfoBuilder.Finish(offsetResult.Value, "MAPP");
+        byte[] bff = _spawnerInfoBuilder.SizedByteArray();
 
         return bff;
     }
@@ -132,7 +147,7 @@ public class BackendFunctionInGame : MonoBehaviour
     }
 
     //데이터 송신
-    public void SnedData(byte[] bff)
+    public void Send(byte[] bff)
     {
         Backend.Match.SendDataToInGameRoom(bff);
     }
@@ -192,6 +207,8 @@ public class BackendFunctionInGame : MonoBehaviour
             //수신받은 버퍼안에 담긴 enum값을 가져와 정확히 무슨 데이터를 보낸건지 확인.
             MapMessageType platfomrMessageType = message.MapMessageTypeType;
 
+            Debug.Log($"Message Type : {platfomrMessageType}");
+
             switch (platfomrMessageType)
             {
                 //플랫폼의 상태와 관련된 메세지 처리
@@ -216,10 +233,11 @@ public class BackendFunctionInGame : MonoBehaviour
                         Receiver = Game.Instance.Map.Spawner;
 
                         SpawnerInfo data = message.MapMessageTypeAsspawner_info();
-                        sbyte spawnX = data.SpawnX;
+                        byte spawnPointIndex = data.SpawnPointIndex;
                         byte spawnItemIndex = data.SpawnItemIndex;
-                        Receiver.ApplyByteData(spawnItemIndex);
-                        Receiver.ApplySbyteData(spawnX);
+                        Receiver.ApplyByteData(spawnItemIndex, spawnPointIndex);
+
+                        Debug.Log($"Receiver.ApplyByteData(spawnItemIndex, spawnPointIndex)");
                         break;
                     }
                 default:

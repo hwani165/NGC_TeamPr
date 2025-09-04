@@ -2,27 +2,26 @@ using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Spawner : MonoBehaviour,IReceiver
+public class Spawner : MonoBehaviour, IReceiver, ISender
 {
     [Header("스폰 포인트 & 아이템")]
     [SerializeField] private GameObject[] SpawnerPoints;
     [SerializeField] private GameObject[] Items;
 
     [Header("스폰 타이머 & 최대 아이템 갯수")]
-    [SerializeField] private float Spawnertimer;
+    [SerializeField] private float Spawnertimer = 2;
     [SerializeField] private int MaxCount = 5;
 
-    [SerializeField] private Item spawnObject; 
+    [SerializeField] private GameObject spawnObject; 
 
     private int _itemCount;
     private float _currentTimer;
-    private int _randomPoint;
 
     public static Action OnItemSpawned;
     public static Action OnItemCollected;
 
     //network data
-    private sbyte _spawnX;
+    private byte _spawnPointIndex;
     private byte _spawnItemIndex;
 
     private void Start()
@@ -45,37 +44,60 @@ public class Spawner : MonoBehaviour,IReceiver
 
     private void Update()
     {
+        Debug.Log(Server.IsSuperGamer);
+        if(Server.IsSuperGamer)
+        {
+            CreateItem();
+        }
+    }
+    private void Receive()
+    {
+        Debug.Log("Receive");
+        if ((_itemCount < MaxCount))
+        {
+            if (SpawnerPoints[_spawnPointIndex] != null)
+            {
+                //0번부터 아이템 배열의 길이까지 인덱스를 랜덤하게 구해서 랜덤한 아이템 객체를 가져옴
+                GameObject _item = Items[_spawnItemIndex];
+                //랜덤한 아이템 스폰 포인트의 위치를 가져옴
+                Vector2 spawnPos = SpawnerPoints[_spawnPointIndex].transform.position;
+                //가져온 아이템을 스폰 포인트의 위치로 생성시킴.
+                Instantiate(_item, spawnPos, Quaternion.identity);
+            }
+        }
+    }
+    private void CreateItem()
+    {
+        if (_itemCount > MaxCount)
+        {
+            _currentTimer = 0;
+        }
         if (_itemCount < MaxCount)
         {
             _currentTimer += Time.deltaTime;
+            Debug.Log(_currentTimer);
             if (_currentTimer >= Spawnertimer)
             {
                 _currentTimer = 0;
-                _randomPoint = Random.Range(0, SpawnerPoints.Length);
+                _spawnPointIndex = (byte)Random.Range(0, SpawnerPoints.Length);
 
-                while (SpawnerPoints[_randomPoint] == null)
+                while (SpawnerPoints[_spawnPointIndex] == null)
                 {
-                    _randomPoint = Random.Range(0, SpawnerPoints.Length);
+                    _spawnPointIndex = (byte)Random.Range(0, SpawnerPoints.Length);
                 }
 
-                if (SpawnerPoints[_randomPoint] != null)
+                if (SpawnerPoints[_spawnPointIndex] != null)
                 {
+                    Debug.Log("Create Item!");
                     //0번부터 아이템 배열의 길이까지 인덱스를 랜덤하게 구해서 랜덤한 아이템 객체를 가져옴
-                    byte randomPoint = (byte)Random.Range(0, Items.Length);
-                    GameObject _item = Items[randomPoint];
+                    _spawnItemIndex = (byte)Random.Range(0, Items.Length);
+                    GameObject _item = Items[_spawnItemIndex];
                     //랜덤한 아이템 스폰 포인트의 위치를 가져옴
-                    Vector2 spawnPos = SpawnerPoints[_randomPoint].transform.position;
+                    Vector3 spawnPos = SpawnerPoints[_spawnPointIndex].transform.position;
                     //가져온 아이템을 스폰 포인트의 위치로 생성시킴.
-                    Instantiate(_item, spawnPos,Quaternion.identity);
-
-                    #region network data
-                    //RoundToInt : float 데이터 값을 가장 가까운 정수 자료형 값으로 바꿈.
-                    _spawnX = (sbyte)Mathf.RoundToInt(spawnPos.x);
-                    _spawnItemIndex = randomPoint;
-                    #endregion
-                }
-                else
-                {
+                    spawnObject = Instantiate(_item, spawnPos, Quaternion.identity);
+                    //어떤 아이템을 어떤 위치로 생성시켰는지 전송.
+                    Send();
                 }
             }
         }
@@ -92,16 +114,27 @@ public class Spawner : MonoBehaviour,IReceiver
 
     public void ApplyByteData(byte byteData)
     {
-        _spawnItemIndex = byteData;
+        throw new NotImplementedException("If you want to use this method, you must override it.");
     }
-
+    public void ApplyByteData(byte spawnItemIndex, byte spawnPointIndex)
+    {
+        Debug.Log($"spawnItemIndex : {spawnItemIndex}, spawnPointIndex : {spawnPointIndex}");
+        _spawnItemIndex = spawnItemIndex;
+        _spawnPointIndex = spawnPointIndex;
+        Receive();
+    }
     public void ApplySbyteData(sbyte sbyteData)
     {
-        _spawnX = sbyteData;
+        throw new NotImplementedException("If you want to use this method, you must override it.");
     }
-
     public void ApplySbyteData(sbyte sbyteData1, sbyte sbyteData2, sbyte sbyteData3)
     {
         throw new NotImplementedException("If you want to use this method, you must override it.");
+    }
+
+    public void Send()
+    {
+        byte[] bff = Server.Instance.SerializationSpawnerInfoData(_spawnItemIndex,_spawnPointIndex);
+        Server.Instance.Send(bff);
     }
 }

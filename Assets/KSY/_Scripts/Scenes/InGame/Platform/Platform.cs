@@ -10,7 +10,7 @@ public class Platform : MonoBehaviour, IReceiver, ISender
     [field: SerializeField] public byte Id { get; private set; } = 0;
 
     //송/수신 가능한 플랫폼 중 하나를 할당 받음
-    private FallingPlatform _timmerPlatform;
+    private FallingPlatform _fallingPlatform;
     private BreakablePlatform _breakablePlatform;
     public void Init()
     {
@@ -20,7 +20,7 @@ public class Platform : MonoBehaviour, IReceiver, ISender
         Count++;
 
         //자기 자신의 플랫폼 타입을 받아옴
-        TryGetComponent(out _timmerPlatform);
+        TryGetComponent(out _fallingPlatform);
         TryGetComponent(out _breakablePlatform);
     }
 
@@ -36,7 +36,7 @@ public class Platform : MonoBehaviour, IReceiver, ISender
     public void ApplyByteData(byte byteData)
     {
         //플랫폼 상태 적용
-        if(_timmerPlatform != null)
+        if(_fallingPlatform != null)
         {
             //플랫폼의 상태 데이터 가져오기
             byte state = byteData;
@@ -45,7 +45,7 @@ public class Platform : MonoBehaviour, IReceiver, ISender
             bool isOnStep = (state & (byte)flagPlatformState.IsOnPlatform) != 0;
 
             //확인 여부를 적용.
-            _timmerPlatform.isOnPlatform = isOnStep;
+            _fallingPlatform.IsOnPlatform = isOnStep;
         }
         else if(_breakablePlatform != null)
         {
@@ -56,26 +56,27 @@ public class Platform : MonoBehaviour, IReceiver, ISender
             bool isBroken = (state & (byte)flagPlatformState.IsBrokenPlatform) != 0;
 
             //확인 여부를 적용.
-            _breakablePlatform.IsBreaking = isBroken;
+            _breakablePlatform.isBroken = isBroken;
         }
     }
-    public void SendData(bool stateInfo)
+    public void Send()
     {
-        if (_timmerPlatform != null)
+        if (_fallingPlatform != null)
         {
-            byte[] bff = Server.Instance.SerializationPlatformStateData(Id, stateInfo, false);
-            Server.Instance.SnedData(bff);
+            bool isOnPlatform = _fallingPlatform.IsOnPlatform;
+            byte[] bff = Server.Instance.SerializationPlatformStateData(Id, isOnPlatform, false);
+            Server.Instance.Send(bff);
         }
         else if (_breakablePlatform != null)
         {
-            byte[] bff = Server.Instance.SerializationPlatformStateData(Id, false, stateInfo);
-            Server.Instance.SnedData(bff);
+            bool IsBreaking = _breakablePlatform.isBroken;
+            byte[] bff = Server.Instance.SerializationPlatformStateData(Id, false, IsBreaking);
+            Server.Instance.Send(bff);
         }
     }
-    public void SendData()
+    public void ApplyByteData(byte byteData1, byte byteData2)
     {
         throw new NotImplementedException("If you want to use this method, you must override it.");
-
     }
 }
 

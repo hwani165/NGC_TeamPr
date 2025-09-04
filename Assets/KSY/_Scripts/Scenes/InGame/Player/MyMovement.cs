@@ -96,7 +96,7 @@ public class MyMovement : Player
             MoveX = 0;
         }
 
-        base.SendData();
+        base.Send();
     }
 
     public void OnJump()
@@ -107,7 +107,7 @@ public class MyMovement : Player
             _rbCompo.linearVelocityY = jumpForce;
             currentJumpCount--;
 
-            base.SendData();
+            base.Send();
         }
     }
 
@@ -157,7 +157,7 @@ public class MyMovement : Player
                 _rbCompo.linearVelocity = Vector2.zero;
             }
 
-            base.SendData();
+            base.Send();
 
             if (IsDashing) return;
 
@@ -177,7 +177,7 @@ public class MyMovement : Player
             IsDashing = true;
             _dashTimer = dashDuration;
 
-            base.SendData();
+            base.Send();
 
         }
     }

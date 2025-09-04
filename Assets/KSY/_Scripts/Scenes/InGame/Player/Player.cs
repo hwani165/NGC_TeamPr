@@ -37,15 +37,11 @@ public class Player : MonoBehaviour, IReceiver, ISender
             input.defaultActionMap = _actionMap;
             input.actions.Enable();
         }
+        //만약 내가 other (수신만 받는 객체)라면
         else
         {
-            //아니라면 수신받는 movement 추가
+            //수신용 플레이어 움직임을 넣음
             _otherMovement = gameObject.AddComponent<OtherMovement>();
-        }
-
-        //만약 내가 other (수신만 받는 객체)라면
-        if (_otherMovement != null)
-        {
             //메세지가 브로드 캐스팅 되었을 때 호출 (자기자신 포함)
             Backend.Match.OnMatchRelay += ReceiveData;
         }
@@ -60,12 +56,10 @@ public class Player : MonoBehaviour, IReceiver, ISender
             byte[] receiveBff = args.BinaryUserData;
             ByteBuffer _receiveBff = new ByteBuffer(receiveBff);
 
-            //Debug.Log($"PlayerMessageBufferHasIdentifier: {PlayerMessage.PlayerMessageBufferHasIdentifier(_receiveBff)}");
-            //Debug.Log($"PlatformMessageBufferHasIdentifier: {PlatformMessage.PlatformMessageBufferHasIdentifier(_receiveBff)}");
-
             //플레이어 관련 데이터가 맞다면 수신 시도
             if (PlayerMessage.PlayerMessageBufferHasIdentifier(_receiveBff))
             {
+                //다른 플레이어에 수신받은 데이터를 적용함.
                 Server.Instance.ApplyData(_receiveBff, _otherMovement);
             }
             //플랫폼 관련 데이터라면 넘겨주기;
@@ -78,7 +72,6 @@ public class Player : MonoBehaviour, IReceiver, ISender
     }
     public void GetUserData(UserData userData)
     {
-        //Debug.Log($"Player Data Set : {userData}");
         //userData 할당
         _myData = userData;
 
@@ -102,11 +95,7 @@ public class Player : MonoBehaviour, IReceiver, ISender
     {
         throw new NotImplementedException("If you want to use this method, you must override it.");
     }
-    public void SendData(bool boolenData)
-    {
-        throw new NotImplementedException("If you want to use this method, you must override it.");
-    }
-    public virtual void SendData()
+    public virtual void Send()
     {
         if (_myMovement == null) 
         { 
@@ -114,7 +103,6 @@ public class Player : MonoBehaviour, IReceiver, ISender
             Debug.Log($"_myMovement is not null : {_myMovement != null}");
             Debug.Log($"_myMovement.DashDir is not null : {_myMovement.DashDir != null}");
         }
-
         Vector2 dashDir = _myMovement.DashDir;
         sbyte moveX = _myMovement.MoveX;
         bool usingJump = _myMovement.UsingJump;
@@ -122,6 +110,10 @@ public class Player : MonoBehaviour, IReceiver, ISender
         bool isDashing = _myMovement.IsDashing;
 
         byte[] bff = Server.Instance.SerializationPlayerMovementData(dashDir, moveX, usingJump, usingDash, isDashing);
-        Server.Instance.SnedData(bff);
+        Server.Instance.Send(bff);
+    }
+    public void ApplyByteData(byte byteData1, byte byteData2)
+    {
+        throw new NotImplementedException("If you want to use this method, you must override it.");
     }
 }

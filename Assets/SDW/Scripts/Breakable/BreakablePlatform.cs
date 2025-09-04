@@ -13,7 +13,7 @@ namespace SDW
         private Joint2D joint;
 
         // network data
-        public bool IsBreaking = false;
+        public bool isBroken = false;
         private void Awake()
         {
             blockLayer = Mathf.RoundToInt(Mathf.Log(breakableLayer.value, 2));
@@ -44,8 +44,8 @@ namespace SDW
             if (collision.gameObject.layer != blockLayer) return;
 
             //부서졌는가?
-            IsBreaking = true;
-            SendData();
+            isBroken = true;
+            Send();
 
             Hit();
         }
