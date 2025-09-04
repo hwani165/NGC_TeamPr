@@ -9,7 +9,7 @@ public class CircleHpBarScript : MonoBehaviour
     private Tween hpTween;
     private float health;
     private const float tweenDuration = 0.3f;
-    [SerializeField]private TextMeshProUGUI hpText;
+    [SerializeField] private TextMeshProUGUI hpText;
     private void Start()
     {
         StartSetting();
