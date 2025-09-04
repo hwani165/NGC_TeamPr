@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ItemShotScript : MonoBehaviour
 {
-    public bool isItemHold; // 아이템을 들고있는가?
+    public bool isItemHold; // 아이템을 들었는가?
     public bool isItemShot;// 아이템을 던졋는가?
 
     [SerializeField] private Transform holdTransform;
@@ -168,7 +168,6 @@ public class ItemShotScript : MonoBehaviour
 
     private void Shoot()
     {
-        isItemHold = false;
         isItemShot = true;
         if (holdObject == null) return;
         Vector2 dir = GetInputDirection();
