@@ -191,8 +191,8 @@ MonoBehaviour:
   shootingdir: {x: 0, y: 0}
   thisisnoforceobject: 0
   thisownerfading: 1
-  damage: -20
-  knockbackmulti: 0
+  damage: -35
+  knockbackmulti: 3
   explosion: {fileID: 8299260641495768406, guid: bf69bb84027656448baa2e32a65f6d58, type: 3}
 --- !u!114 &1752336488842498954
 MonoBehaviour:
