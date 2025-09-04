@@ -3947,7 +3947,7 @@ MonoBehaviour:
   countDownPanel: {fileID: 1108369608}
   fadingSlide: {fileID: 2082729100}
   countDownText: {fileID: 1542741304}
-  countDownTime: 10
+  countDownTime: 3
 --- !u!1 &1463367041
 GameObject:
   m_ObjectHideFlags: 0

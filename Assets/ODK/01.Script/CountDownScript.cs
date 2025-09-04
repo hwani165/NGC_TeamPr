@@ -20,6 +20,7 @@ public class CountDownScript : MonoBehaviour
 
     private IEnumerator FadingSlideOpen()
     {
+        isCounting = true;
         yield return new WaitForSeconds(1f);
         fadingSlide.transform.DOMoveY(3000f, 2f).SetEase(Ease.OutExpo);
     }
@@ -32,7 +33,7 @@ public class CountDownScript : MonoBehaviour
     public void StartCountDown()
     {
         currentTime = countDownTime;
-        isCounting = true;
+        
         UpdateCountDownText();
         StartCoroutine(FadingSlideOpen());
     }
@@ -61,6 +62,11 @@ public class CountDownScript : MonoBehaviour
     }
     private void UpdateCountDownText()
     {
+        if (currentTime <= 0f)
+        {
+            countDownText.text = "GO!";
+            return;
+        }
         countDownText.text = Mathf.CeilToInt(currentTime).ToString();
     }
 }
