@@ -21,17 +21,19 @@ public class OtherMovement : Player
 
     private bool _isGrounded;
     #region NetWorkData
-    //Á¡ÇÁ¸¦ Çß´Â°¡? (Is Jumping Now? <bool>)
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß´Â°ï¿½? (Is Jumping Now? <bool>)
     private bool _usingJump = false;
-    //´ë½¬¸¦ ÇÏ°í ÀÖ´Â°¡?(Is Dashing Now? <bool>)
+    //ï¿½ë½¬ï¿½ï¿½ ï¿½Ï°ï¿½ ï¿½Ö´Â°ï¿½?(Is Dashing Now? <bool>)
     private bool _isDashing;
-    //´ë½¬ÇÒ ¹æÇâ(Dash Direction<Vec2>)
+    //ï¿½ë½¬ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(Dash Direction<Vec2>)
     private Vector2 _dashDir;
-    //´ë½¬¸¦ »ç¿ëÇß´Â°¡? (Use Dash? <bool>)
+    //ï¿½ë½¬ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ß´Â°ï¿½? (Use Dash? <bool>)
     private bool CanDash = false;
-    //ÀÌµ¿ÇÏ°í ÀÖ´Â ¹æÇâ (Now Move.X Direction <Sbyte>)
+    //ï¿½Ìµï¿½ï¿½Ï°ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ (Now Move.X Direction <Sbyte>)
+    private bool _usingDownDash = false;
     #endregion
 
+    private bool _startDashTimer = false;
     private float _dashTimer;
 
     private void Start()
@@ -41,16 +43,33 @@ public class OtherMovement : Player
         groundMask = LayerMask.GetMask("Ground");
         groundCheckVecSize = new Vector2(0.5f, 1.05f);
     }
+    private void FixedUpdate()
+    {
+        if (_startDashTimer)
+        {
+            _dashTimer += Time.fixedDeltaTime;
+            GroundDash();
+            AirDash();
+        }
+        else
+        {
+            _dashTimer = 0f;
+        }
+    }
+
     private void Update()
     {
-        //if (Keyboard.current.sKey.wasPressedThisFrame && _isGrounded)
-        //{
-        //    _rbCompo.AddForce(Vector2.down * gravity * 1.5f, ForceMode2D.Impulse);
-        //}
+
+        if (Keyboard.current.sKey.wasPressedThisFrame && _isGrounded && _usingDownDash)
+        {
+            _rbCompo.AddForce(Vector2.down * gravity * 1.5f, ForceMode2D.Impulse);
+        }
+        else if (Keyboard.current.sKey.wasReleasedThisFrame)
+        {
+            _usingDownDash = false;
+        }
 
         OnGround();
-        GroundDash();
-        AirDash();
         if (!_isDashing)
         {
             Vector2 velocity = _rbCompo.linearVelocity;
@@ -80,11 +99,12 @@ public class OtherMovement : Player
     {
         if (_isDashing && _isGrounded)
         {
+            _startDashTimer = true;
             _rbCompo.AddForce(new Vector2(_dashDir.x, 0) * dashForce, ForceMode2D.Impulse);
-            _dashTimer -= Time.fixedDeltaTime;
             if (_dashTimer <= 0f)
             {
                 _isDashing = false;
+                _startDashTimer = false;
             }
             return;
         }
@@ -94,13 +114,14 @@ public class OtherMovement : Player
     {
         if (_isDashing && !_isGrounded)
         {
+            _startDashTimer = true;
             _rbCompo.linearVelocity = _dashDir * dashForce / 2f;
-            _dashTimer -= Time.fixedDeltaTime;
             if (_dashTimer <= 0f)
             {
                 _isDashing = false;
+                _startDashTimer = false;
             }
-            GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);
+            //air dash effect
             return;
         }
     }
@@ -109,25 +130,21 @@ public class OtherMovement : Player
     {
         if (!CanDash)
         {
+
+            Vector2 inputDir = _moveVec.normalized;
             if (_isGrounded)
             {
                 _rbCompo.linearVelocityX = 0;
-                CanDash = true;
-            }
-            else
-            {
-                CanDash = false;
-                _rbCompo.linearVelocity = Vector2.zero;
-            }
-            if (_isDashing) return;
-
-            Vector2 inputDir = _moveVec.normalized;
-
-            if (_isGrounded)
-            {
+                //CanDash = true;
                 if (inputDir == Vector2.zero)
                     inputDir = Vector2.down;
             }
+            else
+            {
+                //CanDash = false;
+                _rbCompo.linearVelocity = Vector2.zero;
+            }
+            if (_isDashing) return;
             else
             {
                 inputDir = new Vector2(Mathf.Sign(_moveVec.x), 0);
@@ -136,11 +153,13 @@ public class OtherMovement : Player
             _dashDir = inputDir.normalized;
             _isDashing = true;
             _dashTimer = dashDuration;
+            GroundDash();
+            AirDash();
         }
     }
     public override void ApplyByteData(byte state)
     {
-        //´ë½¬¸¦ Çß´Â°¡?
+        //ï¿½ë½¬ï¿½ï¿½ ï¿½ß´Â°ï¿½?
         bool usingDash = (state & (byte)flagPlayerMovementState.UsingDash) != 0;
         CanDash = usingDash;
         if (!_isDashing && usingDash)
@@ -151,11 +170,11 @@ public class OtherMovement : Player
             AirDash();
         }
 
-        //´Þ¸®°í ÀÖ´Â°¡?
+        //ï¿½Þ¸ï¿½ï¿½ï¿½ ï¿½Ö´Â°ï¿½?
         bool isDashing = (state & (byte)flagPlayerMovementState.IsDashing) != 0;
         _isDashing = isDashing;
 
-        //Á¡ÇÁ¸¦ ÇÏ°í ÀÖ´Â°¡?
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï°ï¿½ ï¿½Ö´Â°ï¿½?
         bool isJumping = (state & (byte)flagPlayerMovementState.IsJumping) != 0;
         if (_isGrounded && isJumping)
         {

@@ -105,9 +105,9 @@ public class Server : SingletonBehaviour<Server>
     {
         _bfInGame.SnedData(bff);
     }
-    public void ReceiveData(ByteBuffer bff, IReceiver Receiver)
+    public void ApplyData(ByteBuffer bff, IReceiver Receiver)
     {
-        _bfInGame.ReceiveData(bff, Receiver);
+        _bfInGame.ApplyData(bff, Receiver);
     }
     public bool TryInitialize()
     {

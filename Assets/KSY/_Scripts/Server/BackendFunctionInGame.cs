@@ -141,7 +141,7 @@ public class BackendFunctionInGame : MonoBehaviour
     }
 
     //데이터 수신
-    public void ReceiveData(ByteBuffer bff, IReceiver Receiver) 
+    public void ApplyData(ByteBuffer bff, IReceiver Receiver) 
     {
         //버퍼가 비어있다면 반환
         if (bff == null) return;

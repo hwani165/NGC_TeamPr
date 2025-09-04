@@ -139,7 +139,6 @@ public class MyMovement : Player
             return;
         }
     }
-
     public void OnDash(InputValue value)
     {
         if (currentJumpCount <= 0) return;

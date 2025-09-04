@@ -1,6 +1,7 @@
 using System;
 using BackEnd;
 using BackEnd.Tcp;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static UnityEngine.EventSystems.EventTrigger;
@@ -13,10 +14,12 @@ public class Game : SingletonBehaviour<Game>
 
     public Map Map;
 
+    string[] mapNames = { "SDW_Map_1", "SDW_Map_2", "SDW_Map_3" };
+
     //씬이 다 로드되었다면 true
     private bool _accountMenuLoaded;
     private bool _mainMenuLoaded;
-    private bool _inGameLoaded;
+    private bool _mapLoaded;
     private void Awake()
     {
         BackendReturnObject Initialize = Backend.Initialize();
@@ -53,12 +56,24 @@ public class Game : SingletonBehaviour<Game>
                     {
                         //맵에 있는 플랫폼 모음 가져오기
                         //if (!GameObject.Find("Map").TryGetComponent(out Map)) Map = GameObject.Find("Map").AddComponent<Map>();
-                        _inGameLoaded = true;
+                        _mapLoaded = true;
                         break;
                     }
                 case "SDW_Map_1":
                     {
-                        _inGameLoaded = true;
+                        _mapLoaded = true;
+                        if (!GameObject.Find("Map").TryGetComponent(out Map)) Map = GameObject.Find("Map").AddComponent<Map>();
+                        break;
+                    }
+                case "SDW_Map_2":
+                    {
+                        _mapLoaded = true;
+                        if (!GameObject.Find("Map").TryGetComponent(out Map)) Map = GameObject.Find("Map").AddComponent<Map>();
+                        break;
+                    }
+                case "SDW_Map_3":
+                    {
+                        _mapLoaded = true;
                         if (!GameObject.Find("Map").TryGetComponent(out Map)) Map = GameObject.Find("Map").AddComponent<Map>();
                         break;
                     }
@@ -77,9 +92,14 @@ public class Game : SingletonBehaviour<Game>
             Server.Instance.InitOtherData();
 
             //씬이 다 로드되고나서 실행되도록 이벤트 등록
-            if (_inGameLoaded)
+            if (_mapLoaded)
+            {
                 InitPlayer();
-            else SceneManager.sceneLoaded += InitPlayer;
+            }
+            else
+            {
+                SceneManager.sceneLoaded += InitPlayer;
+            }
         };
     }
     private void InitPlayer()
@@ -186,7 +206,10 @@ public class Game : SingletonBehaviour<Game>
     {
         //씬 로드
         //SceneManager.LoadScene("InGame");
-        SceneManager.LoadScene("SDW_Map_1");  
+
+        //int mapIndex = UnityEngine.Random.Range(0, 4);
+        //SceneManager.LoadScene(_maps[mapIndex]); 
+        SceneManager.LoadScene("SDW_Map_1"); 
     }
     public void ExitAccountMenu()
     {

@@ -31,6 +31,6 @@ public class Object : MonoBehaviour
 
     private void OnDestroy()
     {
-            Spawner.itemCount--;
+        Spawner.itemCount--;
     }
 }

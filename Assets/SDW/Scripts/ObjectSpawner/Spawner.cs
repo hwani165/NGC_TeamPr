@@ -47,6 +47,5 @@ public class Spawner : MonoBehaviour
                 itemCount++;
             }
         }
-
     }
 }

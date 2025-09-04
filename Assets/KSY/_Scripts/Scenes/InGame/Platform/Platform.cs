@@ -71,7 +71,6 @@ public class Platform : MonoBehaviour, IReceiver, ISender
             byte[] bff = Server.Instance.SerializationPlatformStateData(Id, false, stateInfo);
             Server.Instance.SnedData(bff);
         }
-
     }
     public void SendData()
     {

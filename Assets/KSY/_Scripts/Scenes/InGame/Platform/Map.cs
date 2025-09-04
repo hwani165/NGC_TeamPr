@@ -28,16 +28,12 @@ public class Map : MonoBehaviour
             _platfomrs.Add(platform.Id, platform);
         }
     }
-    public void MatchData(ByteBuffer bff)
+    public Platform FindPlatform(byte id)
     {
-        //(송신한)수신 받을 플랫폼의 아이디를 찾음
-        var message = PlatformMessage.GetRootAsPlatformMessage(bff);
-        byte senderId = message.SenderInfo.Value.Id;
+        //아이디 값을 통해 플랫폼을 찾음
+        Platform platform = _platfomrs[id];
+        return platform;
 
-        //(송신한)수신 받을 플랫폼을 찾음
-        var receiver = _platfomrs[senderId];
-
-        Server.Instance.ReceiveData(bff, receiver);
     }
     internal void SetPos()
     {
