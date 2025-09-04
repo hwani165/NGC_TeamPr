@@ -12,23 +12,13 @@ public class TimerScript : MonoBehaviour
     private void Start()
     {
         timerText = GetComponent<TextMeshProUGUI>();
-        StartTimer();
+        
         UpdateTimerDisplay();
     }
 
     private void Update()
     {
-        if (isReversed)
-        {
-            elapsedTime -= Time.deltaTime;
-            if (elapsedTime < 0f)
-            {
-                elapsedTime = 0f;
-                isReversed = false;
-            }
-            UpdateTimerDisplay();
-            return;
-        }
+
         if (isRunning)
         {
             elapsedTime += Time.deltaTime;
@@ -38,7 +28,7 @@ public class TimerScript : MonoBehaviour
 
     public void StartTimer()
     {
-        elapsedTime = 6f;
+        elapsedTime = 0f;
         isRunning = true;
         UpdateTimerDisplay();
     }
