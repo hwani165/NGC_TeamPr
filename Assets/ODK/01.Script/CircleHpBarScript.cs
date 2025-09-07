@@ -22,7 +22,8 @@ public class CircleHpBarScript : MonoBehaviour
 
     public void SetHP(float newHealth)
     {
-        hpText.text = newHealth+"%";
+        hpText.text = newHealth.ToString("F1") + "%";
+
         int segments = hpBarImage.Length;
         float maxHp = segments * 100f;
         this.health = Mathf.Clamp(newHealth, 0f, maxHp);
