@@ -54,35 +54,35 @@ public class Game : SingletonBehaviour<Game>
                         _mainMenuLoaded = true;
                         break;
                     }
-                case "InGame":
-                    {
-                        //¸Ê¿¡ ÀÖ´Â ÇÃ·§Æû ¸ðÀ½ °¡Á®¿À±â
-                        //if (!GameObject.Find("Map").TryGetComponent(out Map)) Map = GameObject.Find("Map").AddComponent<Map>();
-                        MapLoaded = true;
-                        break;
-                    }
                 case "KSY_Map_1":
                     {
                         MapLoaded = true;
                         if (!GameObject.Find("Map").TryGetComponent(out Map)) Map = GameObject.Find("Map").AddComponent<Map>();
+                        OnEnterInGame?.Invoke();
                         break;
                     }
                 case "SDW_Map_1":
                     {
                         MapLoaded = true;
                         if (!GameObject.Find("Map").TryGetComponent(out Map)) Map = GameObject.Find("Map").AddComponent<Map>();
+                        OnEnterInGame?.Invoke();
+
                         break;
                     }
                 case "SDW_Map_2":
                     {
                         MapLoaded = true;
                         if (!GameObject.Find("Map").TryGetComponent(out Map)) Map = GameObject.Find("Map").AddComponent<Map>();
+                        OnEnterInGame?.Invoke();
+
                         break;
                     }
                 case "SDW_Map_3":
                     {
                         MapLoaded = true;
                         if (!GameObject.Find("Map").TryGetComponent(out Map)) Map = GameObject.Find("Map").AddComponent<Map>();
+                        OnEnterInGame?.Invoke();
+
                         break;
                     }
                 default:
