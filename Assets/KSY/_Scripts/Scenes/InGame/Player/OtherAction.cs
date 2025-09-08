@@ -8,7 +8,7 @@ public class OtherAction : Player
     //network
     public bool IsItemHolding; // 아이템을 들었는가?
     public bool IsItemShoting;// 아이템을 던졌는가?
-    private byte _chargeForce = 0;
+    private byte _chargeGauge = 0;
     private Vector2 _throwDir;
 
     [SerializeField] private Transform HoldTransform;
@@ -22,7 +22,7 @@ public class OtherAction : Player
     [SerializeField] private GameObject ChargeUiObject;
     [SerializeField] private Image ChargeImage;
 
-    private float _chargeGauge = 0f;
+
 
     private void Awake()
     {
@@ -56,13 +56,23 @@ public class OtherAction : Player
     {
         Debug.Log($"GameObject : {item}, Vector2  : {dir}, byte : {force}");
         if (HoldObject == null) return;
+
+        Item itemScript = item.GetComponent<Item>();
+        if (_chargeGauge >= 3)
+        {
+            itemScript.preowner = transform;
+            itemScript.shootingdir = Vector2.zero;
+            itemScript.Eat();
+            HoldObject = null;
+            return;
+        }
+
         if (dir == Vector2.zero) return;
         Debug.Log("Start ThrowItem");
 
         HoldObject.transform.parent = null;
         HoldObject.transform.position = transform.position + ((Vector3)dir * 1.25f);
 
-        Item itemScript = item.GetComponent<Item>();
         itemScript.isshooting = true;
         itemScript.preowner = transform;
         itemScript.CooldownActive();
@@ -72,7 +82,7 @@ public class OtherAction : Player
         //아이템 물리연산 O
         hrb.simulated = true;
         //던지는 방향과 힘을 정함
-        itemScript.shootingdir = dir * _chargeForce;
+        itemScript.shootingdir = dir * _chargeGauge;
 
         if (!itemScript.thisisnoforceobject)
         {
@@ -99,12 +109,12 @@ public class OtherAction : Player
         HoldObject = Game.Instance.Map.Spawner.FindItem(id);
         //Debug.Log("Success Apply ushort data");
     }
-    public override void ApplyByteData(byte state, byte force)
+    public override void ApplyByteData(byte state, byte charge)
     {
         //Debug.Log("Success Apply Byte data");
         bool isHolding = (state & (byte)flagActionState.IsHolding) != 0;
         bool isThrowing = (state & (byte)flagActionState.IsThrowing) != 0;
-        _chargeForce = force;
+        _chargeGauge = charge;
         if (isHolding)
         {
             Debug.Log($"isHolding : {isHolding}");
@@ -113,7 +123,7 @@ public class OtherAction : Player
         if (isThrowing)
         {
             Debug.Log($"isThrowing : {isThrowing}");
-            ThrowItem(HoldObject, _throwDir, _chargeForce);
+            ThrowItem(HoldObject, _throwDir, _chargeGauge);
         }
     }
     public override void ApplySbyteData(sbyte dirX, sbyte dirY)
