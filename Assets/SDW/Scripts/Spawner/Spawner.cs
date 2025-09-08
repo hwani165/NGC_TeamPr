@@ -67,8 +67,8 @@ public class Spawner : MonoBehaviour, IReceiver, ISender
                 //랜덤한 아이템 스폰 포인트의 위치를 가져옴
                 Vector2 spawnPos = SpawnerPoints[_spawnPointIndex].transform.position;
                 //가져온 아이템을 스폰 포인트의 위치로 생성시킴.
-                GameObject item = Instantiate(itemPrefab, spawnPos, Quaternion.identity);
-                Items.Add(item.GetComponent<Item>().Id,item);
+                spawnObject = Instantiate(itemPrefab, spawnPos, Quaternion.identity);
+                Items.Add(_spawnItemId, spawnObject);
             }
         }
     }
@@ -95,14 +95,14 @@ public class Spawner : MonoBehaviour, IReceiver, ISender
                 {
                     //0번부터 아이템 배열의 길이까지 인덱스를 랜덤하게 구해서 랜덤한 아이템 객체를 가져옴
                     _spawnItemIndex = (byte)Random.Range(0, ItemPrefabs.Length);
-                    GameObject item = ItemPrefabs[_spawnItemIndex];
-                    Item sc = GetComponent<Item>();
-                    _spawnItemId = sc.Id;
+                    GameObject itemPrefab = ItemPrefabs[_spawnItemIndex];
+
                     //랜덤한 아이템 스폰 포인트의 위치를 가져옴
                     Vector3 spawnPos = SpawnerPoints[_spawnPointIndex].transform.position;
                     //가져온 아이템을 스폰 포인트의 위치로 생성시킴.
-                    spawnObject = Instantiate(item, spawnPos, Quaternion.identity);
-                    Items.Add(sc.Id, item);
+                    spawnObject = Instantiate(itemPrefab, spawnPos, Quaternion.identity);
+                    _spawnItemId = spawnObject.GetComponent<Item>().Id;
+                    Items.Add(_spawnItemId, spawnObject);
                     //어떤 아이템을 어떤 위치로 생성시켰는지 전송.
                     Send();
                 }
