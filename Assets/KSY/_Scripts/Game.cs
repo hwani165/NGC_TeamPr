@@ -19,7 +19,9 @@ public class Game : SingletonBehaviour<Game>
     //씬이 다 로드되었다면 true
     private bool _accountMenuLoaded;
     private bool _mainMenuLoaded;
-    private bool _mapLoaded;
+    public bool MapLoaded;
+    public bool AllUserReady { get; private set; }
+
     private void Awake()
     {
         BackendReturnObject Initialize = Backend.Initialize();
@@ -27,8 +29,8 @@ public class Game : SingletonBehaviour<Game>
         if (!Initialize.IsSuccess())
         {
             //초기화에 실패했을 때 처리
-            UIManager.Instance.ShowUI("Retry");
-            UIManager.Instance.UpdateText("Retry/Text_ErrorInfo", "Connection failed. \nPlease try again");
+            //UIManager.Instance.ShowUI("Retry");
+            //UIManager.Instance.UpdateText("Retry/Text_ErrorInfo", "Connection failed. \nPlease try again");
         }
     }
     private void Start()
@@ -56,24 +58,30 @@ public class Game : SingletonBehaviour<Game>
                     {
                         //맵에 있는 플랫폼 모음 가져오기
                         //if (!GameObject.Find("Map").TryGetComponent(out Map)) Map = GameObject.Find("Map").AddComponent<Map>();
-                        _mapLoaded = true;
+                        MapLoaded = true;
+                        break;
+                    }
+                case "KSY_Map_1":
+                    {
+                        MapLoaded = true;
+                        if (!GameObject.Find("Map").TryGetComponent(out Map)) Map = GameObject.Find("Map").AddComponent<Map>();
                         break;
                     }
                 case "SDW_Map_1":
                     {
-                        _mapLoaded = true;
+                        MapLoaded = true;
                         if (!GameObject.Find("Map").TryGetComponent(out Map)) Map = GameObject.Find("Map").AddComponent<Map>();
                         break;
                     }
                 case "SDW_Map_2":
                     {
-                        _mapLoaded = true;
+                        MapLoaded = true;
                         if (!GameObject.Find("Map").TryGetComponent(out Map)) Map = GameObject.Find("Map").AddComponent<Map>();
                         break;
                     }
                 case "SDW_Map_3":
                     {
-                        _mapLoaded = true;
+                        MapLoaded = true;
                         if (!GameObject.Find("Map").TryGetComponent(out Map)) Map = GameObject.Find("Map").AddComponent<Map>();
                         break;
                     }
@@ -88,12 +96,10 @@ public class Game : SingletonBehaviour<Game>
         //모든 유저가 준비되었을 때 호출되는 이벤트
         Backend.Match.OnMatchInGameStart = () => {
 
-            //플레이어 데이터 초기화
-            Server.Instance.InitOtherData();
-
             //씬이 다 로드되고나서 실행되도록 이벤트 등록
-            if (_mapLoaded)
+            if (MapLoaded)
             {
+                AllUserReady = true;
                 InitPlayer();
             }
             else
@@ -154,8 +160,6 @@ public class Game : SingletonBehaviour<Game>
     }
     private void InitPlayer(Scene s, LoadSceneMode lsm)
     {
-        Debug.Log($"InitPlayer -> SuperGameer : {Backend.Match.IsSuperGamer()}");
-
         //********내 데이터 처리********
 
         //씬에서 플레이어 오브젝트 P1을 찾음
@@ -225,7 +229,7 @@ public class Game : SingletonBehaviour<Game>
         ////가져온 이름의 씬(맵)을 로드함.
         //SceneManager.LoadScene(mapName);  
 
-        SceneManager.LoadScene("SDW_Map_1");
+        SceneManager.LoadScene("KSY_Map_1");
     }
     public void ExitAccountMenu()
     {

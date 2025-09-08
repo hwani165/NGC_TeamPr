@@ -2,7 +2,8 @@ using System;
 using BackEnd;
 using BackEnd.Tcp;
 using Google.FlatBuffers;
-
+using InputData.Map;
+using InputData.Player;
 using UnityEngine;
 public enum MatchEventType
 {
@@ -13,7 +14,6 @@ public enum MatchEventType
     OnFindedMatch,
     //매칭 캔슬시
     OnMatchCanceled
-
 }
 public class Server : SingletonBehaviour<Server>
 {
@@ -22,10 +22,7 @@ public class Server : SingletonBehaviour<Server>
     private BackendFunctionMatch _bfMatch;
     private UserData _myData = new UserData();
     private UserData _otherData = new UserData();
-
     public static bool IsSuperGamer { get; private set; } = false;
-
-    public MatchUserGameRecord OnterInfo;
     private void Awake()
     {
         base.Awake();
@@ -56,10 +53,8 @@ public class Server : SingletonBehaviour<Server>
             IsSuperGamer = Backend.Match.IsSuperGamer();
         };
     }
-    public void InitOtherData()
+    public void InitOtherData(MatchUserGameRecord otherInfo)
     {
-        var otherInfo = this.OnterInfo;
-
         string nickname = otherInfo.m_nickname;
 
         //받아왔던 데이터를 할당.
@@ -113,9 +108,13 @@ public class Server : SingletonBehaviour<Server>
     {
         _bfInGame.Send(bff);
     }
-    public void ApplyData(ByteBuffer bff, IReceiver Receiver)
+    public void ApplyData(PlayerMessage message, IReceiver Receiver, PlayerMessageType tpye)
     {
-        _bfInGame.ApplyData(bff, Receiver);
+        _bfInGame.ApplyData(message, Receiver, tpye);
+    }
+    public void ApplyData(MapMessage message, IReceiver Receiver, MapMessageType type)
+    {
+        _bfInGame.ApplyData(message, Receiver, type);
     }
     public bool TryInitialize()
     {
@@ -187,17 +186,17 @@ public class Server : SingletonBehaviour<Server>
     {
         return _bfInGame.SerializationPlatformStateData(id, isOnPlatform, isBrokenPlatform);
     }
-    public byte[] SerializationSpawnerInfoData(byte spawnItemIndex,byte spawnPotinIndex)
+    public byte[] SerializationSpawnerInfoData(ushort spawnItemId, byte spawnItemIndex,byte spawnPotinIndex)
     {
-        return _bfInGame.SerializationSpawnerInfoData(spawnItemIndex, spawnPotinIndex);
+        return _bfInGame.SerializationSpawnerInfoData(spawnItemId, spawnItemIndex, spawnPotinIndex);
     }
-    public byte[] SerializationPlayerItemData(bool hasItem, bool isShootingItem)
+    public byte[] SerializationActionData(ushort itemId, bool isHolding, bool isThrowing, byte charge, Vector2 throwDir)
     {
-        return _bfInGame.SerializationPlayerItemData(hasItem, isShootingItem);
+        return _bfInGame.SerializationActionData(itemId, isHolding, isThrowing, charge, throwDir);
     }
-    public byte[] SerializationPlayerMovementData(Vector2 dashDir,sbyte dataMoveX, bool dataIsGrounded, bool dataCanDash, bool dataIsDashing)
+    public byte[] SerializationPlayerMovementData(Vector2 dashDir,sbyte moveX, bool usingJump, bool usingDash, bool isDashing)
     {
-        return _bfInGame.SerializationPlayerMovementData(dashDir,dataMoveX, dataIsGrounded, dataCanDash, dataIsDashing);
+        return _bfInGame.SerializationPlayerMovementData(dashDir, moveX, usingJump, usingDash, isDashing);
     }
 }
 

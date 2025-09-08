@@ -11,7 +11,7 @@ namespace SDW
         private Joint2D joint;
 
         // network data
-        public bool IsBreaking = false;
+        public bool IsBroken = false;
         private void Awake()
         {
             joint = GetComponent<Joint2D>();
@@ -43,7 +43,7 @@ namespace SDW
             if (collision.gameObject.layer != LayerMask.NameToLayer("Item")) return;
 
             //부서졌는가?
-            IsBreaking = true;
+            IsBroken = true;
             //SendData();
 
             Hit();

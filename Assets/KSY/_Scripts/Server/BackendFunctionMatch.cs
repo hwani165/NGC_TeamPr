@@ -86,7 +86,7 @@ public class BackendFunctionMatch : MonoBehaviour
 
             //아니라면 상대방 정보를 가져옴
             MatchUserGameRecord otherInfo = args.GameRecord;
-            Server.Instance.OnterInfo = otherInfo;
+            Server.Instance.InitOtherData(otherInfo);
         };
 
         //유저가 게임방 접속에 성공했을 때 입장한 유저에게만 최초 1회 호출되는 이벤트 핸들러입니다.
@@ -105,9 +105,7 @@ public class BackendFunctionMatch : MonoBehaviour
             {
                 //상대방 정보를 가져옴
                 MatchUserGameRecord otherInfo = Gamerecords.Find((r) => r.m_nickname != myNickname);
-
-                //Debug.Log($"{otherInfo.m_nickname} != {myNickname}");
-                Server.Instance.OnterInfo = otherInfo;
+                Server.Instance.InitOtherData(otherInfo);
             }
 
             //게임방 접속 성공 처리
@@ -147,7 +145,7 @@ public class BackendFunctionMatch : MonoBehaviour
             //예외 에러처리
             else
             {
-                Debug.LogError("Error : To enter in gameserver.");
+                Debug.LogError("Error : failed enter in gamer server");
             }
         };
 

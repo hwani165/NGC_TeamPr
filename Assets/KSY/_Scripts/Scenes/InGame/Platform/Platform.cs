@@ -6,7 +6,7 @@ using static BackendFunctionInGame;
 
 public class Platform : MonoBehaviour, IReceiver, ISender
 {
-    public static byte Count = 0;
+    public static byte Counter = 0;
     [field: SerializeField] public byte Id { get; private set; } = 0;
 
     //송/수신 가능한 플랫폼 중 하나를 할당 받음
@@ -15,9 +15,8 @@ public class Platform : MonoBehaviour, IReceiver, ISender
     public void Init()
     {
         //초기화 설정 당시 플랫폼의 개수값을 id 값으로 지정
-        Debug.Log($"Platform Id : {Id}");
-        Id = Count;
-        Count++;
+        Id = Counter;
+        Counter++;
 
         //자기 자신의 플랫폼 타입을 받아옴
         TryGetComponent(out _fallingPlatform);
@@ -56,7 +55,7 @@ public class Platform : MonoBehaviour, IReceiver, ISender
             bool isBroken = (state & (byte)flagPlatformState.IsBrokenPlatform) != 0;
 
             //확인 여부를 적용.
-            _breakablePlatform.isBroken = isBroken;
+            _breakablePlatform.IsBroken = isBroken;
         }
     }
     public void Send()
@@ -69,12 +68,20 @@ public class Platform : MonoBehaviour, IReceiver, ISender
         }
         else if (_breakablePlatform != null)
         {
-            bool IsBreaking = _breakablePlatform.isBroken;
+            bool IsBreaking = _breakablePlatform.IsBroken;
             byte[] bff = Server.Instance.SerializationPlatformStateData(Id, false, IsBreaking);
             Server.Instance.Send(bff);
         }
     }
     public void ApplyByteData(byte byteData1, byte byteData2)
+    {
+        throw new NotImplementedException("If you want to use this method, you must override it.");
+    }
+    public void ApplyUShortData(ushort ushortData)
+    {
+        throw new NotImplementedException("If you want to use this method, you must override it.");
+    }
+    public void ApplySbyteData(sbyte sbyteData1, sbyte sbyteData2)
     {
         throw new NotImplementedException("If you want to use this method, you must override it.");
     }

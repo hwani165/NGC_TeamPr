@@ -23,9 +23,6 @@ public class Map : MonoBehaviour
         //ÇÃ·§Æû °³¼ö ¸¸Å­ µñ¼Å³Ê¸® °ø°£ ¸¶·Ã
         _platfomrs = new Dictionary<byte, Platform>(platforms.Length);
 
-        //Debug.Log($"{platforms} != null : {platforms != null}");
-        //Debug.Log(platforms);
-
         //¸ðµç ÇÃ·§ÆûÀ» ÃÊ±âÈ­ÇÔ
         foreach (var platform in platforms)
         {

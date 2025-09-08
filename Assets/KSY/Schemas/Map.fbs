@@ -6,6 +6,7 @@ table PlatformState {
 }
 
 table SpawnerInfo{
+	spawn_item_id:ushort;
 	spawn_item_index:ubyte;
 	spawn_point_index:ubyte;
 }
