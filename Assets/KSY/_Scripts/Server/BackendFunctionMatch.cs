@@ -115,6 +115,67 @@ public class BackendFunctionMatch : MonoBehaviour
                 Backend.Match.OnSessionOffline = (MatchInGameSessionEventArgs args) => {
                     Game.Instance.EnterAccountMenu();
                 };
+
+                //게임방의 게임이 종료되었을 때 호출되는 이벤트입니다.
+                //서버에서 결과 종합이 끝난 후 모든 클라이언트에서 호출되는 이벤트입니다.
+                //게임 시간이 초과되거나, 모든 클라이언트가 게임에 접속되지 못해 게임방이 파기되는 등 게임 자체가 끝나는 경우에도 호출됩니다.
+                Backend.Match.OnMatchResult = (MatchResultEventArgs args) => {
+                    switch(args.ErrInfo)
+                    {
+                        //결과 종합 성공
+                        case ErrorCode.Success:
+                            {
+
+                                break;
+                            }
+                        //1. 게임 시간 초과(콘솔에서 설정한 매치 제한 시간을 초과한 경우)
+                        //2. 게임 시작 실패(룸 생성 후 모든 유저가 게임에 접속하지 않은 경우)
+                        case ErrorCode.Match_InGame_Timeout:
+                            {
+                                switch(args.Reason)
+                                {
+                                    case "Some gamers are not connected.(0)":
+                                        {
+                                            //게임 시작 실패(룸 생성 후 모든 유저가 게임에 접속하지 않은 경우)
+                                            break;
+                                        }
+                                    case "Timeout":
+                                        {
+                                            //게임 시간 초과(콘솔에서 설정한 매치 제한 시간을 초과한 경우)
+                                            break;
+                                        }
+                                }
+                                break;
+                            }
+                        //1. 결과 종합 실패(모든 유저가 결괏값을 서버로 전송하지 않은 경우)
+                        //2. 결과 종합 실패(결과에 포함되어 있는 승/패 유저 리스트와 실제 팀 유저들이 일치하지 않는 경우)
+                        case ErrorCode.Exception:
+                            {
+                                switch(args.Reason)
+                                {
+                                    case "error: Success, status: 400, reason: {\"errorCode\":\"BadParameterException\",\"message\":\"bad headCount, 잘못된 headCount 입니다\",\"statusCode\":400}":
+                                        {
+
+                                            break;
+                                        }
+                                    case "Success, status: 400, reason: {\"errorCode\":\"BadParameterException\",\"message\":\"bad invalid team infomation, 잘못된 invalid team infomation 입니다\",\"statusCode\":400}":
+                                        {
+
+                                            break;
+                                        }
+
+                                }
+                                break;
+                            }
+                        default:
+                            {
+
+                                break;
+                            }
+
+                    }
+                };
+
                 Game.Instance.EnterInGame();
             }
             //게임방 접속 실패 처리

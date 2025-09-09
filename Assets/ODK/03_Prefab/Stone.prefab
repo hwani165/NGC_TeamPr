@@ -182,7 +182,7 @@ MonoBehaviour:
   - {fileID: 4126250750794429402, guid: 9da0e281e311b1142bcbb49d5bfeec00, type: 3}
   targetLayer:
     serializedVersion: 2
-    m_Bits: 16
+    m_Bits: 1024
   groundLayer:
     serializedVersion: 2
     m_Bits: 64

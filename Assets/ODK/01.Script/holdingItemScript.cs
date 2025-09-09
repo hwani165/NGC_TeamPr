@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Linq;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 public abstract class Item : MonoBehaviour
 {
     public static ushort Counter;
@@ -62,6 +63,8 @@ public abstract class Item : MonoBehaviour
     }
     public virtual IEnumerator Attacking(GameObject target)
     {
+        Debug.Log($"Try Attack {gameObject.name} -> {target.name}");
+
         foreach (var item in effect)
         {
             item.SetActive(true);
@@ -97,7 +100,9 @@ public abstract class Item : MonoBehaviour
 
     private void OnDestroy()
     {
-        Game.Instance.Map.Spawner.Items.Remove(Id);
+
+        //Game.Instance.Map.Spawner.Items.Remove(Id);
+
         Spawner.OnItemCollected?.Invoke();
     }
 }
