@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using DG.Tweening;
 using System.Collections;
+using UnityEngine.Events;
 
 public class CountDownScript : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class CountDownScript : MonoBehaviour
     [SerializeField] private GameObject fadingSlide;
     [SerializeField] private TextMeshProUGUI countDownText;
     [SerializeField] private float countDownTime = 5f;
+    [SerializeField] private UnityEvent onCountDownFinished;
     private float currentTime;
     private bool isCounting = false;
 
@@ -57,6 +59,7 @@ public class CountDownScript : MonoBehaviour
     }
     private IEnumerator CountDownSlideClose()
     {
+        onCountDownFinished?.Invoke();
         yield return new WaitForSeconds(1f);
         countDownPanel.transform.DOMoveY(3000f, 2f).SetEase(Ease.OutExpo);
     }
