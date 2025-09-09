@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -12,17 +13,13 @@ public class Spawner : MonoBehaviour
     [SerializeField] private float spawnertimer;
     [SerializeField] private int maxCount = 5;
 
-    [SerializeField] private Object spawnObject; 
-
     private int itemCount;
     private float currentTimer;
-    private int randomPoint;
 
-    public static Action OnItemSpawned;
-    public static Action OnItemCollected;
+    // 현재 필드에 존재하는 아이템 프리팹 인덱스
+    private HashSet<int> spawnedObjectIndices = new HashSet<int>();
 
-    //network data
-    private sbyte spawnX;
+    public static Action<int> OnItemDestroyed; // 인덱스 전달
 
     private void Start()
     {
@@ -32,14 +29,12 @@ public class Spawner : MonoBehaviour
 
     private void OnEnable()
     {
-        OnItemSpawned += IncreaseItemCount;
-        OnItemCollected += DecreaseItemCount;
+        OnItemDestroyed += OnObjectDestroyed;
     }
 
     private void OnDisable()
     {
-        OnItemSpawned -= IncreaseItemCount;
-        OnItemCollected -= DecreaseItemCount;
+        OnItemDestroyed -= OnObjectDestroyed;
     }
 
     private void Update()
@@ -50,37 +45,40 @@ public class Spawner : MonoBehaviour
             if (currentTimer >= spawnertimer)
             {
                 currentTimer = 0;
-                randomPoint = Random.Range(0, spawnerPoints.Length);
 
-                while (spawnerPoints[randomPoint] == null)
+                // 아직 스폰되지 않은 아이템 인덱스만 추출
+                List<int> availableIndices = new List<int>();
+                for (int i = 0; i < Objects.Length; i++)
                 {
-                    randomPoint = Random.Range(0, spawnerPoints.Length);
+                    if (!spawnedObjectIndices.Contains(i))
+                        availableIndices.Add(i);
                 }
 
-                if (spawnerPoints[randomPoint] != null)
+                if (availableIndices.Count > 0)
                 {
-                    Instantiate(Objects[Random.Range(0, Objects.Length)],
-                                spawnerPoints[randomPoint].transform.position,
-                                Quaternion.identity);
+                    int objectIdx = availableIndices[Random.Range(0, availableIndices.Count)];
+                    int spawnPointIdx = Random.Range(0, spawnerPoints.Length);
 
-                    #region network data
-                    spawnX = (sbyte)Mathf.RoundToInt(spawnerPoints[randomPoint].transform.position.x);
-                    #endregion
-                }
-                else
-                {
+                    var spawned = Instantiate(Objects[objectIdx],
+                        spawnerPoints[spawnPointIdx].transform.position,
+                        Quaternion.identity);
+
+                    // Object 스크립트에 인덱스 전달
+                    var objScript = spawned.GetComponent<Object>();
+                    if (objScript != null)
+                        objScript.SpawnedIndex = objectIdx;
+
+                    spawnedObjectIndices.Add(objectIdx);
+                    itemCount++;
                 }
             }
         }
     }
 
-    private void IncreaseItemCount()
+    // 아이템이 Destroy될 때 호출
+    private void OnObjectDestroyed(int objectIdx)
     {
-        itemCount++;
-    }
-
-    private void DecreaseItemCount()
-    {
+        spawnedObjectIndices.Remove(objectIdx);
         itemCount--;
     }
 }

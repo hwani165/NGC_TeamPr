@@ -1,16 +1,13 @@
 fileFormatVersion: 2
-guid: 24e2162358e256540b97d63dc3d4c462
+guid: ec3d631db565418478da1a876df21b41
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 534167056533025034
-    second: gyutyfdrftygyu_0
+      213: -2908971113185550707
+    second: Nigger_0
   - first:
-      213: 5019560685981259365
-    second: gyutyfdrftygyu_1
-  - first:
-      213: 772241616309420664
-    second: gyutyfdrftygyu_2
+      213: -2947892436959678747
+    second: Nigger_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -43,7 +40,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -81,7 +78,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -106,35 +103,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: gyutyfdrftygyu_0
+      name: Nigger_0
       rect:
         serializedVersion: 2
-        x: 777
-        y: 131
-        width: 1303
-        height: 207
-      alignment: 9
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 358, y: 0, z: 372, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: a01fd579b1eb96700800000000000000
-      internalID: 534167056533025034
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: gyutyfdrftygyu_2
-      rect:
-        serializedVersion: 2
-        x: 39
-        y: 122
-        width: 731
-        height: 213
+        x: 46
+        y: 452
+        width: 109
+        height: 109
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -143,8 +118,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 87285e498ad87ba00800000000000000
-      internalID: 772241616309420664
+      spriteID: d8ed3b85f2241a7d0800000000000000
+      internalID: -2908971113185550707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nigger_1
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 392
+        width: 38
+        height: 149
+      alignment: 9
+      pivot: {x: 0.503997, y: 0.9846949}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ee25fa727bf617d0800000000000000
+      internalID: -2947892436959678747
       vertices: []
       indices: 
       edges: []
@@ -153,7 +150,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: b34924b3f4522ab47b624edc5acd97c6
+    spriteID: b8e3c86cb47dbed40a2ab965997abec3
     internalID: 0
     vertices: []
     indices: 
@@ -163,9 +160,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      gyutyfdrftygyu_0: 534167056533025034
-      gyutyfdrftygyu_1: 5019560685981259365
-      gyutyfdrftygyu_2: 772241616309420664
+      Nigger_0: -2908971113185550707
+      Nigger_1: -2947892436959678747
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
