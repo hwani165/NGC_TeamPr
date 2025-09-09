@@ -56,8 +56,7 @@ public class Spawner : MonoBehaviour, IReceiver, ISender
         }
     }
     private void Receive()
-    {
-        Debug.Log("Receive");
+    { 
         if ((_itemCount < MaxCount))
         {
             if (SpawnerPoints[_spawnPointIndex] != null)
