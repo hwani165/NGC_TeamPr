@@ -1836,8 +1836,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4db68537bd06cf4d89df0738d8e76cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Map: {fileID: 0}
-  MapLoaded: 0
+  _gameData: {fileID: 11400000, guid: 074d6689be0822043b2476befb93369f, type: 2}
+  _mapNames:
+  - InGame_City
+  - InGame_Sea
+  - InGame_Cyberpunk
+  _mapCount: 0
 --- !u!1 &1110475519
 GameObject:
   m_ObjectHideFlags: 0
