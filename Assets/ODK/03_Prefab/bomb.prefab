@@ -139,7 +139,7 @@ MonoBehaviour:
     m_Bits: 1024
   groundLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 2147483712
   owner: {fileID: 0}
   preowner: {fileID: 0}
   shootingdir: {x: 0, y: 0}
