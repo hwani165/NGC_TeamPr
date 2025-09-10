@@ -7,11 +7,6 @@ public class Entity : MonoBehaviour
     [SerializeField] private PlayerDataSO _playerData;
     [SerializeField] private CircleHpBarScript hpbar;
 
-    private void OnValidate()
-    {
-        hpbar = _playerData.HpBar;
-    }
-
     public void Attack(Transform tra, float damage, float knockback)
     {
         // HP °¨¼Ò
