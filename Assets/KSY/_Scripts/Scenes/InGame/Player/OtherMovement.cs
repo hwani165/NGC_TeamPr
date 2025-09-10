@@ -132,7 +132,7 @@ public class OtherMovement : Player
             if (_isGrounded)
             {
                 _rbCompo.linearVelocityX = 0;
-                CanDash = true;
+                _usingDash = false;
                 if (inputDir == Vector2.zero)
                     inputDir = Vector2.down;
             }
