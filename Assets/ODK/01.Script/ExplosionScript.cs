@@ -7,35 +7,41 @@ public class ExplosionScript : MonoBehaviour
     public float knockbackmulti = 3;
 
     public float lifetime = 0.2f;
+    public float invisibletime = 0.1f;
     public LayerMask layermask;
     public Transform preowner;
-    private HashSet<Entity> alreadyHit = new HashSet<Entity>();
+
+    private Dictionary<Entity, float> lastHitTime = new Dictionary<Entity, float>();
+    private CircleCollider2D circle; // 폭발 범위 콜라이더 (isTrigger = true)
+
     private void Start()
     {
+        circle = GetComponent<CircleCollider2D>();
         Destroy(gameObject, lifetime);
     }
 
-    
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void Update()
     {
-        if (((1 << collision.gameObject.layer) & layermask) != 0)
-        {
-            Entity player = collision.gameObject.GetComponent<Entity>();
-            if (player != null && !alreadyHit.Contains(player))
-            {
-                alreadyHit.Add(player); // 중복 방지
+        if (circle == null) return;
 
-                if (collision.transform == preowner)
-                {
+        // 현재 Trigger 범위 안에 있는 모든 콜라이더 가져오기
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, circle.radius, layermask);
+
+        float now = Time.time;
+        foreach (var hit in hits)
+        {
+            Entity player = hit.GetComponent<Entity>();
+            if (player == null) continue;
+
+            if (!lastHitTime.ContainsKey(player) || now - lastHitTime[player] >= invisibletime)
+            {
+                lastHitTime[player] = now;
+
+                if (hit.transform == preowner)
                     player.Attack(preowner, damage / 1.5f, knockbackmulti);
-                }
                 else
-                {
                     player.Attack(preowner, damage, knockbackmulti);
-                }
             }
         }
     }
-
 }
