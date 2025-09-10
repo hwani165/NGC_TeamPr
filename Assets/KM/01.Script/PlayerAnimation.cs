@@ -16,7 +16,7 @@ public class PlayerAnimation : MonoBehaviour
 
     private void Update()
     {
-        if(_dir != Vector2.zero)
+        if(_dir.x != 0)
         {
             _animator.SetFloat(_blendTreeHash, 1);
         }
