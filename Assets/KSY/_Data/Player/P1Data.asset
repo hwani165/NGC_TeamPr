@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e389e3c8063da5a44bcec73045b4f1d3, type: 3}
   m_Name: P1Data
   m_EditorClassIdentifier: 
-  HpBar: {fileID: 4934836046029378830, guid: db84965fc2ae2654ab3cc284f3242938, type: 3}
+  HpBar: {fileID: 2941625474100205933, guid: db84965fc2ae2654ab3cc284f3242938, type: 3}

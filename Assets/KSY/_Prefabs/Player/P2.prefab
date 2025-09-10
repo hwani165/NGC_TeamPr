@@ -225,7 +225,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CurrentHp>k__BackingField: 0
   _playerData: {fileID: 11400000, guid: 2a5a61dca31375b43b7b20e3193486b6, type: 2}
-  hpbar: {fileID: 6393294391121956432, guid: 38c7fbde68025544f87ee1bbaac9d734, type: 3}
+  hpbar: {fileID: 5951835715575870842, guid: 38c7fbde68025544f87ee1bbaac9d734, type: 3}
 --- !u!1001 &5737640265142026380
 PrefabInstance:
   m_ObjectHideFlags: 0
