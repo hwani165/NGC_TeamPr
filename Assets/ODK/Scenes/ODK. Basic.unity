@@ -772,7 +772,7 @@ GameObject:
   - component: {fileID: 284704260}
   - component: {fileID: 284704258}
   m_Layer: 10
-  m_Name: Player (1)
+  m_Name: P2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -791,7 +791,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <CurrentHp>k__BackingField: 0
-  _playerData: {fileID: 0}
+  _playerData: {fileID: 11400000, guid: 2a5a61dca31375b43b7b20e3193486b6, type: 2}
   hpbar: {fileID: 7170829537396459758}
 --- !u!61 &284704260
 BoxCollider2D:
@@ -1037,8 +1037,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   redScore: 0
   blueScore: 0
-  redScoreText: {fileID: 0}
-  blueScoreText: {fileID: 0}
+  redScoreText: {fileID: 1538245514}
+  blueScoreText: {fileID: 584899975}
 --- !u!1 &485943981
 GameObject:
   m_ObjectHideFlags: 0
@@ -2459,7 +2459,7 @@ GameObject:
   - component: {fileID: 1338154350}
   - component: {fileID: 1338154351}
   m_Layer: 10
-  m_Name: Player
+  m_Name: P1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2645,7 +2645,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <CurrentHp>k__BackingField: 0
-  _playerData: {fileID: 0}
+  _playerData: {fileID: 11400000, guid: 207044432b2cff04c94401168f5c9a79, type: 2}
   hpbar: {fileID: 1097210250269690564}
 --- !u!114 &1338154351
 MonoBehaviour:
@@ -3715,7 +3715,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6928401041825513586, guid: 0b72e714a9a8d1846a9207e824b0a28d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5744,7 +5744,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0%
+  m_text: 0.0%
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5d61ee02267feb049af07436d58c31b9, type: 2}
   m_sharedMaterial: {fileID: 6961167465095002461, guid: 5d61ee02267feb049af07436d58c31b9, type: 2}
@@ -5853,7 +5853,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0%
+  m_text: 0.0%
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5d61ee02267feb049af07436d58c31b9, type: 2}
   m_sharedMaterial: {fileID: 6961167465095002461, guid: 5d61ee02267feb049af07436d58c31b9, type: 2}
