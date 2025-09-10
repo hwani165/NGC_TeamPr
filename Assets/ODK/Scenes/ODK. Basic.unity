@@ -3947,7 +3947,22 @@ MonoBehaviour:
   countDownPanel: {fileID: 1108369608}
   fadingSlide: {fileID: 2082729100}
   countDownText: {fileID: 1542741304}
-  countDownTime: 3
+  countDownTime: 4
+  onCountDownFinished:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 61022084}
+        m_TargetAssemblyTypeName: TimerScript, Assembly-CSharp
+        m_MethodName: StartTimer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1463367041
 GameObject:
   m_ObjectHideFlags: 0
