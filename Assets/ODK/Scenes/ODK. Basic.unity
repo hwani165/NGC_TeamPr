@@ -904,7 +904,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <CurrentHp>k__BackingField: 0
-  hpbar: {fileID: 143646375}
+  _playerData: {fileID: 11400000, guid: 2a5a61dca31375b43b7b20e3193486b6, type: 2}
+  hpbar: {fileID: 6393294391121956432, guid: 38c7fbde68025544f87ee1bbaac9d734, type: 3}
 --- !u!61 &284704260
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3665,7 +3666,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <CurrentHp>k__BackingField: 0
-  hpbar: {fileID: 1614870663}
+  _playerData: {fileID: 11400000, guid: 207044432b2cff04c94401168f5c9a79, type: 2}
+  hpbar: {fileID: 4934836046029378830, guid: db84965fc2ae2654ab3cc284f3242938, type: 3}
 --- !u!114 &1338154351
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -82,8 +82,6 @@ public class BackendFunctionMatch : MonoBehaviour
                 return;
             }
 
-            //Debug.Log($"{args.GameRecord.m_nickname} != {myNickname}");
-
             //아니라면 상대방 정보를 가져옴
             MatchUserGameRecord otherInfo = args.GameRecord;
             Server.Instance.InitOtherData(otherInfo);
@@ -137,6 +135,7 @@ public class BackendFunctionMatch : MonoBehaviour
                                     case "Some gamers are not connected.(0)":
                                         {
                                             //게임 시작 실패(룸 생성 후 모든 유저가 게임에 접속하지 않은 경우)
+                                            Game.Instance.EnterScene(SceneType.Account);
                                             break;
                                         }
                                     case "Timeout":
@@ -175,8 +174,8 @@ public class BackendFunctionMatch : MonoBehaviour
 
                     }
                 };
-
-                Game.Instance.EnterScene(SceneType.Account);
+                Debug.Log("4444444444444444444444444444444444444444444444444444444444");
+                Game.Instance.EnterScene(SceneType.InGame);
             }
             //게임방 접속 실패 처리
             else

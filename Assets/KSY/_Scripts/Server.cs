@@ -1,20 +1,10 @@
 using System;
 using BackEnd;
 using BackEnd.Tcp;
-using Google.FlatBuffers;
 using InputData.Map;
 using InputData.Player;
 using UnityEngine;
-public enum MatchEventType
-{
-    None = 0,
-    //¸ÅÄª ½ÃÀÛ½Ã
-    OnEnterFindingMatch,
-    //¸ÅÄª ¼º»ç½Ã
-    OnFindedMatch,
-    //¸ÅÄª Äµ½½½Ã
-    OnMatchCanceled
-}
+
 public class Server : SingletonBehaviour<Server>
 {
     private BackendFunctionInGame _bfInGame;
@@ -155,32 +145,6 @@ public class Server : SingletonBehaviour<Server>
     public void FindMatch()
     {
         _bfMatch.FindMatch();
-    }
-    public void AddMatchEvent(MatchEventType t, Action eventHandler)
-    {
-       switch(t)
-        {
-            case MatchEventType.None:
-                {
-                    Debug.Log("Error");
-                    break;
-                }
-            case MatchEventType.OnEnterFindingMatch:
-                {
-                    _bfMatch.EnterMatch += eventHandler;
-                    break;
-                }
-            case MatchEventType.OnFindedMatch:
-                {
-                    _bfMatch.SuccessMatch += eventHandler;
-                    break;
-                }
-            case MatchEventType.OnMatchCanceled:
-                {
-                    _bfMatch.CanceledMatch += eventHandler;
-                    break;
-                }
-        }
     }
     public byte[] SerializationPlatformStateData(byte id, bool isOnPlatform, bool isBrokenPlatform)
     {
