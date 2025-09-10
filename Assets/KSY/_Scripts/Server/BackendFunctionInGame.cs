@@ -156,7 +156,7 @@ public class BackendFunctionInGame : MonoBehaviour
     //데이터 송신
     public void Send(byte[] bff)
     {
-        if (!Game.Instance.AllUserReady)
+        if (!Game.Instance.IsAllReady)
         {
             Debug.LogError("map un loaded.");
             return;
@@ -176,7 +176,7 @@ public class BackendFunctionInGame : MonoBehaviour
                     byte senderId = message.MapMessageTypeAsplatform_state().Id;
 
                     //(송신한) 수신 받을 플랫폼을 아이디로 찾음
-                    Platform platform = Game.Instance.Map.FindPlatform(senderId);
+                    Platform platform = Game.Instance.MapCompo.FindPlatform(senderId);
 
                     //MapMessage에서 데이터를 꺼내서 적용함.
                     PlatformState data = message.MapMessageTypeAsplatform_state();
@@ -188,7 +188,7 @@ public class BackendFunctionInGame : MonoBehaviour
             case MapMessageType.spawner_info:
                 {
                     //씬에 있는 스포너를 가져옴
-                    Receiver = Game.Instance.Map.Spawner;
+                    Receiver = Game.Instance.MapCompo.SpawnerCompo;
 
                     SpawnerInfo data = message.MapMessageTypeAsspawner_info();
                     ushort spawnItemId = data.SpawnItemId;
