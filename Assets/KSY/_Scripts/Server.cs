@@ -190,9 +190,9 @@ public class Server : SingletonBehaviour<Server>
     {
         return _bfInGame.SerializationSpawnerInfoData(spawnItemId, spawnItemIndex, spawnPotinIndex);
     }
-    public byte[] SerializationActionData(ushort itemId, bool isHolding, bool isThrowing, byte charge, Vector2 throwDir)
+    public byte[] SerializationActionData(ushort itemId, bool isHolding, bool isThrowing, byte chargeGauge, Vector2 throwDir)
     {
-        return _bfInGame.SerializationActionData(itemId, isHolding, isThrowing, charge, throwDir);
+        return _bfInGame.SerializationActionData(itemId, isHolding, isThrowing, chargeGauge, throwDir);
     }
     public byte[] SerializationPlayerMovementData(Vector2 dashDir,sbyte moveX, bool usingJump, bool usingDash, bool isDashing)
     {

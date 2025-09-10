@@ -117,10 +117,13 @@ public class Boomaerang : Item
     public override IEnumerator Attacking(GameObject target)
     {
         base.Attacking(target);
-
         Entity entity = target.GetComponent<Entity>();
+
+        Debug.Log($"Try Attack {gameObject.name} -> {entity.name}");
+
         if (entity != null)
         {
+            Debug.Log($"{gameObject.name} is attakcing {entity.name}");
             entity.Attack(preowner, damage, knockbackmulti);
         }
 

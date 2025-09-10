@@ -523,7 +523,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 148793197}
-  m_Layer: 4
+  m_Layer: 10
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -884,7 +884,7 @@ GameObject:
   - component: {fileID: 284704261}
   - component: {fileID: 284704260}
   - component: {fileID: 284704258}
-  m_Layer: 4
+  m_Layer: 10
   m_Name: Player (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2007,7 +2007,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 751846684}
-  m_Layer: 4
+  m_Layer: 10
   m_Name: Hold
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3461,7 +3461,7 @@ GameObject:
   - component: {fileID: 1338154349}
   - component: {fileID: 1338154350}
   - component: {fileID: 1338154351}
-  m_Layer: 4
+  m_Layer: 10
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4544,7 +4544,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1563309777}
-  m_Layer: 4
+  m_Layer: 10
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4912,6 +4912,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 284704263}
     m_Modifications:
+    - target: {fileID: 553304289580732616, guid: 0b72e714a9a8d1846a9207e824b0a28d, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1004693078137259056, guid: 0b72e714a9a8d1846a9207e824b0a28d, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1941948294152987095, guid: 0b72e714a9a8d1846a9207e824b0a28d, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4554749127242205516, guid: 0b72e714a9a8d1846a9207e824b0a28d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -4995,6 +5007,10 @@ PrefabInstance:
     - target: {fileID: 6928401041825513586, guid: 0b72e714a9a8d1846a9207e824b0a28d, type: 3}
       propertyPath: m_Name
       value: ChageCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 6928401041825513586, guid: 0b72e714a9a8d1846a9207e824b0a28d, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8709785550119060889, guid: 0b72e714a9a8d1846a9207e824b0a28d, type: 3}
       propertyPath: m_PresetInfoIsWorld
@@ -5428,7 +5444,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1895182419}
-  m_Layer: 4
+  m_Layer: 10
   m_Name: Hold
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5458,6 +5474,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1338154346}
     m_Modifications:
+    - target: {fileID: 553304289580732616, guid: 0b72e714a9a8d1846a9207e824b0a28d, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1004693078137259056, guid: 0b72e714a9a8d1846a9207e824b0a28d, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1941948294152987095, guid: 0b72e714a9a8d1846a9207e824b0a28d, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1941948294152987095, guid: 0b72e714a9a8d1846a9207e824b0a28d, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -5545,6 +5573,10 @@ PrefabInstance:
     - target: {fileID: 6928401041825513586, guid: 0b72e714a9a8d1846a9207e824b0a28d, type: 3}
       propertyPath: m_Name
       value: ChageCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 6928401041825513586, guid: 0b72e714a9a8d1846a9207e824b0a28d, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6928401041825513586, guid: 0b72e714a9a8d1846a9207e824b0a28d, type: 3}
       propertyPath: m_IsActive

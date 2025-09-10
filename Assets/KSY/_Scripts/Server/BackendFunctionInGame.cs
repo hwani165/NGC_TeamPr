@@ -95,7 +95,7 @@ public class BackendFunctionInGame : MonoBehaviour
 
         return bff;
     }
-    public byte[] SerializationActionData(ushort itemId, bool isHolding, bool isThrowing, byte charge, Vector2 throwDir)
+    public byte[] SerializationActionData(ushort itemId, bool isHolding, bool isThrowing, byte chargeGauge, Vector2 throwDir)
     {
         //버퍼 재사용
         _itemActionBuilder.Clear();
@@ -111,7 +111,7 @@ public class BackendFunctionInGame : MonoBehaviour
         if (isThrowing) state |= (byte)flagActionState.IsThrowing;
 
         //오프셋 세팅 + 데이터 할당
-        Offset<ItemAction> offsetActionData = ItemAction.CreateItemAction(_itemActionBuilder, state, id, x, y, charge);
+        Offset<ItemAction> offsetActionData = ItemAction.CreateItemAction(_itemActionBuilder, state, id, x, y, chargeGauge);
         Offset<PlayerMessage> offsetResultData = PlayerMessage.CreatePlayerMessage(_itemActionBuilder, PlayerMessageType.item_action, offsetActionData.Value);
 
         //스키마 버퍼화

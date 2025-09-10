@@ -7,7 +7,6 @@ public class MyAction : Player
     //network
     public bool IsHolding; // 아이템을 들었는가?
     public bool IsThrowing;// 아이템을 던졌는가?
-    private byte _chargeForce = 0;
     private Vector2 _throwDir;
 
     [SerializeField] private Transform HoldTransform;
@@ -63,7 +62,6 @@ public class MyAction : Player
             //아이템 발사
             ThrowItem();
             //차징 게이지 초기화
-            _chargeForce = 0;
             _chargeGauge = 0f;
             //charge ui's active = false;
             ChargeUiObject.gameObject.SetActive(false);
@@ -159,7 +157,7 @@ public class MyAction : Player
         Item itemScript = HoldObject.GetComponent<Item>();
         itemScript.isshooting = true;
         Rigidbody2D hrb = HoldObject.GetComponent<Rigidbody2D>();
-        if (_chargeGauge >= 2.5)
+        if (_chargeGauge >= 3)
         {
             itemScript.preowner = transform;
             itemScript.shootingdir = Vector2.zero;
@@ -174,7 +172,6 @@ public class MyAction : Player
 
         IsHolding = false;
         IsThrowing = true;
-        _chargeForce = (byte)_chargeGauge;
         Send();
 
         itemScript.preowner = transform;
@@ -226,7 +223,8 @@ public class MyAction : Player
     public override void Send()
     {
         ushort id = HoldObject.GetComponent<Item>().Id;
-        byte[] bff = Server.Instance.SerializationActionData(id, IsHolding,IsThrowing, _chargeForce,_throwDir);
+        byte chargeGauge = (byte)_chargeGauge;
+        byte[] bff = Server.Instance.SerializationActionData(id, IsHolding,IsThrowing, chargeGauge, _throwDir);
         Server.Instance.Send(bff);
     }
 }

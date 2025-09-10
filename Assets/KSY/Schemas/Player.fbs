@@ -12,7 +12,7 @@ table ItemAction{
 	action_item_id:ushort;
 	shot_dir_x:byte;
 	shot_dir_y:byte;
-	charge:ubyte;
+	charg_gauge:ubyte;
 }
 
 union PlayerMessageType{
