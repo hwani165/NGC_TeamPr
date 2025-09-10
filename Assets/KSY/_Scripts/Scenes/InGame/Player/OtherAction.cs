@@ -33,6 +33,7 @@ public class OtherAction : Player
     }
     private void Hold(GameObject obj)
     {
+        if (HoldObject != null) return;
         Debug.Log($"obj is {obj.name}");
         //아이템 들기 처리
         if (obj.TryGetComponent(out Item itemSc))

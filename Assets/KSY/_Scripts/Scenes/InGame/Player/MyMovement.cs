@@ -4,18 +4,20 @@ using UnityEngine.UIElements.Experimental;
 
 public class MyMovement : Player
 {
-    [SerializeField] private float speed = 10f;
-    [SerializeField] private float jumpForce = 12f;
+    [SerializeField] private MovementDataSO _movementData;
+
+    [SerializeField] private float speed = 5f;
+    [SerializeField] private float jumpForce = 6f;
     [SerializeField] private float gravity = 9.8f;
 
     [SerializeField] private Vector2 groundCheckVecSize = new Vector2(0.5f, 1.05f);
     [SerializeField] private Vector2 groundCheckVec;
     [SerializeField] private LayerMask groundMask;
 
-    [SerializeField] private float dashForce = 20f;
-    [SerializeField] private float dashDuration = 0.2f;
+    [SerializeField] private float dashForce = 10f;
+    [SerializeField] private float dashDuration = 0.15f;
 
-    [SerializeField] private int maxJumpCount = 3;
+    [SerializeField] private int maxJumpCount = 2;
     private int _currentJumpCount;
 
     private Rigidbody2D _rbCompo;
@@ -70,6 +72,15 @@ public class MyMovement : Player
             _rbCompo.AddForce(Vector2.down * gravity * 1.5f, ForceMode2D.Impulse);
             Send();
         }
+    }
+    private void OnValidate()
+    {
+        speed = _movementData.Speed;
+        jumpForce = _movementData.JumpForce;
+        gravity = _movementData.Gravity;
+
+        dashForce = _movementData.DashForce;
+        dashDuration = _movementData.DashDuration;
     }
 
     private void OnGround()
@@ -136,7 +147,7 @@ public class MyMovement : Player
     {
         if (_isDashing && !_isGrounded)
         {
-            _rbCompo.linearVelocity = _dashDir * dashForce / 2f;
+            _rbCompo.linearVelocity = _dashDir * dashForce / 1.5f;
             _dashTimer -= Time.fixedDeltaTime;
             if (_dashTimer <= 0f)
             {

@@ -5,6 +5,8 @@ using static BackendFunctionInGame;
 
 public class OtherMovement : Player
 {
+    [SerializeField] private MovementDataSO _movementDast;
+
     [SerializeField] private float speed = 10f;
     [SerializeField] private float jumpForce = 12f;
     [SerializeField] private float gravity = 9.8f;
