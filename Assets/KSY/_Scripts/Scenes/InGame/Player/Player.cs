@@ -33,11 +33,11 @@ public class Player : MonoBehaviour, IReceiver, ISender
         if (Nickname == Server.Instance.GetMyData().Value.nickname)
         {
             //송신용 플레이어 스크립트 추가
-            if (!TryGetComponent(out _myMovement)) _myMovement = gameObject.AddComponent<MyMovement>();
-            if (!TryGetComponent(out _myAction)) _myAction = gameObject.AddComponent<MyAction>();
+            _myMovement = GetComponent<MyMovement>();
+            _myAction = GetComponent<MyAction>();
 
             //인풋 시스템 세팅
-            if(!TryGetComponent(out _playerInput)) _playerInput = gameObject.AddComponent<PlayerInput>();
+            _playerInput.GetComponent<PlayerInput>();
             _playerInput.actions = InputSetting;
             _playerInput.defaultActionMap = _actionMap;
             _playerInput.actions.Enable();
@@ -46,8 +46,8 @@ public class Player : MonoBehaviour, IReceiver, ISender
         else
         {
             //수신용 플레이어 스크립트 추가
-            if (!TryGetComponent(out _otherMovement)) _otherMovement = gameObject.AddComponent<OtherMovement>();
-            if (!TryGetComponent(out _otherAction)) _otherAction = gameObject.AddComponent<OtherAction>();
+            _otherMovement = GetComponent<OtherMovement>();
+            _otherAction = GetComponent<OtherAction>();
 
             //수신 이벤트 추가
             Backend.Match.OnMatchRelay += ReceiveData;

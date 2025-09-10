@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: -5878438068652748384}
   - component: {fileID: 5822240849622324189}
   - component: {fileID: 1818194576719011869}
+  - component: {fileID: -1267571591749026520}
   m_Layer: 10
   m_Name: P1
   m_TagString: Player
@@ -195,7 +196,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <CurrentHp>k__BackingField: 0
-  _playerData: {fileID: 11400000, guid: 207044432b2cff04c94401168f5c9a79, type: 2}
   hpbar: {fileID: 2941625474100205933, guid: db84965fc2ae2654ab3cc284f3242938, type: 3}
 --- !u!114 &5822240849622324189
 MonoBehaviour:
@@ -220,7 +220,7 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 0
-  dashForce: 12
+  dashForce: 8
   dashDuration: 0.2
   maxJumpCount: 2
 --- !u!114 &1818194576719011869
@@ -246,6 +246,36 @@ MonoBehaviour:
   PlayerRecoil: 40
   ChargeUiObject: {fileID: 7153311871473908794}
   ChargeImage: {fileID: 4893735692424855341}
+--- !u!114 &-1267571591749026520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7011468713277402235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: 
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &8812166200187830082
 GameObject:
   m_ObjectHideFlags: 0
