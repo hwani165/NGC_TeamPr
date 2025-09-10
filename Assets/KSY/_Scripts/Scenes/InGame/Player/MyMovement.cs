@@ -4,18 +4,20 @@ using UnityEngine.UIElements.Experimental;
 
 public class MyMovement : Player
 {
-    [SerializeField] private float speed = 10f;
-    [SerializeField] private float jumpForce = 12f;
+    [SerializeField] private MovementDataSO _movementData;
+
+    [SerializeField] private float speed = 5f;
+    [SerializeField] private float jumpForce = 6f;
     [SerializeField] private float gravity = 9.8f;
 
     [SerializeField] private Vector2 groundCheckVecSize = new Vector2(0.5f, 1.05f);
     [SerializeField] private Vector2 groundCheckVec;
     [SerializeField] private LayerMask groundMask;
 
-    [SerializeField] private float dashForce = 20f;
-    [SerializeField] private float dashDuration = 0.2f;
+    [SerializeField] private float dashForce = 10f;
+    [SerializeField] private float dashDuration = 0.15f;
 
-    [SerializeField] private int maxJumpCount = 3;
+    [SerializeField] private int maxJumpCount = 2;
     private int _currentJumpCount;
 
     private Rigidbody2D _rbCompo;
@@ -36,6 +38,8 @@ public class MyMovement : Player
     private bool _usingDownDash = false;
     //이동하고 있는 방향 (Now Move.X Direction <Sbyte>)
     private sbyte _moveX = 0;
+    //송신 버퍼
+    byte[] bff;
     #endregion
 
     private float _dashTimer = 0;
@@ -51,6 +55,7 @@ public class MyMovement : Player
 
     private void FixedUpdate()
     {
+        Serialize();
         OnGround();
         GroundDash();
         AirDash();
@@ -71,6 +76,15 @@ public class MyMovement : Player
             Send();
         }
     }
+    private void OnValidate()
+    {
+        speed = _movementData.Speed;
+        jumpForce = _movementData.JumpForce;
+        gravity = _movementData.Gravity;
+
+        dashForce = _movementData.DashForce;
+        dashDuration = _movementData.DashDuration;
+    }
 
     private void OnGround()
     {
@@ -79,14 +93,13 @@ public class MyMovement : Player
 
         if (_isGrounded)
         {
-            Debug.Log($"_isGrounded : {_isGrounded}");
+            //Debug.Log($"_isGrounded : {_isGrounded}");
             _currentJumpCount = maxJumpCount;
             _usingJump = false;
             _usingDownDash = false;
             _usingDash = false;
         }
     }
-
     public void OnMove(InputValue value)
     {
         _moveVec = value.Get<Vector2>();
@@ -105,7 +118,6 @@ public class MyMovement : Player
 
         Send();
     }
-
     public void OnJump()
     {
         if (_currentJumpCount > 0)
@@ -117,7 +129,6 @@ public class MyMovement : Player
             Send();
         }
     }
-
     private void GroundDash()
     {
         if (_isDashing && _isGrounded)
@@ -136,7 +147,7 @@ public class MyMovement : Player
     {
         if (_isDashing && !_isGrounded)
         {
-            _rbCompo.linearVelocity = _dashDir * dashForce / 2f;
+            _rbCompo.linearVelocity = _dashDir * dashForce / 1.5f;
             _dashTimer -= Time.fixedDeltaTime;
             if (_dashTimer <= 0f)
             {
@@ -188,10 +199,8 @@ public class MyMovement : Player
 
         }
     }
-
-    public override void Send()
+    public void Serialize()
     {
-        Debug.Log($"_downDashing : {_usingDownDash}");
         Vector2 dashDir = _dashDir;
         sbyte moveX = _moveX;
         bool usingJump = _usingJump;
@@ -199,7 +208,12 @@ public class MyMovement : Player
         bool isDashing = _isDashing;
         bool usingDownDash = _usingDownDash;
 
-        byte[] bff = Server.Instance.SerializationPlayerMovementData(dashDir, moveX, usingJump, usingDash, isDashing, usingDownDash);
+        bff = Server.Instance.SerializationPlayerMovementData(dashDir, moveX, usingJump, usingDash, isDashing, usingDownDash);
+    }
+
+    public override void Send()
+    {
+        if(bff != null)
         Server.Instance.Send(bff);
     }
 

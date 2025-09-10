@@ -14,16 +14,16 @@ public enum SceneType
 public class Game : SingletonBehaviour<Game>
 {
     [SerializeField] private GameDataSO _gameData;
-    
+    [SerializeField] private string[] _mapNames;
+
     //씬이 다 로드된 후에 호출됨 
-    public event Action EnterAccountMenu;
-    public event Action EnterMainMenu;
-    public event Action EnterInGame;
+    public event Action LoadedAccountMenu;
+    public event Action LoadedMainMenu;
+    public event Action LoadedInGame;
 
     public bool IsAllReady { get; private set; }
+    private bool _InGameLoaded;
     public Map MapCompo { get; private set; }
-    [SerializeField] private string[] _mapNames;
-    [SerializeField] private byte _mapCount = 0;
 
     #region Unity Event Function
     private void Awake()
@@ -37,7 +37,7 @@ public class Game : SingletonBehaviour<Game>
     }
     private void Start()
     {
-        EnterInGame += InitPlayer;
+        LoadedInGame += () => _InGameLoaded = true;
 
         //씬이 완료되었을 떄 호출되는 이벤트 등록.
         SceneManager.sceneLoaded += (Scene s, LoadSceneMode lsm) =>
@@ -50,19 +50,19 @@ public class Game : SingletonBehaviour<Game>
             {
                 case "AccountMenu":
                     {
-                        EnterAccountMenu?.Invoke();
+                        LoadedAccountMenu?.Invoke();
                         break;
                     }
                 case "MainMenu":
                     {
-                        EnterMainMenu?.Invoke();
+                        LoadedMainMenu?.Invoke();
                         break;
                     }
                 //In Game Loaded
                 default:
                     {
                         MapCompo = GameObject.Find("Map").GetComponent<Map>();
-                        EnterInGame?.Invoke();
+                        LoadedInGame?.Invoke();
                         break;
                     }
             }
@@ -70,7 +70,11 @@ public class Game : SingletonBehaviour<Game>
 
         //모든 유저가 준비되었을 때 호출되는 이벤트
         Backend.Match.OnMatchInGameStart = () => {
-                IsAllReady = true;
+            IsAllReady = true;
+
+            //인 게임 씬이 다 로드된 다음에 플레이어 초기화.
+            if (!_InGameLoaded) LoadedInGame += InitPlayer;
+            else InitPlayer();
         };
     }
     private void Update()
@@ -80,12 +84,6 @@ public class Game : SingletonBehaviour<Game>
     private void OnValidate()
     {
         _mapNames = _gameData.MapNames;
-        _mapCount = _gameData.MapCount;
-
-        if (_mapNames.Length > _gameData.MapCount)
-        {
-            Debug.Log("<color=red>맵의 이름의 개수가 지정된 맵의 개수보다 많습니다!</color>");
-        }
     }
     #endregion
     private void InitPlayer()

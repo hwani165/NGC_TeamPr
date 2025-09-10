@@ -46,7 +46,7 @@ public class BackendFunctionsAccount : MonoBehaviour
         //매칭 서버에 접속을 성공/실패했을 때 호출되는 이벤트입니다.
         Backend.Match.OnJoinMatchMakingServer = (JoinChannelEventArgs joinChannelEventArgs) =>
         {
-            //매칭 서버 접속 시도 이벤트 시작
+            //매칭 서버 접속 성공, 실패 호출 이벤트
             OnTryEnterMatchServer?.Invoke(joinChannelEventArgs.ErrInfo == ErrorInfo.Success);
         };
 
@@ -63,8 +63,12 @@ public class BackendFunctionsAccount : MonoBehaviour
         {
             //매칭 서버 접속 시도
             Backend.Match.JoinMatchMakingServer(out ErrorInfo isSuccess);
-        }
 
+            if(isSuccess.Category == ErrorCode.Exception)
+            {
+                Debug.Log("매칭 서버 접속에 실패했습니다. 다시 시도 해주세요.");
+            }
+        }
     }
     public int Signup(string id, string pw)
     {
