@@ -1,16 +1,28 @@
+using TMPro;
 using UnityEngine;
 
 public class ScoreScript : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public int redScore = 0;
+    public int blueScore = 0;
+
+    public TextMeshProUGUI redScoreText;
+    public TextMeshProUGUI blueScoreText;
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    void RedScoreUp()
     {
-        
+        redScore++;
+        redScoreText.text = redScore.ToString();
     }
+    void BlueScoreUp()
+    {
+        blueScore++;
+        blueScoreText.text = blueScore.ToString();
+    }
+
 }
