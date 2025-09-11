@@ -12,7 +12,7 @@ public class Player : MonoBehaviour, IReceiver, ISender
 {
     //User Data
     private UserData _myData = new UserData();
-    [SerializeField] private string Nickname;
+    [field:SerializeField] public string Nickname { get; private set; }
 
     //My palyer
     [SerializeField] private InputActionAsset InputSetting;
