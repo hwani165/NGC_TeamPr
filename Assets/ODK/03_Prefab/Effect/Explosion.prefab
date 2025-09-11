@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6955478661297748338}
   - component: {fileID: 8821282594998924484}
   - component: {fileID: 7938375741798333323}
+  - component: {fileID: 1602291385064607740}
   m_Layer: 31
   m_Name: Explosion
   m_TagString: Untagged
@@ -105,10 +106,9 @@ MonoBehaviour:
   damage: 50
   knockbackmulti: 4
   lifetime: 0.2
-  invisibletime: 1
   layermask:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 16
   preowner: {fileID: 0}
 --- !u!58 &8821282594998924484
 CircleCollider2D:
@@ -173,3 +173,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1602291385064607740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8299260641495768406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f23f10eaf576e74ab7ed4214a20cd8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
