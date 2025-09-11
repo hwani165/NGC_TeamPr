@@ -35,19 +35,18 @@ public class CountDownScript : MonoBehaviour
         yield return new WaitForSeconds(1f);
         fadingSlide.DOAnchorPosY(0f, 2f).SetEase(Ease.OutExpo);
         yield return new WaitForSeconds(2f);
-        countDownText.gameObject.SetActive(true);
-        countDownText.color = new Color(1f, 0f, 0f, 1f);
-        countDownText.DOColor(new Color(1f, 0f, 0f, 0f), 0.3f).SetEase(Ease.InOutSine);
+        wintext.GetComponent<TextMeshProUGUI>().color = new Color(1f, 0f, 0f, 1f);
+        wintext.GetComponent<TextMeshProUGUI>().DOColor(new Color(1f, 0f, 0f, 0f), 0.8f).SetEase(Ease.InOutSine);
         int reds = scoreScript.redScore;
         int blues = scoreScript.blueScore;
 
         if (reds > blues)
         {
-            wintext.GetComponent<TextMeshProUGUI>().text = GameObject.Find("P1").GetComponent<Player>().name + "Win!";
+            wintext.GetComponent<TextMeshProUGUI>().text = GameObject.Find("P1").GetComponent<Player>().Nickname + " Win!";
         }
         else if (blues > reds)
         {
-            wintext.GetComponent<TextMeshProUGUI>().text = GameObject.Find("P2").GetComponent<Player>().name + "Win!";
+            wintext.GetComponent<TextMeshProUGUI>().text = GameObject.Find("P2").GetComponent<Player>().Nickname + " Win!";
         }
         else
         {
@@ -86,8 +85,9 @@ public class CountDownScript : MonoBehaviour
 
     private IEnumerator CountDownSlideClose()
     {
-        onCountDownFinished?.Invoke();
+        
         yield return new WaitForSeconds(1f);
+        onCountDownFinished?.Invoke();
         countDownPanel.DOAnchorPosY(3000f, 2f).SetEase(Ease.OutExpo);
         yield return new WaitForSeconds(2f);
     }
