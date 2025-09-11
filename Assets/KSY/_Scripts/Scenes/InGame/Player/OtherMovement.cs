@@ -73,7 +73,6 @@ public class OtherMovement : Player
     {
         _rbCompo.AddForce(Vector2.down * gravity * 1.5f, ForceMode2D.Impulse);
     }
-
     private void OnGround()
     {
         Collider2D hit = Physics2D.OverlapBox((Vector2)transform.position + groundCheckVec, groundCheckVecSize, 0, groundMask);
@@ -91,7 +90,6 @@ public class OtherMovement : Player
         _usingJump = true;
         _rbCompo.linearVelocityY = jumpForce;
     }
-
     private void GroundDash()
     {
         if (_isDashing && _isGrounded)
@@ -106,7 +104,6 @@ public class OtherMovement : Player
             return;
         }
     }
-
     private void AirDash()
     {
         if (_isDashing && !_isGrounded)
@@ -131,14 +128,14 @@ public class OtherMovement : Player
             Vector2 inputDir = _moveVec.normalized;
             if (_isGrounded)
             {
-                _rbCompo.linearVelocityX = 0;
                 _usingDash = false;
+                _rbCompo.linearVelocityX = 0;
                 if (inputDir == Vector2.zero)
                     inputDir = Vector2.down;
             }
             else
             {
-                //CanDash = false;
+                _usingDash = false;
                 _rbCompo.linearVelocity = Vector2.zero;
             }
             if (_isDashing) return;
