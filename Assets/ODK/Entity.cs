@@ -4,6 +4,7 @@ public class Entity : MonoBehaviour
 {
     public float MaxHP { get; private set; } = 1000f;
     [field: SerializeField] public float CurrentHp { get; private set; } = 0f;
+    [SerializeField] private PlayerDataSO _playerData;
     [SerializeField] private CircleHpBarScript hpbar;
 
     public void Attack(Transform tra, float damage, float knockback)
