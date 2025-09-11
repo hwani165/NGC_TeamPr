@@ -11,15 +11,10 @@ public class BtnLoginListener : MonoBehaviour
     private void Awake()
     {
         //로그인 시도 이벤트 할당
-        if (OnTryLogin == null)
-        {
-            OnTryLogin += SuccessLogin;
-            OnTryLogin += FailedLogin;
-        }
-        if (OnTryEnterMatchServer == null)
-        {
-            OnTryEnterMatchServer += FailedEnterMatchServer;
-        }
+        OnTryLogin += SuccessLogin;
+        OnTryLogin += FailedLogin;
+
+        OnTryEnterMatchServer += FailedEnterMatchServer;
     }
     public void Login()
     {
@@ -27,8 +22,6 @@ public class BtnLoginListener : MonoBehaviour
         string pw = input_Pw.text;
 
         //만약 재접속 할 게임이 있다면 재접속 시도
-        Debug.Log($"Server.Instance : {Server.Instance == null}");
-
         if (Server.Instance.TryReconnect()) return;
 
         //없다면 로그인 시도
@@ -42,8 +35,11 @@ public class BtnLoginListener : MonoBehaviour
         if(statusCode == 200)
         {
             Server.Instance.InitMyData();
-            Game.Instance.EnterMainMenu();
+            Game.Instance.EnterScene(SceneType.MainMenu);
         }
+
+        //이벤트 할당 해제
+        OnTryLogin -= SuccessLogin;
     }
 
     //정확한 기능을 메소드 이름으로 명시할 것
@@ -75,6 +71,9 @@ public class BtnLoginListener : MonoBehaviour
                     break;
                 }
         }
+
+        //이벤트 할당 해제
+        OnTryLogin -= FailedLogin;
     }
 
     //정확한 기능을 메소드 이름으로 명시할 것
@@ -82,7 +81,11 @@ public class BtnLoginListener : MonoBehaviour
     {
         if(isConnected == false)
         {
-            //UIManager.Instance.UpdateText("Login/ErrorInfo", "Enter MatchServer failed");
+            Debug.Log("Not Success : Enter Match Server");
+        }
+        else
+        {
+            Debug.Log("Success : Enter Match Server !");
         }
     }
 }
