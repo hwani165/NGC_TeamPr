@@ -5,6 +5,8 @@ using static BackendFunctionInGame;
 
 public class OtherMovement : Player
 {
+    [SerializeField] private MovementDataSO _movementDast;
+
     [SerializeField] private float speed = 10f;
     [SerializeField] private float jumpForce = 12f;
     [SerializeField] private float gravity = 9.8f;
@@ -130,7 +132,7 @@ public class OtherMovement : Player
             if (_isGrounded)
             {
                 _rbCompo.linearVelocityX = 0;
-                CanDash = true;
+                _usingDash = false;
                 if (inputDir == Vector2.zero)
                     inputDir = Vector2.down;
             }

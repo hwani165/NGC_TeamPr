@@ -9,6 +9,13 @@ public class BackendFunctionMatch : MonoBehaviour
     public string myNickname = null; 
     public event Action EnterMatch, SuccessMatch, CanceledMatch;
     public event Action SuccessCreateRoom, FailedCreateRoom, EnterRoom;
+
+    //매칭 정보
+    private MatchType _matchType = MatchType.Random;
+    private MatchModeType _matchMode = MatchModeType.OneOnOne;
+
+    //매칭 카드 inDate  
+    private const string _matchCard = "2025-08-17T13:27:17.823Z";
     public void FindMatch()
     {
         //유저가 매칭을 신청, 취소 했을 때 그리고 매칭이 성사되었을 때 호출되는 이벤트 핸들러입니다.
@@ -50,15 +57,8 @@ public class BackendFunctionMatch : MonoBehaviour
             {
                 //대기방 생성 성공 이벤트 호출
                 SuccessCreateRoom?.Invoke();
-
-                //대기실이 생성되면 매칭을 곧바로 시작.
-                MatchType random = MatchType.Random;
-                MatchModeType oneOnOne = MatchModeType.OneOnOne;
-                //매칭 카드 inDate  
-                var matchCard = "2025-08-17T13:27:17.823Z";
-
                 //매칭 요청
-                Backend.Match.RequestMatchMaking(random, oneOnOne, matchCard);
+                Backend.Match.RequestMatchMaking(_matchType, _matchMode, _matchCard);
             }
             else
             {
@@ -69,7 +69,21 @@ public class BackendFunctionMatch : MonoBehaviour
         };
 
         //대기방 생성 시도
-        Backend.Match.CreateMatchRoom();
+        if(Backend.Match.IsMatchServerConnect())
+        {
+            try
+            {
+                Backend.Match.CreateMatchRoom();
+            }
+            catch(Exception e)
+            {
+                Debug.Log($"CreateMatchRoom 호출중 예외 발생 : {e}");
+            }
+        }
+        else
+        {
+            Debug.LogError($"<faild>\n<color=red>IsMatchServerConnect</color> : {Backend.Match.IsMatchServerConnect()}");
+        }
     }
     public void JoinInGameServer(string serverAddress, ushort serverPort, string roomToken, bool isReconnecting)
     {
@@ -174,7 +188,6 @@ public class BackendFunctionMatch : MonoBehaviour
 
                     }
                 };
-                Debug.Log("4444444444444444444444444444444444444444444444444444444444");
                 Game.Instance.EnterScene(SceneType.InGame);
             }
             //게임방 접속 실패 처리
@@ -208,7 +221,6 @@ public class BackendFunctionMatch : MonoBehaviour
                 Debug.LogError("Error : failed enter in gamer server");
             }
         };
-
         //인게임 서버 접속 시도
         Backend.Match.JoinGameServer(serverAddress, serverPort, isReconnecting, out ErrorInfo successInfo);      
     }
