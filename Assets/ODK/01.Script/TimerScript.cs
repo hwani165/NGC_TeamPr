@@ -1,4 +1,6 @@
+using DG.Tweening;
 using NUnit.Framework;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -9,6 +11,7 @@ public class TimerScript : MonoBehaviour
     [SerializeField] private float elapsedTime;
     private bool isRunning;
     private bool isReversed = true;
+    [SerializeField] private GameObject countdownTimer;
     private void Start()
     {
         timerText = GetComponent<TextMeshProUGUI>();
@@ -46,8 +49,21 @@ public class TimerScript : MonoBehaviour
         {
             timerText.color = Color.red;
         }
+        if (elapsedTime > maxTime - 5)
+        {
+            countdownTimer.SetActive(true);
+            StartCoroutine(CountDown((int)maxTime - (int)elapsedTime));
+        }
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
+    public IEnumerator CountDown(int i)
+    {
+        countdownTimer.GetComponent<TextMeshProUGUI>().DOKill();
+        countdownTimer.GetComponent<TextMeshProUGUI>().text = i.ToString();
+        countdownTimer.GetComponent<TextMeshProUGUI>().color = new Color(1f, 0f, 0f, 1f);
+        countdownTimer.GetComponent<TextMeshProUGUI>().DOColor(new Color(1f,0f,0f,0f), 0.8f).SetEase(Ease.OutElastic);
 
+        yield return new WaitForSeconds(1f);
+    }
 
 }
