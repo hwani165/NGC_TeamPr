@@ -3,11 +3,14 @@ using UnityEngine;
 using DG.Tweening;
 using System.Collections;
 using UnityEngine.Events;
+using static Unity.Burst.Intrinsics.X86.Avx;
 
 public class CountDownScript : MonoBehaviour
 {
-    [SerializeField] private GameObject countDownPanel;
-    [SerializeField] private GameObject fadingSlide;
+    [SerializeField] private ScoreScript scoreScript;
+    [SerializeField] private GameObject wintext;
+    [SerializeField] private RectTransform countDownPanel;   // GameObject ¡æ RectTransform
+    [SerializeField] private RectTransform fadingSlide;      // GameObject ¡æ RectTransform
     [SerializeField] private TextMeshProUGUI countDownText;
     [SerializeField] private float countDownTime = 5f;
     [SerializeField] private UnityEvent onCountDownFinished;
@@ -16,21 +19,40 @@ public class CountDownScript : MonoBehaviour
 
     private void Awake()
     {
-        countDownPanel.SetActive(true);
-        fadingSlide.SetActive(true);
+        countDownPanel.gameObject.SetActive(true);
+        fadingSlide.gameObject.SetActive(true);
     }
 
     private IEnumerator FadingSlideOpen()
     {
         isCounting = true;
         yield return new WaitForSeconds(1f);
-        fadingSlide.transform.DOMoveY(3000f, 2f).SetEase(Ease.OutExpo);
+        fadingSlide.DOAnchorPosY(3000f, 2f).SetEase(Ease.OutExpo);
     }
+
     public IEnumerator FadingSlideClose()
     {
-
         yield return new WaitForSeconds(1f);
-        fadingSlide.transform.DOMoveY(1000f, 2f).SetEase(Ease.OutExpo);
+        fadingSlide.DOAnchorPosY(0f, 2f).SetEase(Ease.OutExpo);
+        yield return new WaitForSeconds(2f);
+        countDownText.gameObject.SetActive(true);
+        countDownText.color = new Color(1f, 0f, 0f, 1f);
+        countDownText.DOColor(new Color(1f, 0f, 0f, 0f), 0.3f).SetEase(Ease.InOutSine);
+        int reds = scoreScript.redScore;
+        int blues = scoreScript.blueScore;
+
+        if (reds > blues)
+        {
+            wintext.GetComponent<TextMeshProUGUI>().text = GameObject.Find("P1").GetComponent<Player>().name + "Win!";
+        }
+        else if (blues > reds)
+        {
+            wintext.GetComponent<TextMeshProUGUI>().text = GameObject.Find("P2").GetComponent<Player>().name + "Win!";
+        }
+        else
+        {
+            wintext.GetComponent<TextMeshProUGUI>().text = "Draw!";
+        }
     }
 
     private void Start()
@@ -41,7 +63,6 @@ public class CountDownScript : MonoBehaviour
     public void StartCountDown()
     {
         currentTime = countDownTime;
-        
         UpdateCountDownText();
         StartCoroutine(FadingSlideOpen());
     }
@@ -57,18 +78,20 @@ public class CountDownScript : MonoBehaviour
             currentTime = 0f;
             isCounting = false;
 
-            
             StartCoroutine(CountDownSlideClose());
         }
 
         UpdateCountDownText();
     }
+
     private IEnumerator CountDownSlideClose()
     {
         onCountDownFinished?.Invoke();
         yield return new WaitForSeconds(1f);
-        countDownPanel.transform.DOMoveY(3000f, 2f).SetEase(Ease.OutExpo);
+        countDownPanel.DOAnchorPosY(3000f, 2f).SetEase(Ease.OutExpo);
+        yield return new WaitForSeconds(2f);
     }
+
     private void UpdateCountDownText()
     {
         if (currentTime <= 0f)

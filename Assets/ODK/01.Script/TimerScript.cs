@@ -8,7 +8,7 @@ using static Unity.Burst.Intrinsics.X86.Avx;
 public class TimerScript : MonoBehaviour
 {
     private TextMeshProUGUI timerText;
-    private float maxTime = 180f;
+    [SerializeField] private float maxTime = 180f;
     [SerializeField] private float elapsedTime;
     private bool isRunning;
     private bool isReversed = true;
