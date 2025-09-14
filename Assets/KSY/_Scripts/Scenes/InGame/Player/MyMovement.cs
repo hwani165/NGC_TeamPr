@@ -39,7 +39,8 @@ public class MyMovement : Player
     //이동하고 있는 방향 (Now Move.X Direction <Sbyte>)
     private sbyte _moveX = 0;
     //송신 버퍼
-    byte[] bff;
+    byte[] movementBff;
+    byte[] posBff;
     #endregion
 
     private float _dashTimer = 0;
@@ -200,13 +201,14 @@ public class MyMovement : Player
     }
     public void Serialize()
     {
-        bff = Server.Instance.SerializationPlayerMovementData(_dashDir, _moveX, _usingJump, _usingDash, _isDashing, _usingDownDash);
+        movementBff = Server.Instance.SerializationPlayerMovementData(_dashDir, _moveX, _usingJump, _usingDash, _isDashing, _usingDownDash);
+        posBff = Server.Instance.SerializationPlayerPos(transform.position);
     }
 
     public override void Send()
     {
-        if(bff != null)
-        Server.Instance.Send(bff);
+        if(movementBff != null)
+        Server.Instance.Send(movementBff);
     }
     public void PosSend()
     {
