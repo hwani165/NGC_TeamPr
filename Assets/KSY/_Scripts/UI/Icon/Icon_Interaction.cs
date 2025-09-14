@@ -88,8 +88,6 @@ public class Icon_Interaction : MonoBehaviour
             //닉네임 변경 성공 처리
             case 204:
                 {
-                    _errorInfo.text = "회원 가입에 성공했습니다.";
-
                     _icon.IsSuccessWorking = true;
                     return;
                 }
@@ -139,6 +137,7 @@ public class Icon_Interaction : MonoBehaviour
     }
     public void FindMatch()
     {
+        gameObject.SetActive(false);
         Server.Instance.FindMatch();
     }
     public void Rename()
@@ -154,6 +153,11 @@ public class Icon_Interaction : MonoBehaviour
             case 204:
                 {
                     _errorInfo.text = $"닉네임 변경에 성공했습니다.\n변경된 닉네임 : {nickname}";
+
+                    //닉네임 변경 후 서버로부터의 데이터를 다시 가져옴
+                    Server.Instance.InitMyData();
+
+                    //UI 닉네임 변경
                     GameObject.Find("Canvas/Pages/Image_R_MyInfoPage/Text_MyProfile").GetComponent<TMP_Text>()
                     .text = $"이름 : {Server.Instance.GetMyData().Value.nickname}";
                     return;
@@ -184,7 +188,6 @@ public class Icon_Interaction : MonoBehaviour
         //로그인 성공 처리
         if (statusCode == 200)
         {
-            _errorInfo.text = "로그인에 성공했습니다.";
             _icon.IsSuccessWorking = true;
 
             GameObject.Find("Canvas/Pages/Image_R_DefaultPage/Btn_FindMatch").SetActive(true);

@@ -28,7 +28,7 @@ public class BackendFunctionsAccount : MonoBehaviour
 
         //로그인 성공시 매칭 서버 접속 시도
         //로그인 성공 처리
-        if (statusCode == 200)
+        if (statusCode == 200 && !Backend.Match.IsMatchServerConnect())
         {
             //매칭 서버 접속 시도
             Backend.Match.JoinMatchMakingServer(out ErrorInfo isSuccess);
