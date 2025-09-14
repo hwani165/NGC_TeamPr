@@ -1,0 +1,2353 @@
+fileFormatVersion: 2
+guid: a9eb5a7e6209d904d8906d069777c536
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 124747588071957112
+    second: TravelBookLite_retouch01_0
+  - first:
+      213: 2869171482119320165
+    second: TravelBookLite_retouch01_1
+  - first:
+      213: 7016483741258767931
+    second: TravelBookLite_retouch01_2
+  - first:
+      213: -7859992809125699557
+    second: TravelBookLite_retouch01_3
+  - first:
+      213: -2411942367332595251
+    second: TravelBookLite_retouch01_4
+  - first:
+      213: 3009035969310884051
+    second: TravelBookLite_retouch01_5
+  - first:
+      213: -4339167495138728892
+    second: TravelBookLite_retouch01_6
+  - first:
+      213: 6739507096695808160
+    second: TravelBookLite_retouch01_7
+  - first:
+      213: 479080662346954145
+    second: TravelBookLite_retouch01_8
+  - first:
+      213: -23512075465851206
+    second: TravelBookLite_retouch01_9
+  - first:
+      213: -2916667724027273265
+    second: TravelBookLite_retouch01_10
+  - first:
+      213: 255205538058865421
+    second: TravelBookLite_retouch01_11
+  - first:
+      213: -3242488882767905552
+    second: TravelBookLite_retouch01_12
+  - first:
+      213: 2702386963356599282
+    second: TravelBookLite_retouch01_13
+  - first:
+      213: 7946864451076190421
+    second: TravelBookLite_retouch01_14
+  - first:
+      213: -4956839958606804223
+    second: TravelBookLite_retouch01_15
+  - first:
+      213: -3136497189212970783
+    second: TravelBookLite_retouch01_16
+  - first:
+      213: -2725602922250440157
+    second: TravelBookLite_retouch01_17
+  - first:
+      213: -2908341831766685420
+    second: TravelBookLite_retouch01_18
+  - first:
+      213: 7413595372964685299
+    second: TravelBookLite_retouch01_19
+  - first:
+      213: -8046763974435596659
+    second: TravelBookLite_retouch01_20
+  - first:
+      213: 2860556756438267109
+    second: TravelBookLite_retouch01_21
+  - first:
+      213: 1048795958247134520
+    second: TravelBookLite_retouch01_22
+  - first:
+      213: -6166939355792952597
+    second: TravelBookLite_retouch01_23
+  - first:
+      213: 8864076966100496553
+    second: TravelBookLite_retouch01_24
+  - first:
+      213: 7052306204131776636
+    second: TravelBookLite_retouch01_25
+  - first:
+      213: 7573518329318517985
+    second: TravelBookLite_retouch01_26
+  - first:
+      213: 3476844832898742092
+    second: TravelBookLite_retouch01_27
+  - first:
+      213: -180712305791712454
+    second: TravelBookLite_retouch01_28
+  - first:
+      213: 7589406630865359339
+    second: TravelBookLite_retouch01_29
+  - first:
+      213: -3888007447299385623
+    second: TravelBookLite_retouch01_30
+  - first:
+      213: -4890005780034213935
+    second: TravelBookLite_retouch01_31
+  - first:
+      213: 3965521476448772788
+    second: TravelBookLite_retouch01_32
+  - first:
+      213: 7600434086585425030
+    second: TravelBookLite_retouch01_33
+  - first:
+      213: 3789823287623212996
+    second: TravelBookLite_retouch01_34
+  - first:
+      213: -9134427889317214119
+    second: TravelBookLite_retouch01_35
+  - first:
+      213: -2647016453432944513
+    second: TravelBookLite_retouch01_36
+  - first:
+      213: 6267594765358838447
+    second: TravelBookLite_retouch01_37
+  - first:
+      213: -3445310676454498833
+    second: TravelBookLite_retouch01_38
+  - first:
+      213: -1370857806543943281
+    second: TravelBookLite_retouch01_39
+  - first:
+      213: -5906923596650884814
+    second: TravelBookLite_retouch01_40
+  - first:
+      213: 8784989875978505497
+    second: TravelBookLite_retouch01_41
+  - first:
+      213: -1753309733723249277
+    second: TravelBookLite_retouch01_42
+  - first:
+      213: -1596193677140832137
+    second: TravelBookLite_retouch01_43
+  - first:
+      213: 5773770062371841766
+    second: TravelBookLite_retouch01_44
+  - first:
+      213: -8646056592566752399
+    second: TravelBookLite_retouch01_45
+  - first:
+      213: 62931274160935559
+    second: TravelBookLite_retouch01_46
+  - first:
+      213: 6509675597732077926
+    second: TravelBookLite_retouch01_47
+  - first:
+      213: 4971659450645428503
+    second: TravelBookLite_retouch01_48
+  - first:
+      213: 3028881307366703412
+    second: TravelBookLite_retouch01_49
+  - first:
+      213: 4963760548628690207
+    second: TravelBookLite_retouch01_50
+  - first:
+      213: 3596527622683610043
+    second: TravelBookLite_retouch01_51
+  - first:
+      213: 7754999905392262534
+    second: TravelBookLite_retouch01_52
+  - first:
+      213: 8707216279380052711
+    second: TravelBookLite_retouch01_53
+  - first:
+      213: -8604989849438111956
+    second: TravelBookLite_retouch01_54
+  - first:
+      213: 6322850178686818927
+    second: TravelBookLite_retouch01_55
+  - first:
+      213: 5632368150257535287
+    second: TravelBookLite_retouch01_56
+  - first:
+      213: -1648608385048332864
+    second: TravelBookLite_retouch01_57
+  - first:
+      213: -2805924177126821196
+    second: TravelBookLite_retouch01_58
+  - first:
+      213: -5185318897649425014
+    second: TravelBookLite_retouch01_59
+  - first:
+      213: -9030165111591224616
+    second: TravelBookLite_retouch01_60
+  - first:
+      213: -2319143216185149350
+    second: TravelBookLite_retouch01_61
+  - first:
+      213: 3376053003466551602
+    second: TravelBookLite_retouch01_62
+  - first:
+      213: 4942039524341211762
+    second: TravelBookLite_retouch01_63
+  - first:
+      213: 7854216421765736027
+    second: TravelBookLite_retouch01_64
+  - first:
+      213: -4655707227501208032
+    second: TravelBookLite_retouch01_65
+  - first:
+      213: 4460900160057182574
+    second: TravelBookLite_retouch01_66
+  - first:
+      213: 295225450062993538
+    second: TravelBookLite_retouch01_67
+  - first:
+      213: 2085789207213489627
+    second: TravelBookLite_retouch01_68
+  - first:
+      213: 8373539623209555934
+    second: TravelBookLite_retouch01_69
+  - first:
+      213: -6597862562602845446
+    second: TravelBookLite_retouch01_70
+  - first:
+      213: -574179027128573558
+    second: TravelBookLite_retouch01_71
+  - first:
+      213: -7981070909916239279
+    second: TravelBookLite_retouch01_72
+  - first:
+      213: 2874734540802033499
+    second: TravelBookLite_retouch01_73
+  - first:
+      213: 5135923366682074853
+    second: TravelBookLite_retouch01_74
+  - first:
+      213: 2677664284155413798
+    second: TravelBookLite_retouch01_75
+  - first:
+      213: -1723797582011360670
+    second: TravelBookLite_retouch01_76
+  - first:
+      213: 5140110717287142924
+    second: TravelBookLite_retouch01_77
+  - first:
+      213: -4130820743457194128
+    second: TravelBookLite_retouch01_78
+  - first:
+      213: -8178935135318627024
+    second: TravelBookLite_retouch01_79
+  - first:
+      213: 1368873351693501751
+    second: TravelBookLite_retouch01_80
+  - first:
+      213: -1323009503519329590
+    second: TravelBookLite_retouch01_81
+  - first:
+      213: -333973967350880955
+    second: TravelBookLite_retouch01_82
+  - first:
+      213: 4108685948817878587
+    second: TravelBookLite_retouch01_83
+  - first:
+      213: -408475937232498992
+    second: TravelBookLite_retouch01_84
+  - first:
+      213: -8902653709920669111
+    second: TravelBookLite_retouch01_85
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 1024
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 831
+        width: 61
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 872ad9935413bb100800000000000000
+      internalID: 124747588071957112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_1
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 687
+        width: 226
+        height: 162
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 562376fe24851d720800000000000000
+      internalID: 2869171482119320165
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_2
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 700
+        width: 106
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3e580aa9ce8f5160800000000000000
+      internalID: 7016483741258767931
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_3
+      rect:
+        serializedVersion: 2
+        x: 431
+        y: 700
+        width: 106
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1020f22f22bbe290800000000000000
+      internalID: -7859992809125699557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 655
+        width: 61
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc90d68223f078ed0800000000000000
+      internalID: -2411942367332595251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_5
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 639
+        width: 226
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d00623854e32c920800000000000000
+      internalID: 3009035969310884051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 575
+        width: 61
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 444a55f272e28c3c0800000000000000
+      internalID: -4339167495138728892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_7
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 592
+        width: 32
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a027cb3ff9878d50800000000000000
+      internalID: 6739507096695808160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_8
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 560
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a5f2f9f25906a600800000000000000
+      internalID: 479080662346954145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 543
+        width: 61
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: abefce554e77caff0800000000000000
+      internalID: -23512075465851206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_10
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 528
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fcfd18d782ae587d0800000000000000
+      internalID: -2916667724027273265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_11
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 511
+        width: 61
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0b06b0b51caa8300800000000000000
+      internalID: 255205538058865421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_12
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 496
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0fc37726a8d5003d0800000000000000
+      internalID: -3242488882767905552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_13
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 479
+        width: 61
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f3448410aec08520800000000000000
+      internalID: 2702386963356599282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_14
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 488
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d0739c2d1fe84e60800000000000000
+      internalID: 7946864451076190421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_15
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 488
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10b87c2f154c53bb0800000000000000
+      internalID: -4956839958606804223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 399
+        width: 61
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e023fd9c6ce874d0800000000000000
+      internalID: -3136497189212970783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_17
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 464
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 322fe744596bc2ad0800000000000000
+      internalID: -2725602922250440157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_18
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 448
+        width: 64
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4194328538e73a7d0800000000000000
+      internalID: -2908341831766685420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_19
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 464
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f52a0a76b162e660800000000000000
+      internalID: 7413595372964685299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_20
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 432
+        width: 64
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d861b508cc6245090800000000000000
+      internalID: -8046763974435596659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_21
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 416
+        width: 64
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e4b85fc63db2b720800000000000000
+      internalID: 2860556756438267109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_22
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 367
+        width: 61
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8359f250e521e8e00800000000000000
+      internalID: 1048795958247134520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_23
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 384
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be2b59a6451aa6aa0800000000000000
+      internalID: -6166939355792952597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_24
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 352
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a0742a6907830b70800000000000000
+      internalID: 8864076966100496553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_25
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 335
+        width: 61
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c78de80c023ded160800000000000000
+      internalID: 7052306204131776636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_26
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 327
+        width: 16
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1eca0f65bca8a1960800000000000000
+      internalID: 7573518329318517985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_27
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 327
+        width: 16
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c47f41454fb304030800000000000000
+      internalID: 3476844832898742092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_28
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 191
+        width: 61
+        height: 130
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a334eb68d1bfd7df0800000000000000
+      internalID: -180712305791712454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_29
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 294
+        width: 64
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be159b0de1df25960800000000000000
+      internalID: 7589406630865359339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_30
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 275
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e695a383d50b0ac0800000000000000
+      internalID: -3888007447299385623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_31
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 259
+        width: 11
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d72473c6a5332cb0800000000000000
+      internalID: -4890005780034213935
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_32
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 245
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b269e8c5cc580730800000000000000
+      internalID: 3965521476448772788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_33
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 228
+        width: 12
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 68cd1bd688a2a7960800000000000000
+      internalID: 7600434086585425030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_34
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 228
+        width: 12
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4cfd8446338289430800000000000000
+      internalID: 3789823287623212996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_35
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 212
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95883de1b3efb3180800000000000000
+      internalID: -9134427889317214119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_36
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 212
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f78d3826f88e34bd0800000000000000
+      internalID: -2647016453432944513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_37
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 194
+        width: 15
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa2bf416b38faf650800000000000000
+      internalID: 6267594765358838447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_38
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 194
+        width: 15
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fed911d913ccf20d0800000000000000
+      internalID: -3445310676454498833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_39
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 194
+        width: 15
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f89806b861cb9fce0800000000000000
+      internalID: -1370857806543943281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_40
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 194
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 231504af844660ea0800000000000000
+      internalID: -5906923596650884814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_41
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 194
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91d0a115fbd8ae970800000000000000
+      internalID: 8784989875978505497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_42
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 194
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 385e03c261efaa7e0800000000000000
+      internalID: -1753309733723249277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_43
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 194
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 770db41ce4e29d9e0800000000000000
+      internalID: -1596193677140832137
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_44
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 192
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e6657ee74d802050800000000000000
+      internalID: 5773770062371841766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_45
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 192
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17b622c7659030880800000000000000
+      internalID: -8646056592566752399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_46
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 193
+        width: 18
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78210a119a39fd000800000000000000
+      internalID: 62931274160935559
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_47
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 193
+        width: 13
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66169d56773075a50800000000000000
+      internalID: 6509675597732077926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_48
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 176
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7193febede1eef440800000000000000
+      internalID: 4971659450645428503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_49
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 176
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 431c968508fb80a20800000000000000
+      internalID: 3028881307366703412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_50
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 176
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f157c1b7be1d2e440800000000000000
+      internalID: 4963760548628690207
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_51
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 179
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bbbcfee41de69e130800000000000000
+      internalID: 3596527622683610043
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_52
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 179
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 68df712835b4f9b60800000000000000
+      internalID: 7754999905392262534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_53
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 179
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ea42f2c21f36d870800000000000000
+      internalID: 8707216279380052711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_54
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 179
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c273668b25fe49880800000000000000
+      internalID: -8604989849438111956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_55
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 177
+        width: 11
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6a94a4dcb64fb750800000000000000
+      internalID: 6322850178686818927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_56
+      rect:
+        serializedVersion: 2
+        x: 226
+        y: 177
+        width: 12
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7390358bdf03a2e40800000000000000
+      internalID: 5632368150257535287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_57
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 177
+        width: 17
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c5b6739867fe19e0800000000000000
+      internalID: -1648608385048332864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_58
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 176
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b2fcabc3da5f09d0800000000000000
+      internalID: -2805924177126821196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_59
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 161
+        width: 16
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a856c728feb0a08b0800000000000000
+      internalID: -5185318897649425014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_60
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 162
+        width: 14
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8daba74cca86ea280800000000000000
+      internalID: -9030165111591224616
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_61
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 162
+        width: 14
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a58f600488fb0dfd0800000000000000
+      internalID: -2319143216185149350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_62
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 164
+        width: 25
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 231b38ec1562ade20800000000000000
+      internalID: 3376053003466551602
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_63
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 163
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2726c4a63c6a59440800000000000000
+      internalID: 4942039524341211762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_64
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 111
+        width: 61
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b56e260e838cffc60800000000000000
+      internalID: 7854216421765736027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_65
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 132
+        width: 13
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02e529e81fa936fb0800000000000000
+      internalID: -4655707227501208032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_66
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 115
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6901ba8f0d48ed30800000000000000
+      internalID: 4460900160057182574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_67
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 115
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 288d8af8bf9d81400800000000000000
+      internalID: 295225450062993538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_68
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 115
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bddbd44ab3632fc10800000000000000
+      internalID: 2085789207213489627
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_69
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 115
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed750122ce9c43470800000000000000
+      internalID: 8373539623209555934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_70
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 99
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: afa753fc4feaf64a0800000000000000
+      internalID: -6597862562602845446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_71
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 99
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a81a58a873b1808f0800000000000000
+      internalID: -574179027128573558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_72
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 99
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15a2d3ffa4a8d3190800000000000000
+      internalID: -7981070909916239279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_73
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 99
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b570d0875db15e720800000000000000
+      internalID: 2874734540802033499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_74
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 82
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ee96b83717764740800000000000000
+      internalID: 5135923366682074853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_75
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 82
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62585d4ca79f82520800000000000000
+      internalID: 2677664284155413798
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_76
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 82
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26a19837b37d318e0800000000000000
+      internalID: -1723797582011360670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_77
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 82
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c061412c677555740800000000000000
+      internalID: 5140110717287142924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_78
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 67
+        width: 17
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07f3b6b7b606ca6c0800000000000000
+      internalID: -4130820743457194128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_79
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 67
+        width: 17
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03d2f5a04d59e7e80800000000000000
+      internalID: -8178935135318627024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_80
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 67
+        width: 17
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 735803e8f073ff210800000000000000
+      internalID: 1368873351693501751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_81
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 67
+        width: 17
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac2b34cbdd9b3ade0800000000000000
+      internalID: -1323009503519329590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_82
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 35
+        width: 11
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 545a2d7327c7d5bf0800000000000000
+      internalID: -333973967350880955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_83
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 34
+        width: 11
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3eade80a1cf40930800000000000000
+      internalID: 4108685948817878587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_84
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 51
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0de46fd9c4dc45af0800000000000000
+      internalID: -408475937232498992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TravelBookLite_retouch01_85
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 33
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9427ddd7e9b637480800000000000000
+      internalID: -8902653709920669111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      TravelBookLite_retouch01_0: 124747588071957112
+      TravelBookLite_retouch01_1: 2869171482119320165
+      TravelBookLite_retouch01_10: -2916667724027273265
+      TravelBookLite_retouch01_11: 255205538058865421
+      TravelBookLite_retouch01_12: -3242488882767905552
+      TravelBookLite_retouch01_13: 2702386963356599282
+      TravelBookLite_retouch01_14: 7946864451076190421
+      TravelBookLite_retouch01_15: -4956839958606804223
+      TravelBookLite_retouch01_16: -3136497189212970783
+      TravelBookLite_retouch01_17: -2725602922250440157
+      TravelBookLite_retouch01_18: -2908341831766685420
+      TravelBookLite_retouch01_19: 7413595372964685299
+      TravelBookLite_retouch01_2: 7016483741258767931
+      TravelBookLite_retouch01_20: -8046763974435596659
+      TravelBookLite_retouch01_21: 2860556756438267109
+      TravelBookLite_retouch01_22: 1048795958247134520
+      TravelBookLite_retouch01_23: -6166939355792952597
+      TravelBookLite_retouch01_24: 8864076966100496553
+      TravelBookLite_retouch01_25: 7052306204131776636
+      TravelBookLite_retouch01_26: 7573518329318517985
+      TravelBookLite_retouch01_27: 3476844832898742092
+      TravelBookLite_retouch01_28: -180712305791712454
+      TravelBookLite_retouch01_29: 7589406630865359339
+      TravelBookLite_retouch01_3: -7859992809125699557
+      TravelBookLite_retouch01_30: -3888007447299385623
+      TravelBookLite_retouch01_31: -4890005780034213935
+      TravelBookLite_retouch01_32: 3965521476448772788
+      TravelBookLite_retouch01_33: 7600434086585425030
+      TravelBookLite_retouch01_34: 3789823287623212996
+      TravelBookLite_retouch01_35: -9134427889317214119
+      TravelBookLite_retouch01_36: -2647016453432944513
+      TravelBookLite_retouch01_37: 6267594765358838447
+      TravelBookLite_retouch01_38: -3445310676454498833
+      TravelBookLite_retouch01_39: -1370857806543943281
+      TravelBookLite_retouch01_4: -2411942367332595251
+      TravelBookLite_retouch01_40: -5906923596650884814
+      TravelBookLite_retouch01_41: 8784989875978505497
+      TravelBookLite_retouch01_42: -1753309733723249277
+      TravelBookLite_retouch01_43: -1596193677140832137
+      TravelBookLite_retouch01_44: 5773770062371841766
+      TravelBookLite_retouch01_45: -8646056592566752399
+      TravelBookLite_retouch01_46: 62931274160935559
+      TravelBookLite_retouch01_47: 6509675597732077926
+      TravelBookLite_retouch01_48: 4971659450645428503
+      TravelBookLite_retouch01_49: 3028881307366703412
+      TravelBookLite_retouch01_5: 3009035969310884051
+      TravelBookLite_retouch01_50: 4963760548628690207
+      TravelBookLite_retouch01_51: 3596527622683610043
+      TravelBookLite_retouch01_52: 7754999905392262534
+      TravelBookLite_retouch01_53: 8707216279380052711
+      TravelBookLite_retouch01_54: -8604989849438111956
+      TravelBookLite_retouch01_55: 6322850178686818927
+      TravelBookLite_retouch01_56: 5632368150257535287
+      TravelBookLite_retouch01_57: -1648608385048332864
+      TravelBookLite_retouch01_58: -2805924177126821196
+      TravelBookLite_retouch01_59: -5185318897649425014
+      TravelBookLite_retouch01_6: -4339167495138728892
+      TravelBookLite_retouch01_60: -9030165111591224616
+      TravelBookLite_retouch01_61: -2319143216185149350
+      TravelBookLite_retouch01_62: 3376053003466551602
+      TravelBookLite_retouch01_63: 4942039524341211762
+      TravelBookLite_retouch01_64: 7854216421765736027
+      TravelBookLite_retouch01_65: -4655707227501208032
+      TravelBookLite_retouch01_66: 4460900160057182574
+      TravelBookLite_retouch01_67: 295225450062993538
+      TravelBookLite_retouch01_68: 2085789207213489627
+      TravelBookLite_retouch01_69: 8373539623209555934
+      TravelBookLite_retouch01_7: 6739507096695808160
+      TravelBookLite_retouch01_70: -6597862562602845446
+      TravelBookLite_retouch01_71: -574179027128573558
+      TravelBookLite_retouch01_72: -7981070909916239279
+      TravelBookLite_retouch01_73: 2874734540802033499
+      TravelBookLite_retouch01_74: 5135923366682074853
+      TravelBookLite_retouch01_75: 2677664284155413798
+      TravelBookLite_retouch01_76: -1723797582011360670
+      TravelBookLite_retouch01_77: 5140110717287142924
+      TravelBookLite_retouch01_78: -4130820743457194128
+      TravelBookLite_retouch01_79: -8178935135318627024
+      TravelBookLite_retouch01_8: 479080662346954145
+      TravelBookLite_retouch01_80: 1368873351693501751
+      TravelBookLite_retouch01_81: -1323009503519329590
+      TravelBookLite_retouch01_82: -333973967350880955
+      TravelBookLite_retouch01_83: 4108685948817878587
+      TravelBookLite_retouch01_84: -408475937232498992
+      TravelBookLite_retouch01_85: -8902653709920669111
+      TravelBookLite_retouch01_9: -23512075465851206
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

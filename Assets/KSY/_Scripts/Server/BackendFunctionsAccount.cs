@@ -70,10 +70,10 @@ public class BackendFunctionsAccount : MonoBehaviour
             }
         }
     }
-    public int Signup(string id, string pw)
+    public int Signup(string id, string pw, string nickname)
     {
         //회원 가입 시도
-        BackendReturnObject bro_customSignUp = Backend.BMember.CustomSignUp(id, pw);
+        BackendReturnObject bro_customSignUp = Backend.BMember.CustomSignUp(id, pw, nickname);
 
         return bro_customSignUp.StatusCode;
     }

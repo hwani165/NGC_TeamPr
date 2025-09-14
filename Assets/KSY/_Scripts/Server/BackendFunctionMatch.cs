@@ -248,7 +248,6 @@ public class BackendFunctionMatch : MonoBehaviour
             //획득한 정보를 토대로 재접속 시도
             JoinInGameServer(serverAddress, serverPort, roomToken, isReconnecting);
 
-            Debug.Log("End TryReconnect");
             return isReconnecting;
         }
         //진행중이었던 게임이 없었을 경우 처리

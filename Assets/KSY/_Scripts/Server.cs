@@ -123,7 +123,6 @@ public class Server : SingletonBehaviour<Server>
     }
     public bool TryReconnect()
     {
-        Debug.Log("TryReconnect");
         return _bfMatch.TryReconnect();
     }
     public void Login(string id, string pw)
@@ -134,9 +133,9 @@ public class Server : SingletonBehaviour<Server>
     {
         _bfAccount.Login(id, pw, OnTryMatchServer, OnTryLogin);
     }
-    public int TrySignup(string id, string pw)
+    public int TrySignup(string id, string pw , string nickname)
     {
-        return _bfAccount.Signup(id,pw);
+        return _bfAccount.Signup(id,pw, nickname);
     }
     public int TryUpdateNickname(string nickName)
     {

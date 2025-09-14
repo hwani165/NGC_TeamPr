@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6342300686301961608}
   - component: {fileID: 74575316459447489}
   - component: {fileID: 1579183833524600508}
+  - component: {fileID: 2337348580596189198}
   m_Layer: 5
   m_Name: Image_R_HomePage
   m_TagString: Untagged
@@ -34,8 +35,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 281, y: 78}
-  m_SizeDelta: {x: 434.7987, y: 580}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 435, y: 580}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &74575316459447489
 CanvasRenderer:
@@ -75,3 +76,15 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2337348580596189198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1415084341708372315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77408cdc5ad7f9a4cae428da5aa0b313, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
