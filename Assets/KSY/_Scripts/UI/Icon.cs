@@ -3,6 +3,7 @@ using System.Collections;
 using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -10,14 +11,16 @@ using UnityEngine.UI;
 public class Icon : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IPointerDownHandler
 {
     [SerializeField] private Page _page;
+    [SerializeField] private UnityEvent _Clicked;
 
-    public event Action Clicked;
     public event Action ClickEffectEnd;
 
     private RectTransform _recTransform;
 
     private Image _image;
     private Outline _outLine;
+
+    public bool IsSuccessWorking = false;
 
     private bool isShaking = false;
     private void Awake()
@@ -29,9 +32,25 @@ public class Icon : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
         _outLine = GetComponent<Outline>();
 
-        Clicked += _clickEffect;
-        Clicked += () => Page.OnTop(_page);
-        Clicked += () => Page.Move(_page);
+        _Clicked.AddListener(_clickEffect);
+
+        if(_page != null)
+        {
+            if(_Clicked.GetPersistentEventCount() == 0)
+            {
+                Debug.Log($"<color=green>subscribe : {gameObject.name}</color>");
+
+                _Clicked.AddListener(() => Page.UpdateOnPage(_page));
+                _Clicked.AddListener(() => Page.Move(_page));
+            }
+            else
+            {
+                Debug.Log($"<color=red>subscribe working f : {gameObject.name}</color>");
+
+                _Clicked.AddListener(() => Page.UpdateOnPage(_page, IsSuccessWorking));
+                _Clicked.AddListener(() => Page.Move(_page, IsSuccessWorking));
+            }
+        }
     }
 
     #region Pointer
@@ -46,7 +65,7 @@ public class Icon : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     }
     public void OnPointerClick(PointerEventData eventData)
     {
-        Clicked?.Invoke();
+        _Clicked?.Invoke();
 
         _image.color = Color.white;
     }

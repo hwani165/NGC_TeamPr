@@ -125,13 +125,9 @@ public class Server : SingletonBehaviour<Server>
     {
         return _bfMatch.TryReconnect();
     }
-    public void Login(string id, string pw)
+    public void Login(string id, string pw, Action<int> OnTryLogin)
     {
-        _bfAccount.Login(id,pw);
-    }
-    public void Login(string id, string pw, Action<bool> OnTryMatchServer, Action<int> OnTryLogin)
-    {
-        _bfAccount.Login(id, pw, OnTryMatchServer, OnTryLogin);
+        _bfAccount.Login(id, pw, OnTryLogin);
     }
     public int TrySignup(string id, string pw , string nickname)
     {
