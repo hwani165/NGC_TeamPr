@@ -25,6 +25,7 @@ public struct PlayerMessage : IFlatbufferObject
   public TTable? Data<TTable>() where TTable : struct, IFlatbufferObject { int o = __p.__offset(6); return o != 0 ? (TTable?)__p.__union<TTable>(o + __p.bb_pos) : null; }
   public InputData.Player.ItemAction DataAsitem_action() { return Data<InputData.Player.ItemAction>().Value; }
   public InputData.Player.Movement DataAsmovement() { return Data<InputData.Player.Movement>().Value; }
+  public InputData.Player.PlayerPos DataAspos() { return Data<InputData.Player.PlayerPos>().Value; }
 
   public static Offset<InputData.Player.PlayerMessage> CreatePlayerMessage(FlatBufferBuilder builder,
       InputData.Player.PlayerMessageType data_type = InputData.Player.PlayerMessageType.NONE,

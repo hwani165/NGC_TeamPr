@@ -10,7 +10,7 @@ public class BackendFunctionInGame : MonoBehaviour
 {
     private readonly FlatBufferBuilder _movementBuilder = new FlatBufferBuilder(32);
     private readonly FlatBufferBuilder _itemActionBuilder = new FlatBufferBuilder(32);
-
+    private readonly FlatBufferBuilder _playerPosBuilder = new FlatBufferBuilder(32);
     private readonly FlatBufferBuilder _platformStateBuilder = new FlatBufferBuilder(32);
     private readonly FlatBufferBuilder _spawnerInfoBuilder = new FlatBufferBuilder(32);
 
@@ -120,6 +120,21 @@ public class BackendFunctionInGame : MonoBehaviour
         //스키마 버퍼화
         _itemActionBuilder.Finish(offsetResultData.Value, "PLYR");
         byte[] bff = _itemActionBuilder.SizedByteArray();
+
+        return bff;
+    }
+    public byte[] SerializationPlayerPos(Vector2 pos)
+    {
+        _playerPosBuilder.Clear();
+
+        sbyte x = (sbyte)pos.x;
+        sbyte y = (sbyte)pos.y;
+
+        Offset<PlayerPos> offsetPlayerPosData = PlayerPos.CreatePlayerPos(_playerPosBuilder, x, y);
+        Offset<PlayerMessage> offsetResultData = PlayerMessage.CreatePlayerMessage(_playerPosBuilder, PlayerMessageType.pos, offsetPlayerPosData.Value);
+
+        _playerPosBuilder.Finish(offsetResultData.Value, "PLYR");
+        byte[] bff = _playerPosBuilder.SizedByteArray();
 
         return bff;
     }
@@ -233,7 +248,7 @@ public class BackendFunctionInGame : MonoBehaviour
                     //데이터를 버퍼에서 꺼내옴 (역직렬화)
                     ItemAction data = message.DataAsitem_action();
                     byte state = data.ActionState;
-                    byte charge = data.Charge;
+                    byte charge = data.ChargeGauge;
                     ushort itemdID = data.ActionItemId;
                     sbyte x = data.ShotDirX;
                     sbyte y = data.ShotDirY;

@@ -11,7 +11,6 @@ public class Icon_Interaction : MonoBehaviour
     [SerializeField] private TMP_Text _errorInfo;
 
     private Action<int> TryingLogin;
-    private Action<bool> OnTryEnterMatchServer;
 
     [SerializeField] private TMP_InputField input_id;
     [SerializeField] private TMP_InputField input_pw;

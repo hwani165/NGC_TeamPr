@@ -55,7 +55,7 @@ public class MyMovement : Player
 
     private void FixedUpdate()
     {
-        Serialize();
+        //Serialize();
         OnGround();
         GroundDash();
         AirDash();
@@ -93,7 +93,6 @@ public class MyMovement : Player
 
         if (_isGrounded)
         {
-            //Debug.Log($"_isGrounded : {_isGrounded}");
             _currentJumpCount = maxJumpCount;
             _usingJump = false;
             _usingDownDash = false;
@@ -208,6 +207,10 @@ public class MyMovement : Player
     {
         if(bff != null)
         Server.Instance.Send(bff);
+    }
+    public void PosSend()
+    {
+
     }
 
 #if UNITY_EDITOR

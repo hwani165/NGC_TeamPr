@@ -2,21 +2,22 @@ using System;
 using System.Runtime.CompilerServices;
 using BackEnd;
 using BackEnd.Tcp;
+using NUnit.Framework;
 using UnityEngine;
 
 public class BackendFunctionsAccount : MonoBehaviour
 {
     public void Login(string id, string pw, Action<int> OnTryLogin)
     {
-        //매칭 서버에 접속을 성공/실패했을 때 호출되는 이벤트입니다.
-        Backend.Match.OnJoinMatchMakingServer = (JoinChannelEventArgs joinChannelEventArgs) =>
-        {
-            //매칭 서버 접속 성공, 실패 호출 이벤트
-            if(!(joinChannelEventArgs.ErrInfo == ErrorInfo.Success))
-            {
-                OnTryLogin?.Invoke(0);
-            }
-        };
+        ////매칭 서버에 접속을 성공/실패했을 때 호출되는 이벤트입니다.
+        //Backend.Match.OnJoinMatchMakingServer = (JoinChannelEventArgs joinChannelEventArgs) =>
+        //{
+        //    //매칭 서버 접속 성공, 실패 호출 이벤트
+        //    if(!(joinChannelEventArgs.ErrInfo == ErrorInfo.Success))
+        //    {
+        //        //OnTryLogin?.Invoke(0);
+        //    }
+        //};
 
         //로그인 시도
         BackendReturnObject bro_customLogin = Backend.BMember.CustomLogin(id, pw);
@@ -30,9 +31,20 @@ public class BackendFunctionsAccount : MonoBehaviour
         //로그인 성공 처리
         if (statusCode == 200 && !Backend.Match.IsMatchServerConnect())
         {
+            bool isSuccess = false;
+
             //매칭 서버 접속 시도
-            Backend.Match.JoinMatchMakingServer(out ErrorInfo isSuccess);
+            while(!isSuccess)
+            {
+                Backend.Match.JoinMatchMakingServer(out ErrorInfo errorInfo);
+
+                isSuccess = errorInfo == ErrorInfo.Success;
+            }
         }
+    }
+    private void JoinMatchMakingServer()
+    {
+
     }
     public int Signup(string id, string pw, string nickname)
     {
