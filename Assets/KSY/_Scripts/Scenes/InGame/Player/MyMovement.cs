@@ -201,14 +201,7 @@ public class MyMovement : Player
     }
     public void Serialize()
     {
-        Vector2 dashDir = _dashDir;
-        sbyte moveX = _moveX;
-        bool usingJump = _usingJump;
-        bool usingDash = _usingDash;
-        bool isDashing = _isDashing;
-        bool usingDownDash = _usingDownDash;
-
-        bff = Server.Instance.SerializationPlayerMovementData(dashDir, moveX, usingJump, usingDash, isDashing, usingDownDash);
+        bff = Server.Instance.SerializationPlayerMovementData(_dashDir, _moveX, _usingJump, _usingDash, _isDashing, _usingDownDash);
     }
 
     public override void Send()
