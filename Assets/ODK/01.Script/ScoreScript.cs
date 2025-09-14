@@ -14,11 +14,13 @@ public class ScoreScript : MonoBehaviour
         
     }
 
+    [ContextMenu("RedScoreUp")]
     void RedScoreUp()
     {
         redScore++;
         redScoreText.text = redScore.ToString();
     }
+    [ContextMenu("BlueScoreUp")]
     void BlueScoreUp()
     {
         blueScore++;
