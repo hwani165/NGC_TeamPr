@@ -26,6 +26,12 @@ public class CountDownScript : MonoBehaviour
         yield return new WaitForSeconds(1f);
         fadingSlide.transform.DOMoveY(3000f, 2f).SetEase(Ease.OutExpo);
     }
+    public IEnumerator FadingSlideClose()
+    {
+
+        yield return new WaitForSeconds(1f);
+        fadingSlide.transform.DOMoveY(1000f, 2f).SetEase(Ease.OutExpo);
+    }
 
     private void Start()
     {
