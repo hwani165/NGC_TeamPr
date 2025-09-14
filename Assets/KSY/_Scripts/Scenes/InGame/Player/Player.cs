@@ -81,6 +81,11 @@ public class Player : MonoBehaviour, IReceiver, ISender
                             Server.Instance.ApplyData(message, _otherAction, messageType);
                             break;
                         }
+                    case PlayerMessageType.pos:
+                        {
+                            Server.Instance.ApplyData(message, _otherMovement, messageType);
+                            break;
+                        }
                     default:
                         {
                             Debug.LogError("this enum value is nonexistent");
@@ -129,7 +134,7 @@ public class Player : MonoBehaviour, IReceiver, ISender
     {
         throw new NotImplementedException("If you want to use this method, you must override it.");
     }
-    public virtual void ApplySbyteData(sbyte dirX, sbyte dirY)
+    public virtual void ApplySbyteData(sbyte sbyteData1, sbyte sbyteData2)
     {
         throw new NotImplementedException("If you want to use this method, you must override it.");
     }

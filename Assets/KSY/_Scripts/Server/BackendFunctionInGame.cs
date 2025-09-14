@@ -261,6 +261,16 @@ public class BackendFunctionInGame : MonoBehaviour
                     Debug.Log("End item Action receive");
                     break;
                 }
+            case PlayerMessageType.pos:
+                {
+                    PlayerPos data = message.DataAspos();
+
+                    sbyte x = data.X;
+                    sbyte y = data.Y;
+
+                    Receiver.ApplySbyteData(x, y);
+                    break;
+                }
             default:
                 {
                     Debug.Log("Error");

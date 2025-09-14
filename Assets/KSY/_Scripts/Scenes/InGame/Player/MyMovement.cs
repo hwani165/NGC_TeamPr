@@ -212,7 +212,8 @@ public class MyMovement : Player
     }
     public void PosSend()
     {
-
+        if (posBff != null)
+            Server.Instance.Send(posBff);
     }
 
 #if UNITY_EDITOR

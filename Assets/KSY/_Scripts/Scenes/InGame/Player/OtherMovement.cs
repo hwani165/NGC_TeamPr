@@ -183,7 +183,12 @@ public class OtherMovement : Player
             Debug.Log($"usingDownDash : {usingDownDash}");
             _downDashing = usingDownDash;
             DownDash();
+            DownDash();
         }
+    }
+    public override void ApplySbyteData(sbyte x, sbyte y)
+    {
+        transform.position = new Vector3(x, y);
     }
     public override void ApplySbyteData(sbyte moveX, sbyte dashX, sbyte dashY)
     {
