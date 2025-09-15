@@ -23,10 +23,15 @@ public class OtherAction : Player
     [SerializeField] private GameObject ChargeUiObject;
     [SerializeField] private Image ChargeImage;
 
-
+    private GameObject SoundGroup;
 
     private void Awake()
     {
+        DontDestroyOnLoadObjs objs = FindAnyObjectByType<DontDestroyOnLoadObjs>();
+        if (objs != null)
+        {
+            SoundGroup = objs.gameObject;
+        }
         _rb = GetComponent<Rigidbody2D>();
         if (HoldTransform == null) HoldTransform = transform.Find("Hold");
         if (ChargeUiObject == null) ChargeUiObject = transform.Find("ChageCanvas").gameObject;
@@ -118,6 +123,11 @@ public class OtherAction : Player
         itemScript.Launching();
 
         HoldObject = null;
+        PlayThrowSound();
+    }
+    private void PlayThrowSound()
+    {
+        SoundGroup.transform.GetChild(0).GetComponent<AudioSource>().Play();
     }
 
     //수정할코드
