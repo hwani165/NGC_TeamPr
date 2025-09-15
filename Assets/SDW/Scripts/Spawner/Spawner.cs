@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -126,10 +125,6 @@ public class Spawner : MonoBehaviour, IReceiver, ISender
     {
         GameObject item = _items[id];
         return item;
-    }
-    public void Delate(ushort id)
-    {
-        _items.Remove(id);
     }
     private void IncreaseItemCount()
     {

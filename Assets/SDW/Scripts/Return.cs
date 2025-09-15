@@ -12,13 +12,12 @@ public class Return : MonoBehaviour
         if(collision.gameObject.layer != LayerMask.NameToLayer("Player")) Destroy(collision.gameObject);
         else
         {
-            string pName = collision.gameObject.name;
-            if (pName == "P1")
+            if(collision.gameObject.name == "P1")
             {
                 p1MaxLife--;
                 if(p1MaxLife <= 0)
                 {
-                    Game.Instance.EndGame(pName);
+                    Game.Instance.EndGame();
                 }
             }
             else
@@ -26,7 +25,7 @@ public class Return : MonoBehaviour
                 p2MaxLife--;
                 if (p2MaxLife <= 0)
                 {
-                    Game.Instance.EndGame(pName);
+                    Game.Instance.EndGame();
                 }
             }
 

@@ -77,7 +77,7 @@ public class OtherAction : Player
         if (HoldObject == null) return;
 
         Item itemScript = item.GetComponent<Item>();
-        if (_chargeGauge >= 2)
+        if (_chargeGauge >= 3)
         {
             itemScript.preowner = transform;
             itemScript.shootingdir = Vector2.zero;

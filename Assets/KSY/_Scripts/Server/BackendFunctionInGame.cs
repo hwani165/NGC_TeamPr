@@ -4,7 +4,6 @@ using BackEnd;
 using Google.FlatBuffers;
 using InputData.Map;
 using InputData.Player;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class BackendFunctionInGame : MonoBehaviour
@@ -15,7 +14,6 @@ public class BackendFunctionInGame : MonoBehaviour
     private readonly FlatBufferBuilder _platformStateBuilder = new FlatBufferBuilder(32);
     private readonly FlatBufferBuilder _spawnerInfoBuilder = new FlatBufferBuilder(32);
     private readonly FlatBufferBuilder _itemPosBuilder = new FlatBufferBuilder(32);
-    private readonly FlatBufferBuilder _itemDesBuilder = new FlatBufferBuilder(8);
 
     [Flags]
     public enum flagPlayerMovementState : byte
@@ -186,19 +184,6 @@ public class BackendFunctionInGame : MonoBehaviour
 
         return bff;
     }
-    public byte[] SerializationItemDes(ushort id)
-    {
-        _itemDesBuilder.Clear();
-
-        Offset<itemDestroy> offsetItemDes = itemDestroy.CreateitemDestroy(_itemDesBuilder, id);
-        Offset<PlayerMessage> offsetResultData = PlayerMessage.CreatePlayerMessage(_itemDesBuilder, PlayerMessageType.itme_des, offsetItemDes.Value);
-
-        _itemDesBuilder.Finish(offsetResultData.Value, "PLYR");
-
-        byte[] bff = _itemDesBuilder.SizedByteArray();
-
-        return bff;
-    }
 
     //데이터 송신
     public void Send(byte[] bff)
@@ -309,20 +294,10 @@ public class BackendFunctionInGame : MonoBehaviour
                     float y = data.Y;
 
                     GameObject item = Game.Instance.MapCompo.SpawnerCompo.FindItem(id);
-                    Debug.Log($"<color=yellow>item is null : {item == null}</color>");
-
-                    item.transform.position = new Vector2(x, y);
-                    Debug.Log($"<color=yellow>Receive : {x}, {y}</color>");
-                    Debug.Log($"<color=yellow>Apply : {item.transform.position}</color>");
-                    break;
-                }
-            case PlayerMessageType.itme_des:
-                {
-                    itemDestroy data = message.DataAsitme_des();
-                    ushort id = data.Id;
-                    GameObject item = Game.Instance.MapCompo.SpawnerCompo.FindItem(id);
-                    Game.Instance.MapCompo.SpawnerCompo.Delate(id);
-                    Destroy(item);
+                    //Debug.Log($"<color=yellow>item is null : {item == null}</color>");
+                    item.GetComponent<Rigidbody2D>().MovePosition(new Vector2(x, y));
+                    //Debug.Log($"<color=yellow>Receive : {x}, {y}</color>");
+                    //Debug.Log($"<color=yellow>Apply : {item.transform.position}</color>");
                     break;
                 }
             default:

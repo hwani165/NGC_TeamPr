@@ -93,11 +93,6 @@ public class Player : MonoBehaviour, IReceiver, ISender
                             Server.Instance.ApplyData(message, null, messageType);
                             break;
                         }
-                    case PlayerMessageType.itme_des:
-                        {
-                            Server.Instance.ApplyData(message, null, messageType);
-                            break;
-                        }
                     default:
                         {
                             Debug.LogError("this enum value is nonexistent");

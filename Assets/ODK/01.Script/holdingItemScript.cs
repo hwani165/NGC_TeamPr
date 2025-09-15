@@ -10,7 +10,7 @@ public abstract class Item : MonoBehaviour
     public bool iscooldown = false;
     public bool isShooting = false;
     [SerializeField] protected GameObject[] effect;
-    protected Rigidbody2D rigidbody;
+    protected Rigidbody2D rb;
     [SerializeField] protected LayerMask targetLayer;
     [SerializeField] protected LayerMask groundLayer;
     public GameObject owner;
@@ -24,10 +24,9 @@ public abstract class Item : MonoBehaviour
     private float _synkTime = 0f;
     private float _synkTime2 = 0f;
     byte[] _bff;
-    byte[] _desBff;
     public virtual void Awake()
     {
-        rigidbody = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
         Id = Counter++;
     }
     private void Update()
@@ -59,12 +58,6 @@ public abstract class Item : MonoBehaviour
     {
         _bff = Server.Instance.SerializationItemPos(Id, transform.position);
         Server.Instance.Send(_bff);
-    }
-    //¼öÁ¤
-    public void SendDse()
-    {
-        _desBff = Server.Instance.SerializationItemDes(Id);
-        Server.Instance.Send(_desBff);
     }
 
     protected virtual void OnCollisionStay2D(Collision2D collision)
@@ -140,7 +133,9 @@ public abstract class Item : MonoBehaviour
 
     private void OnDestroy()
     {
+
+        //Game.Instance.Map.Spawner.Items.Remove(Id);
+
         Spawner.OnItemCollected?.Invoke();
-        SendDse();
     }
 }

@@ -12,7 +12,6 @@ public enum PlayerMessageType : byte
   movement = 2,
   player_pos = 3,
   item_pos = 4,
-  itme_des = 5,
 };
 
 
@@ -35,9 +34,6 @@ static public class PlayerMessageTypeVerify
         break;
       case PlayerMessageType.item_pos:
         result = InputData.Player.itemPosVerify.Verify(verifier, tablePos);
-        break;
-      case PlayerMessageType.itme_des:
-        result = InputData.Player.itemDestroyVerify.Verify(verifier, tablePos);
         break;
       default: result = true;
         break;
