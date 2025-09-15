@@ -47,9 +47,16 @@ public class OtherMovement : Player
     }
     private void FixedUpdate()
     {
+
+    }
+
+    private void Update()
+    {
+        OnGround();
+
         if (_startDashTimer)
         {
-            _dashTimer += Time.fixedDeltaTime;
+            _dashTimer += Time.deltaTime;
             GroundDash();
             AirDash();
         }
@@ -57,11 +64,7 @@ public class OtherMovement : Player
         {
             _dashTimer = 0f;
         }
-    }
 
-    private void Update()
-    {
-        OnGround();
         if (!_isDashing)
         {
             Vector2 velocity = _rbCompo.linearVelocity;
@@ -71,7 +74,11 @@ public class OtherMovement : Player
     }
     private void DownDash()
     {
-        _rbCompo.AddForce(Vector2.down * gravity * 1.5f, ForceMode2D.Impulse);
+        if(!_isGrounded)
+        {
+            Debug.Log($"_isGrounded : {_isGrounded}");
+            _rbCompo.AddForce(Vector2.down * gravity * 1.5f, ForceMode2D.Impulse);
+        }
     }
     private void OnGround()
     {
@@ -183,11 +190,11 @@ public class OtherMovement : Player
             Debug.Log($"usingDownDash : {usingDownDash}");
             _downDashing = usingDownDash;
             DownDash();
-            DownDash();
         }
     }
-    public override void ApplySbyteData(sbyte x, sbyte y)
+    public override void ApplyPosData(float x, float y)
     {
+        Debug.Log($"<color=green>other pos : {(float)x}, {(float)y}</color>");
         transform.position = new Vector3(x, y);
     }
     public override void ApplySbyteData(sbyte moveX, sbyte dashX, sbyte dashY)
@@ -200,7 +207,7 @@ public class OtherMovement : Player
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.green;
+        Gizmos.color = Color.red;
         Gizmos.DrawWireCube(transform.position + (Vector3)groundCheckVec, groundCheckVecSize);
     }
 #endif

@@ -29,6 +29,8 @@ public class Player : MonoBehaviour, IReceiver, ISender
 
     public void Init()
     {
+        Debug.Log("Success : Init");
+
         //나의 플레이어라면
         if (Nickname == Server.Instance.GetMyData().Value.nickname)
         {
@@ -37,7 +39,7 @@ public class Player : MonoBehaviour, IReceiver, ISender
             _myAction = GetComponent<MyAction>();
 
             //인풋 시스템 세팅
-            _playerInput.GetComponent<PlayerInput>();
+            _playerInput = GetComponent<PlayerInput>();
             _playerInput.actions = InputSetting;
             _playerInput.defaultActionMap = _actionMap;
             _playerInput.actions.Enable();
@@ -143,6 +145,10 @@ public class Player : MonoBehaviour, IReceiver, ISender
         throw new NotImplementedException("If you want to use this method, you must override it.");
     }
     public virtual void ApplyUShortData(ushort ushortData)
+    {
+        throw new NotImplementedException("If you want to use this method, you must override it.");
+    }
+    public virtual void ApplyPosData(float x, float y)
     {
         throw new NotImplementedException("If you want to use this method, you must override it.");
     }

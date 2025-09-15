@@ -39,8 +39,12 @@ public class MyMovement : Player
     //이동하고 있는 방향 (Now Move.X Direction <Sbyte>)
     private sbyte _moveX = 0;
     //송신 버퍼
-    byte[] movementBff;
-    byte[] posBff;
+    private byte[] movementBff;
+    private byte[] posBff;
+
+    private float _currentTime = 0f;
+
+    private Vector2 _pos;
     #endregion
 
     private float _dashTimer = 0;
@@ -56,7 +60,6 @@ public class MyMovement : Player
 
     private void FixedUpdate()
     {
-        //Serialize();
         OnGround();
         GroundDash();
         AirDash();
@@ -70,11 +73,27 @@ public class MyMovement : Player
 
     private void Update()
     {
+        float x = (float)System.Math.Round(transform.position.x, 3);
+        float y = (float)System.Math.Round(transform.position.y, 3);
+
+        _pos = new Vector2(x, y);
+
+        Serialize();
+
+        _currentTime += Time.deltaTime;
+
         if (Keyboard.current.sKey.wasPressedThisFrame && !_isGrounded)
         {
             _usingDownDash = true;
             _rbCompo.AddForce(Vector2.down * gravity * 1.5f, ForceMode2D.Impulse);
             Send();
+        }
+
+        if (_currentTime >= 1.5f)
+        {
+            _currentTime = 0f;
+            Serialize();
+            PosSend();
         }
     }
     private void OnValidate()
@@ -201,25 +220,29 @@ public class MyMovement : Player
     }
     public void Serialize()
     {
-        movementBff = Server.Instance.SerializationPlayerMovementData(_dashDir, _moveX, _usingJump, _usingDash, _isDashing, _usingDownDash);
-        posBff = Server.Instance.SerializationPlayerPos(transform.position);
+        if (Server.Instance == null) return;
+        posBff = Server.Instance.SerializationPlayerPos(_pos);
+
+        //movementBff = Server.Instance.SerializationPlayerMovementData(_dashDir, _moveX, _usingJump, _usingDash, _isDashing, _usingDownDash);
     }
 
     public override void Send()
     {
-        if(movementBff != null)
+        movementBff = Server.Instance.SerializationPlayerMovementData(_dashDir, _moveX, _usingJump, _usingDash, _isDashing, _usingDownDash);
         Server.Instance.Send(movementBff);
     }
     public void PosSend()
     {
         if (posBff != null)
+        {
             Server.Instance.Send(posBff);
+        }
     }
 
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.green;
+        Gizmos.color = Color.red;
         Gizmos.DrawWireCube(transform.position + (Vector3)groundCheckVec, groundCheckVecSize);
     }
 #endif

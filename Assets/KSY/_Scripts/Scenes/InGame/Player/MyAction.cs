@@ -13,7 +13,7 @@ public class MyAction : Player
     [SerializeField] private GameObject HoldObject;
     private Rigidbody2D rb;
 
-    [SerializeField] private float ThrowPower = 60f;
+    [SerializeField] private float ThrowPower = 30f;
     [SerializeField] private float UpwardForce = 30f;
     [SerializeField] private float PlayerRecoil = 40f;
     [SerializeField] private GameObject ChargeUiObject;
@@ -144,7 +144,6 @@ public class MyAction : Player
                 }
 
                 Hold(item.gameObject);
-                IsHolding = true;
                 Send();
             }
         }
@@ -182,12 +181,15 @@ public class MyAction : Player
         itemScript.CooldownActive();
         hrb.simulated = true;
 
-        itemScript.shootingdir = _throwDir * _chargeGauge;
+        itemScript.shootingdir = _throwDir * (sbyte)_chargeGauge;
 
         if (!itemScript.thisisnoforceobject)
         {
             hrb.linearVelocity = Vector2.zero;
-            hrb.AddForce(_throwDir * ThrowPower * _chargeGauge + (_throwDir.y == 0 ? new Vector2(0, UpwardForce) : new Vector2(0, 0)), ForceMode2D.Impulse);
+
+            hrb.AddForce(_throwDir * ThrowPower + (_throwDir.y == 0 ? new Vector2(0, UpwardForce)
+            : new Vector2(0, 0)), ForceMode2D.Impulse);
+
             hrb.angularVelocity += Random.Range(-180f, 180f);
         }
 
@@ -201,6 +203,8 @@ public class MyAction : Player
     }
     private void Hold(GameObject obj)
     {
+        IsHolding = true;
+
         //아이템 들기 처리
         if (obj.TryGetComponent(out Item itemSc))
         {

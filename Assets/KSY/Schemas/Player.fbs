@@ -16,8 +16,8 @@ table ItemAction{
 }
 
 table PlayerPos{
-	x:byte;
-	y:byte;
+	x:float;
+	y:float;
 }
 
 union PlayerMessageType{

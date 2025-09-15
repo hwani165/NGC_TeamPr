@@ -19,12 +19,12 @@ public struct PlayerPos : IFlatbufferObject
   public void __init(int _i, ByteBuffer _bb) { __p = new Table(_i, _bb); }
   public PlayerPos __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-  public sbyte X { get { int o = __p.__offset(4); return o != 0 ? __p.bb.GetSbyte(o + __p.bb_pos) : (sbyte)0; } }
-  public sbyte Y { get { int o = __p.__offset(6); return o != 0 ? __p.bb.GetSbyte(o + __p.bb_pos) : (sbyte)0; } }
+  public float X { get { int o = __p.__offset(4); return o != 0 ? __p.bb.GetFloat(o + __p.bb_pos) : (float)0.0f; } }
+  public float Y { get { int o = __p.__offset(6); return o != 0 ? __p.bb.GetFloat(o + __p.bb_pos) : (float)0.0f; } }
 
   public static Offset<InputData.Player.PlayerPos> CreatePlayerPos(FlatBufferBuilder builder,
-      sbyte x = 0,
-      sbyte y = 0) {
+      float x = 0.0f,
+      float y = 0.0f) {
     builder.StartTable(2);
     PlayerPos.AddY(builder, y);
     PlayerPos.AddX(builder, x);
@@ -32,8 +32,8 @@ public struct PlayerPos : IFlatbufferObject
   }
 
   public static void StartPlayerPos(FlatBufferBuilder builder) { builder.StartTable(2); }
-  public static void AddX(FlatBufferBuilder builder, sbyte x) { builder.AddSbyte(0, x, 0); }
-  public static void AddY(FlatBufferBuilder builder, sbyte y) { builder.AddSbyte(1, y, 0); }
+  public static void AddX(FlatBufferBuilder builder, float x) { builder.AddFloat(0, x, 0.0f); }
+  public static void AddY(FlatBufferBuilder builder, float y) { builder.AddFloat(1, y, 0.0f); }
   public static Offset<InputData.Player.PlayerPos> EndPlayerPos(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<InputData.Player.PlayerPos>(o);
@@ -46,8 +46,8 @@ static public class PlayerPosVerify
   static public bool Verify(Google.FlatBuffers.Verifier verifier, uint tablePos)
   {
     return verifier.VerifyTableStart(tablePos)
-      && verifier.VerifyField(tablePos, 4 /*X*/, 1 /*sbyte*/, 1, false)
-      && verifier.VerifyField(tablePos, 6 /*Y*/, 1 /*sbyte*/, 1, false)
+      && verifier.VerifyField(tablePos, 4 /*X*/, 4 /*float*/, 4, false)
+      && verifier.VerifyField(tablePos, 6 /*Y*/, 4 /*float*/, 4, false)
       && verifier.VerifyTableEnd(tablePos);
   }
 }

@@ -173,7 +173,7 @@ public class BackendFunctionInGame : MonoBehaviour
     {
         if (!Game.Instance.IsAllReady)
         {
-            Debug.LogError("map un loaded.");
+            Debug.Log("map un loaded.");
             return;
         }
         Backend.Match.SendDataToInGameRoom(bff);
@@ -265,10 +265,10 @@ public class BackendFunctionInGame : MonoBehaviour
                 {
                     PlayerPos data = message.DataAspos();
 
-                    sbyte x = data.X;
-                    sbyte y = data.Y;
+                    float x = data.X;
+                    float y = data.Y;
 
-                    Receiver.ApplySbyteData(x, y);
+                    Receiver.ApplyPosData(x, y);
                     break;
                 }
             default:

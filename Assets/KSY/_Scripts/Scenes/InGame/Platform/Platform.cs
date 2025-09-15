@@ -85,5 +85,9 @@ public class Platform : MonoBehaviour, IReceiver, ISender
     {
         throw new NotImplementedException("If you want to use this method, you must override it.");
     }
+    public void ApplyPosData(float x, float y)
+    {
+        throw new NotImplementedException("If you want to use this method, you must override it.");
+    }
 }
 

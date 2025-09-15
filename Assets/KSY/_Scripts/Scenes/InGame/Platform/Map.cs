@@ -32,10 +32,6 @@ public class Map : MonoBehaviour
             _platfomrs.Add(platform.Id, platform);
         }
     }
-    private void OnValidate()
-    {
-
-    }
     #endregion
     public Platform FindPlatform(byte id)
     {
