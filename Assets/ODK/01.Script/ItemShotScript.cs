@@ -14,7 +14,7 @@ public class ItemShotScript : MonoBehaviour
     private Rigidbody2D rb;
 
     [SerializeField] private float shootPower = 60f;
-    [SerializeField] private float upwardForce = 30f;
+    [SerializeField] private float upwardForce = 15f;
     [SerializeField] private float playerRecoil = 40f;
     [SerializeField] private GameObject chargeUiObject;
     [SerializeField] private Image chargeImage;
