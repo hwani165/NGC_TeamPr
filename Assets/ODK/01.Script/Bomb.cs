@@ -21,9 +21,9 @@ public class Bomb : Item
 
 
         if (((1 << layer) & targetLayer) != 0 &&
-            collision.gameObject != owner && isshooting)
+            collision.gameObject != owner && isShooting)
         {
-            isshooting = false;
+            isShooting = false;
             owner = null;
             
             StartCoroutine(Attacking(collision.gameObject));

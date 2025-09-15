@@ -104,7 +104,10 @@ public class BackendFunctionInGame : MonoBehaviour
         //버퍼 재사용
         _itemPosBuilder.Clear();
 
-        Offset<itemPos> offsetItemPosData = itemPos.CreateitemPos(_itemPosBuilder, id, pos.x, pos.y);
+        float x = MathF.Round(pos.x, 2);
+        float y = MathF.Round(pos.y, 2);
+
+        Offset<itemPos> offsetItemPosData = itemPos.CreateitemPos(_itemPosBuilder, id, x, y);
         Offset<PlayerMessage> offsetResultData = PlayerMessage.CreatePlayerMessage(_itemPosBuilder, PlayerMessageType.item_pos, offsetItemPosData.Value);//offsetItemPosData
 
         _itemPosBuilder.Finish(offsetResultData.Value, "PLYR");

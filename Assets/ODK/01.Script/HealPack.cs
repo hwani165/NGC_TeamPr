@@ -9,7 +9,7 @@ public class HealPack : Item
     public override void Eat()
     {
         owner.GetComponent<Entity>().Attack(transform, damage * 1.5f, 0f);
-        isshooting = false;
+        isShooting = false;
         Instantiate(effect[0], owner.transform.position, Quaternion.identity);
         owner = null;
         Destroy(gameObject);

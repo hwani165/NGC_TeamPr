@@ -64,7 +64,6 @@ public class MyMovement : Player
         if (!CountDownScript.IsGameStarting) return;
         OnGround();
         GroundDash();
-        AirDash();
         if (!_isDashing)
         {
             Vector2 velocity = _rbCompo.linearVelocity;
@@ -165,21 +164,6 @@ public class MyMovement : Player
             return;
         }
     }
-
-    private void AirDash()
-    {
-        if (_isDashing && !_isGrounded)
-        {
-            _rbCompo.linearVelocity = _dashDir * dashForce / 1.5f;
-            _dashTimer -= Time.fixedDeltaTime;
-            if (_dashTimer <= 0f)
-            {
-                _isDashing = false;
-            }
-            GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);
-            return;
-        }
-    }
     public void OnDash(InputValue value)
     {
         if (_currentJumpCount <= 0) return;
@@ -197,8 +181,6 @@ public class MyMovement : Player
                 _usingDash = false;
                 _rbCompo.linearVelocity = Vector2.zero;
             }
-            
-            //Send();
 
             if (_isDashing) return;
 
@@ -226,8 +208,6 @@ public class MyMovement : Player
     {
         if (Server.Instance == null) return;
         posBff = Server.Instance.SerializationPlayerPos(_pos);
-
-        //movementBff = Server.Instance.SerializationPlayerMovementData(_dashDir, _moveX, _usingJump, _usingDash, _isDashing, _usingDownDash);
     }
 
     public override void Send()

@@ -38,6 +38,7 @@ public class OtherAction : Player
         if (obj.TryGetComponent(out Item itemSc))
         {
             HoldObject = obj;
+            itemSc.isHolding = true;
             itemSc.owner = gameObject;
             itemSc.Grab();
         }
@@ -57,6 +58,7 @@ public class OtherAction : Player
     {
         if (obj.TryGetComponent(out Item itemSc))
         {
+            itemSc.isHolding = false;
             HoldObject = null;
             itemSc.owner = null;
         }
@@ -89,7 +91,7 @@ public class OtherAction : Player
         HoldObject.transform.parent = null;
         HoldObject.transform.position = transform.position + ((Vector3)dir * 1.25f);
 
-        itemScript.isshooting = true;
+        itemScript.isShooting = true;
         itemScript.preowner = transform;
         itemScript.CooldownActive();
 
@@ -103,12 +105,16 @@ public class OtherAction : Player
         {
             hrb.linearVelocity = Vector2.zero;
             hrb.AddForce(dir * ThrowPower + (dir.y == 0 ? new Vector2(0, UpwardForce)
-    : new Vector2(0, 0)), ForceMode2D.Impulse);
+            : new Vector2(0, 0)), ForceMode2D.Impulse);
             hrb.angularVelocity += Random.Range(-180f, 180f);
         }
 
         //플레이어 던지는 반동 이펙트
         _rb.linearVelocity = Vector2.zero;
+
+        itemScript.isShooting = true;
+        itemScript.isHolding = false;
+
         itemScript.Launching();
 
         HoldObject = null;

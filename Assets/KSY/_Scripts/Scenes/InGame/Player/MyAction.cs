@@ -95,7 +95,7 @@ public class MyAction : Player
                 return;
             }
 
-            if (item.owner == null && !item.iscooldown && !item.isshooting)
+            if (item.owner == null && !item.iscooldown && !item.isShooting)
             {
                 if (HoldObject != null)
                 {
@@ -130,7 +130,7 @@ public class MyAction : Player
                 Physics2D.IgnoreCollision(myCol, itemCol, true);
                 return;
             }
-            else if (item.owner == null && !item.iscooldown && !item.isshooting)
+            else if (item.owner == null && !item.iscooldown && !item.isShooting)
             {
                 if (HoldObject != null)
                 {
@@ -154,7 +154,7 @@ public class MyAction : Player
         if (HoldObject == null) return;
         _throwDir = GetInputDirection();
         Item itemScript = HoldObject.GetComponent<Item>();
-        itemScript.isshooting = true;
+        itemScript.isShooting = true;
         Rigidbody2D hrb = HoldObject.GetComponent<Rigidbody2D>();
         if (_chargeGauge >= 3)
         {
@@ -197,6 +197,10 @@ public class MyAction : Player
         rb.AddForce(-_throwDir * PlayerRecoil, ForceMode2D.Impulse);
 
         itemScript.Launching();
+
+        itemScript.isShooting = true;
+        itemScript.isHolding = false;
+
         HoldObject = null;
 
         IsThrowing = false;
@@ -209,6 +213,7 @@ public class MyAction : Player
         if (obj.TryGetComponent(out Item itemSc))
         {
             HoldObject = obj;
+            itemSc.isHolding = true;
             itemSc.owner = gameObject;
             itemSc.Grab();
         }

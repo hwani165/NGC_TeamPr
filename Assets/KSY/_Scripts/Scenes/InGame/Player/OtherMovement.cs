@@ -60,7 +60,7 @@ public class OtherMovement : Player
         {
             _dashTimer += Time.deltaTime;
             GroundDash();
-            AirDash();
+            OnDash();
         }
         else
         {
@@ -113,27 +113,10 @@ public class OtherMovement : Player
             return;
         }
     }
-    private void AirDash()
-    {
-        if (_isDashing && !_isGrounded)
-        {
-            _startDashTimer = true;
-            _rbCompo.linearVelocity = _dashDir * dashForce / 2f;
-            if (_dashTimer <= 0f)
-            {
-                _isDashing = false;
-                _startDashTimer = false;
-            }
-            //air dash effect
-            return;
-        }
-    }
-
     public void OnDash()
     {
         if (!_usingDash)
         {
-
             Vector2 inputDir = _moveVec.normalized;
             if (_isGrounded)
             {
@@ -156,8 +139,6 @@ public class OtherMovement : Player
             _dashDir = inputDir.normalized;
             _isDashing = true;
             _dashTimer = dashDuration;
-            GroundDash();
-            AirDash();
         }
     }
     public override void ApplyByteData(byte state)
@@ -167,10 +148,7 @@ public class OtherMovement : Player
 
         if (!_isDashing && usingDash)
         {
-            //Debug.Log($"isDash : {usingDash}");
             OnDash();
-            GroundDash();
-            AirDash();
         }
 
         bool isDashing = (state & (byte)flagPlayerMovementState.IsDashing) != 0;
@@ -193,7 +171,7 @@ public class OtherMovement : Player
     }
     public override void ApplyPosData(float x, float y)
     {
-        transform.position = new Vector3(x, y + 0.55f);
+        transform.position = new Vector3(x, y + 0.25f);
     }
     public override void ApplySbyteData(sbyte moveX, sbyte dashX, sbyte dashY)
     {

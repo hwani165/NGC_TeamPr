@@ -78,7 +78,7 @@ public class Boomaerang : Item
         GetComponent<Rigidbody2D>().gravityScale = 0f;
         GetComponent<BoxCollider2D>().isTrigger = true;
         seq = DOTween.Sequence();
-        isshooting = false;
+        isShooting = false;
         alreadyHit.Clear();
         seq.Append(transform.DOMove((Vector2)transform.position + (shootingdir * range), firstmovetime).SetEase(easeType));
         seq.AppendCallback(retuning);
