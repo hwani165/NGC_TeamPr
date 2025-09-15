@@ -171,11 +171,7 @@ public class OtherMovement : Player
     }
     public override void ApplyPosData(float x, float y)
     {
-<<<<<<< HEAD
         _rbCompo.MovePosition(new Vector3(x, y));
-=======
-        transform.position = new Vector3(x, y + 0.25f);
->>>>>>> parent of f282742 (feat : Sync Item Destroy)
     }
     public override void ApplySbyteData(sbyte moveX, sbyte dashX, sbyte dashY)
     {
