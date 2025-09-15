@@ -141,6 +141,10 @@ public class Server : SingletonBehaviour<Server>
     {
         _bfMatch.FindMatch();
     }
+    public byte[] SerializationItemDes(ushort id)
+    {
+        return _bfInGame.SerializationItemDes(id);
+    }
     public byte[] SerializationPlatformStateData(byte id, bool isOnPlatform, bool isBrokenPlatform)
     {
         return _bfInGame.SerializationPlatformStateData(id, isOnPlatform, isBrokenPlatform);

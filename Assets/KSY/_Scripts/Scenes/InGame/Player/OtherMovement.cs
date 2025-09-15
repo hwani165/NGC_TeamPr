@@ -171,7 +171,7 @@ public class OtherMovement : Player
     }
     public override void ApplyPosData(float x, float y)
     {
-        transform.position = new Vector3(x, y + 0.25f);
+        transform.position = new Vector3(x, y + 0.35f);
     }
     public override void ApplySbyteData(sbyte moveX, sbyte dashX, sbyte dashY)
     {

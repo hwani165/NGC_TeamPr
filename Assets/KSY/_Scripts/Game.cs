@@ -212,8 +212,23 @@ public class Game : SingletonBehaviour<Game>
         }   
     }
 
-    public void EndGame()
+    public void EndGame(string playerName)
     {
-        Debug.Log($"<color=pink>Game End<color>");
+        Debug.Log($"<color=blue> End *게임 결과 처리 해야함* </color>");
+
+        string myName = Server.Instance.GetMyData().Value.nickname;
+        string otherName = Server.Instance.GetOtherData().Value.nickname;
+
+        //만약 떨어져 죽은 사람이 나라면
+        if (playerName == Server.Instance.GetMyData().Value.nickname)
+        {
+            //other winner 처리
+            Debug.Log(otherName);
+        }
+        else
+        {
+            //my winner 처리
+            Debug.Log(playerName);
+        }
     }
 }

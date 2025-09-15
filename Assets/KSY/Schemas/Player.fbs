@@ -26,11 +26,16 @@ table itemPos{
 	y:float;
 }
 
+table itemDestroy{
+	id:ushort;
+}
+
 union PlayerMessageType{
 	item_action:ItemAction,
 	movement:Movement,
 	player_pos:PlayerPos,
-	item_pos:itemPos
+	item_pos:itemPos,
+	itme_des:itemDestroy
 }
 
 table PlayerMessage{

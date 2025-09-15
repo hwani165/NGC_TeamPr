@@ -156,7 +156,7 @@ public class MyAction : Player
         Item itemScript = HoldObject.GetComponent<Item>();
         itemScript.isShooting = true;
         Rigidbody2D hrb = HoldObject.GetComponent<Rigidbody2D>();
-        if (_chargeGauge >= 3)
+        if (_chargeGauge >= 2)
         {
             itemScript.preowner = transform;
             itemScript.shootingdir = Vector2.zero;
