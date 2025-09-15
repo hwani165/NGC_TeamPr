@@ -515,6 +515,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ffdaca4fce380743af9a2feb62a52ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  responPos: []
 --- !u!61 &230350054
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -637,6 +638,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ffdaca4fce380743af9a2feb62a52ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  responPos: []
 --- !u!61 &289457165
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1444,7 +1446,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -1, z: 10}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalScale: {x: 7, y: 7, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 841731588}
@@ -1480,7 +1482,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 790883733}
@@ -2643,6 +2645,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ffdaca4fce380743af9a2feb62a52ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  responPos: []
 --- !u!61 &1328141603
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4136,7 +4139,7 @@ Transform:
   m_GameObject: {fileID: 1925711321}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.68, z: 0}
+  m_LocalPosition: {x: 0, y: -1.01, z: 0}
   m_LocalScale: {x: 5, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4466,8 +4469,8 @@ Transform:
   m_GameObject: {fileID: 2048370326}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.66, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: -0.7, z: 0}
+  m_LocalScale: {x: 1, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 790883733}
@@ -4572,6 +4575,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ffdaca4fce380743af9a2feb62a52ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  responPos: []
 --- !u!61 &2101910430
 BoxCollider2D:
   m_ObjectHideFlags: 0
