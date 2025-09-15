@@ -60,6 +60,8 @@ public class MyMovement : Player
 
     private void FixedUpdate()
     {
+        //수정
+        if (!CountDownScript.IsGameStarting) return;
         OnGround();
         GroundDash();
         AirDash();
@@ -73,6 +75,8 @@ public class MyMovement : Player
 
     private void Update()
     {
+        //수정
+        if (!CountDownScript.IsGameStarting) return;
         float x = (float)System.Math.Round(transform.position.x, 3);
         float y = (float)System.Math.Round(transform.position.y, 3);
 

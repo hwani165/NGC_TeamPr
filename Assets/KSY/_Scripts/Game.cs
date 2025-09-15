@@ -211,4 +211,9 @@ public class Game : SingletonBehaviour<Game>
                 }
         }   
     }
+
+    public void EndGame()
+    {
+        Debug.Log($"<color=pink>Game End<color>");
+    }
 }

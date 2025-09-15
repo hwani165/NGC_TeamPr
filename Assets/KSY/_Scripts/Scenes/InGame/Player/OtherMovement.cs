@@ -1,6 +1,4 @@
-using BackEnd;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using static BackendFunctionInGame;
 
 public class OtherMovement : Player

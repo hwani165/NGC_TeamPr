@@ -300,6 +300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ffdaca4fce380743af9a2feb62a52ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  responPos: []
 --- !u!61 &230350054
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -527,6 +528,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ffdaca4fce380743af9a2feb62a52ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  responPos: []
 --- !u!61 &289457165
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3100,6 +3102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ffdaca4fce380743af9a2feb62a52ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  responPos: []
 --- !u!61 &1328141603
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5617,6 +5620,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ffdaca4fce380743af9a2feb62a52ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  responPos: []
 --- !u!61 &2101910430
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5818,10 +5822,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb88b2734542ce6418c8b6290b0fc34a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawnerData: {fileID: 0}
-  _spawnSecconds: 0
-  _maxCount: 0
-  _itemPrefabs: []
+  _spawnerData: {fileID: 11400000, guid: 84c6cfc2e10b41e41a41518fec589a94, type: 2}
+  _spawnSecconds: 2
+  _maxCount: 5
+  _itemPrefabs:
+  - {fileID: 4069005640951247961, guid: cfc7f19d0e00a4242a5f8669b78bdae4, type: 3}
+  - {fileID: 2505702280169982577, guid: fd38465d845272545bb1325ce803ae59, type: 3}
+  - {fileID: 4069005640951247961, guid: e781e8fbdc7cdef419e88b70ea356518, type: 3}
+  - {fileID: 4069005640951247961, guid: 6cd28f553f990d3479141cc7ea43a343, type: 3}
+  - {fileID: 2505702280169982577, guid: 4e1ab7bac66632a47a950278952af24c, type: 3}
+  - {fileID: 4069005640951247961, guid: 2fe2f4cfb1810cf428cd84fb801ba4a5, type: 3}
+  - {fileID: 4069005640951247961, guid: dd10b904f879c1642a43fe3bf062891d, type: 3}
+  - {fileID: 4069005640951247961, guid: c9d78048e20f6604ca3033a53994c731, type: 3}
+  - {fileID: 4069005640951247961, guid: f18ed291c4307e5498ac7f5d88ac8aab, type: 3}
   spawnObject: {fileID: 0}
 --- !u!1001 &5348866585084775773
 PrefabInstance:

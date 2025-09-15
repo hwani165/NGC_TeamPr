@@ -56,7 +56,8 @@ public class Spawner : MonoBehaviour, IReceiver, ISender
     }
     private void Update()
     {
-        if (Server.IsSuperGamer && Game.Instance.IsAllReady)
+        //¼öÁ¤
+        if ((Server.IsSuperGamer && Game.Instance.IsAllReady) && CountDownScript.IsGameStarting)
         {
             CreateItem();
         }

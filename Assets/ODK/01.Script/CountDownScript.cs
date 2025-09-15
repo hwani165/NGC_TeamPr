@@ -3,7 +3,6 @@ using UnityEngine;
 using DG.Tweening;
 using System.Collections;
 using UnityEngine.Events;
-using static Unity.Burst.Intrinsics.X86.Avx;
 
 public class CountDownScript : MonoBehaviour
 {
@@ -16,11 +15,15 @@ public class CountDownScript : MonoBehaviour
     [SerializeField] private UnityEvent onCountDownFinished;
     private float currentTime;
     private bool isCounting = false;
+    //수정
+    static public bool IsGameStarting = false;
 
     private void Awake()
     {
         countDownPanel.gameObject.SetActive(true);
         fadingSlide.gameObject.SetActive(true);
+        //수정
+        onCountDownFinished.AddListener(() => IsGameStarting = true);
     }
 
     private IEnumerator FadingSlideOpen()
