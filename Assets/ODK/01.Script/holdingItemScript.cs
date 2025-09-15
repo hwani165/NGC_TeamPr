@@ -25,18 +25,18 @@ public abstract class Item : MonoBehaviour
     public virtual void Awake()
     {
         rigidbody = GetComponent<Rigidbody2D>();
-
-        //아이템에 아이디를 부여
-        //Debug.Log($"Item Id : {Counter}");
         Id = Counter++;
     }
     private void Update()
     {
-        _synkTime += Time.deltaTime;
-        if (_synkTime >= 1)
+        if(!isshooting && !isshooting)
         {
-            _synkTime = 0f;
-            Send();
+            _synkTime += Time.deltaTime;
+            if (_synkTime >= 1)
+            {
+                _synkTime = 0f;
+                Send();
+            }
         }
     }
 
@@ -72,7 +72,6 @@ public abstract class Item : MonoBehaviour
             StartCoroutine(Attacking(collision.gameObject)); //버그
         }
     }
-    
     public virtual void Launching()
     {
 

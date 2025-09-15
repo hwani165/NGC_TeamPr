@@ -283,7 +283,7 @@ public class BackendFunctionInGame : MonoBehaviour
                 }
             case PlayerMessageType.item_pos:
                 {
-                    Debug.Log($"<color = yellow>Start Receive item_pos</color>");
+                    Debug.Log($"<color=yellow>Start Receive item_pos</color>");
                     itemPos data = message.DataAsitem_pos();
 
                     ushort id = data.Id;
@@ -291,11 +291,11 @@ public class BackendFunctionInGame : MonoBehaviour
                     float y = data.Y;
 
                     GameObject item = Game.Instance.MapCompo.SpawnerCompo.FindItem(id);
-                    Debug.Log($"<color = yellow>item is null : {item == null}</color>");
+                    Debug.Log($"<color=yellow>item is null : {item == null}</color>");
 
                     item.transform.position = new Vector2(x, y);
-                    Debug.Log($"<color = yellow>Receive : {x}, {y}</color>");
-                    Debug.Log($"<color = yellow>Apply : {item.transform.position}</color>");
+                    Debug.Log($"<color=yellow>Receive : {x}, {y}</color>");
+                    Debug.Log($"<color=yellow>Apply : {item.transform.position}</color>");
                     break;
                 }
             default:

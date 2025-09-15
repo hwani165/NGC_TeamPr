@@ -187,19 +187,15 @@ public class OtherMovement : Player
 
         bool usingDownDash = (state & (byte)flagPlayerMovementState.UsingDownDash) != 0;
 
-        //Debug.Log($"usingDownDash : {usingDownDash}");
-
         if (!_downDashing && usingDownDash)
         {
-            //Debug.Log($"usingDownDash : {usingDownDash}");
             _downDashing = usingDownDash;
             DownDash();
         }
     }
     public override void ApplyPosData(float x, float y)
     {
-        //Debug.Log($"<color=green>other pos : {(float)x}, {(float)y}</color>");
-        transform.position = new Vector3(x, y);
+        transform.position = new Vector3(x, y + 0.55f);
     }
     public override void ApplySbyteData(sbyte moveX, sbyte dashX, sbyte dashY)
     {
