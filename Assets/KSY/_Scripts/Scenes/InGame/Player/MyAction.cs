@@ -19,9 +19,15 @@ public class MyAction : Player
     [SerializeField] private GameObject ChargeUiObject;
     [SerializeField] private Image ChargeImage;
 
+    private GameObject SoundGroup;
     private float _chargeGauge = 0f;
     private void Awake()
     {
+        DontDestroyOnLoadObjs objs = FindAnyObjectByType<DontDestroyOnLoadObjs>();
+        if (objs != null)
+        {
+            SoundGroup = objs.gameObject;
+        }
         rb = GetComponent<Rigidbody2D>();
         if (HoldTransform == null) HoldTransform = transform.Find("Hold");
         if (ChargeUiObject == null) ChargeUiObject = transform.Find("ChageCanvas").gameObject;
@@ -171,6 +177,7 @@ public class MyAction : Player
 
         IsHolding = false;
         IsThrowing = true;
+        PlayThrowSound();
         Send();
 
         itemScript.preowner = transform;
@@ -201,6 +208,12 @@ public class MyAction : Player
 
         IsThrowing = false;
     }
+
+    private void PlayThrowSound()
+    {
+        SoundGroup.transform.GetChild(0).GetComponent<AudioSource>().Play();
+    }
+
     private void Hold(GameObject obj)
     {
         IsHolding = true;
