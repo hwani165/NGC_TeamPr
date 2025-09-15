@@ -241,16 +241,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Nickname>k__BackingField: 
   InputSetting: {fileID: 0}
-  _movementDast: {fileID: 11400000, guid: a93b85cda72cc2040a9cb7418c8156e4, type: 2}
-  speed: 10
-  jumpForce: 12
-  gravity: 0
+  _movementData: {fileID: 11400000, guid: a93b85cda72cc2040a9cb7418c8156e4, type: 2}
+  speed: 5
+  jumpForce: 10
+  gravity: 9.8
   groundCheckVecSize: {x: 0.5, y: 1.1}
   groundCheckVec: {x: 0, y: 0}
   groundMask:
     serializedVersion: 2
     m_Bits: 0
-  dashForce: 20
+  dashForce: 6.5
   dashDuration: 0.2
 --- !u!114 &3125485611311227130
 MonoBehaviour:

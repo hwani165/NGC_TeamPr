@@ -83,9 +83,14 @@ public class Player : MonoBehaviour, IReceiver, ISender
                             Server.Instance.ApplyData(message, _otherAction, messageType);
                             break;
                         }
-                    case PlayerMessageType.pos:
+                    case PlayerMessageType.player_pos:
                         {
                             Server.Instance.ApplyData(message, _otherMovement, messageType);
+                            break;
+                        }
+                    case PlayerMessageType.item_pos:
+                        {
+                            Server.Instance.ApplyData(message, null, messageType);
                             break;
                         }
                     default:

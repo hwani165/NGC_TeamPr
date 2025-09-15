@@ -157,7 +157,10 @@ public class Server : SingletonBehaviour<Server>
     {
         return _bfInGame.SerializationPlayerMovementData(dashDir, moveX, usingJump, usingDash, isDashing, usingDownDash);
     }
-
+    public byte[] SerializationItemPos(ushort id, Vector2 pos)
+    {
+        return _bfInGame.SerializationItemPos(id, pos);
+    }
     public byte[] SerializationPlayerPos(Vector2 pos)
     {
         return _bfInGame.SerializationPlayerPos(pos);

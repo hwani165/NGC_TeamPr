@@ -20,10 +20,17 @@ table PlayerPos{
 	y:float;
 }
 
+table itemPos{
+	id:ushort;
+	x:float;
+	y:float;
+}
+
 union PlayerMessageType{
 	item_action:ItemAction,
 	movement:Movement,
-	pos:PlayerPos
+	player_pos:PlayerPos,
+	item_pos:itemPos
 }
 
 table PlayerMessage{

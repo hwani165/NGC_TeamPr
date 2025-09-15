@@ -5,7 +5,7 @@ using static BackendFunctionInGame;
 
 public class OtherMovement : Player
 {
-    [SerializeField] private MovementDataSO _movementDast;
+    [SerializeField] private MovementDataSO _movementData;
 
     [SerializeField] private float speed = 10f;
     [SerializeField] private float jumpForce = 12f;
@@ -45,11 +45,15 @@ public class OtherMovement : Player
         groundMask = LayerMask.GetMask("Ground");
         groundCheckVecSize = new Vector2(0.5f, 1.05f);
     }
-    private void FixedUpdate()
+    private void OnValidate()
     {
+        speed = _movementData.Speed;
+        jumpForce = _movementData.JumpForce;
+        gravity = _movementData.Gravity;
 
+        dashForce = _movementData.DashForce;
+        dashDuration = _movementData.DashDuration;
     }
-
     private void Update()
     {
         OnGround();
@@ -165,7 +169,7 @@ public class OtherMovement : Player
 
         if (!_isDashing && usingDash)
         {
-            Debug.Log($"isDash : {usingDash}");
+            //Debug.Log($"isDash : {usingDash}");
             OnDash();
             GroundDash();
             AirDash();
@@ -177,24 +181,24 @@ public class OtherMovement : Player
         bool UsingJump = (state & (byte)flagPlayerMovementState.UsingJump) != 0;
         if (UsingJump)
         {
-            Debug.Log($"isjumping : {UsingJump}");
+            //Debug.Log($"isjumping : {UsingJump}");
             OnJump();
         }
 
         bool usingDownDash = (state & (byte)flagPlayerMovementState.UsingDownDash) != 0;
 
-        Debug.Log($"usingDownDash : {usingDownDash}");
+        //Debug.Log($"usingDownDash : {usingDownDash}");
 
         if (!_downDashing && usingDownDash)
         {
-            Debug.Log($"usingDownDash : {usingDownDash}");
+            //Debug.Log($"usingDownDash : {usingDownDash}");
             _downDashing = usingDownDash;
             DownDash();
         }
     }
     public override void ApplyPosData(float x, float y)
     {
-        Debug.Log($"<color=green>other pos : {(float)x}, {(float)y}</color>");
+        //Debug.Log($"<color=green>other pos : {(float)x}, {(float)y}</color>");
         transform.position = new Vector3(x, y);
     }
     public override void ApplySbyteData(sbyte moveX, sbyte dashX, sbyte dashY)

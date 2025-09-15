@@ -18,6 +18,10 @@ public abstract class Item : MonoBehaviour
     public Vector2 shootingdir;
     public bool thisisnoforceobject = false;
     public bool thisownerfading = true;
+
+    //netWork
+    private float _synkTime = 0f;
+    byte[] _bff;
     public virtual void Awake()
     {
         rigidbody = GetComponent<Rigidbody2D>();
@@ -26,6 +30,22 @@ public abstract class Item : MonoBehaviour
         //Debug.Log($"Item Id : {Counter}");
         Id = Counter++;
     }
+    private void Update()
+    {
+        _synkTime += Time.deltaTime;
+        if (_synkTime >= 1)
+        {
+            _synkTime = 0f;
+            Send();
+        }
+    }
+
+    public void Send()
+    {
+        _bff = Server.Instance.SerializationItemPos(Id, transform.position);
+        Server.Instance.Send(_bff);
+    }
+
     protected virtual void OnCollisionStay2D(Collision2D collision)
     {
         int layer = collision.gameObject.layer;
