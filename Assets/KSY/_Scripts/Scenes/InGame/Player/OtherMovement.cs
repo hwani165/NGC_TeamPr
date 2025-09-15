@@ -17,20 +17,20 @@ public class OtherMovement : Player
     [SerializeField] private float dashDuration = 0.2f;
 
     private Rigidbody2D _rbCompo;
-    private Vector2 _moveVec;
+    public Vector2 _moveVec;
 
     private bool _isGrounded;
     #region NetWorkData
     //������ �ߴ°�? (Is Jumping Now? <bool>)
-    private bool _usingJump = false;
+    public bool _usingJump = false;
     //�뽬�� �ϰ� �ִ°�?(Is Dashing Now? <bool>)
-    private bool _isDashing;
+    public bool _isDashing;
     //�뽬�� ����(Dash Direction<Vec2>)
-    private Vector2 _dashDir;
+    public Vector2 _dashDir;
     //�뽬�� ����ߴ°�? (Use Dash? <bool>)
-    private bool _usingDash = false;
+    public bool _usingDash = false;
     //�̵��ϰ� �ִ� ���� (Now Move.X Direction <Sbyte>)
-    private bool _downDashing = false;
+    public bool _downDashing = false;
     #endregion
 
     private bool _startDashTimer = false;
