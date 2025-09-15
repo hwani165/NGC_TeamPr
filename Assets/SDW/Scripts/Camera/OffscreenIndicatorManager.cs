@@ -1,24 +1,47 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 using System.Collections.Generic;
 
 public class OffscreenIndicatorManager : MonoBehaviour
 {
+    public enum ColorType
+    {
+        Red,
+        Green,
+        Blue,
+        Yellow,
+        Cyan,
+        Magenta,
+        White,
+        Black,
+        Gray
+    }
+
     [SerializeField] private Camera mainCamera;
-    [SerializeField] private Transform[] players;            // 플레이어들
-    [SerializeField] private RectTransform indicatorPrefab; // Indicator 프리팹
-    [SerializeField] private float edgeBuffer = 30f;         // 화면 테두리 여백
+    [SerializeField] private Transform[] players;
+    [SerializeField] private RectTransform indicatorPrefab;
+    [SerializeField] private float edgeBuffer = 30f;
+    [SerializeField] private ColorType indicatorColor; // 단일 색상 선택
 
     private List<RectTransform> indicators = new List<RectTransform>();
+    private List<Coroutine> blinkCoroutines = new List<Coroutine>();
 
     void Start()
     {
-        // 플레이어 수만큼 Indicator 생성
-        foreach (var player in players)
+        for (int i = 0; i < players.Length; i++)
         {
             var indicator = Instantiate(indicatorPrefab, transform);
             indicator.gameObject.SetActive(false);
             indicators.Add(indicator);
+            blinkCoroutines.Add(null);
+
+            // 단일 색상 적용
+            var img = indicator.GetComponent<Image>();
+            if (img != null)
+            {
+                img.color = GetColorFromType(indicatorColor);
+            }
         }
     }
 
@@ -26,42 +49,84 @@ public class OffscreenIndicatorManager : MonoBehaviour
     {
         for (int i = 0; i < players.Length; i++)
         {
-            UpdateIndicator(players[i], indicators[i]);
+            UpdateIndicator(players[i], indicators[i], i);
         }
     }
 
-    void UpdateIndicator(Transform player, RectTransform indicator)
+    void UpdateIndicator(Transform player, RectTransform indicator, int index)
     {
-        // 플레이어가 화면 안에 있는지 확인
         Vector3 viewportPos = mainCamera.WorldToViewportPoint(player.position);
-
-        // 화면 밖에 있으면 true
         bool isOffscreen = viewportPos.x < 0 || viewportPos.x > 1 || viewportPos.y < 0 || viewportPos.y > 1;
 
-        // 화면 안에 있으면 Indicator 비활성화
         if (!isOffscreen)
         {
-            indicator.gameObject.SetActive(false);
+            if (indicator.gameObject.activeSelf)
+            {
+                indicator.gameObject.SetActive(false);
+                if (blinkCoroutines[index] != null)
+                {
+                    StopCoroutine(blinkCoroutines[index]);
+                    blinkCoroutines[index] = null;
+                }
+                SetIndicatorAlpha(indicator, 1f);
+            }
             return;
         }
 
-        // 화면 밖에 있으면 Indicator 활성화
-        indicator.gameObject.SetActive(true);
+        if (!indicator.gameObject.activeSelf)
+        {
+            indicator.gameObject.SetActive(true);
+            if (blinkCoroutines[index] == null)
+                blinkCoroutines[index] = StartCoroutine(BlinkIndicator(indicator));
+        }
 
-        // 화면 중심 기준 방향
-        Vector3 dir = (player.position - mainCamera.transform.position).normalized;
-
-        // 화면 좌표 계산
         Vector3 screenPos = mainCamera.WorldToScreenPoint(player.position);
-
-        // 화면 끝에 클램프
         screenPos.x = Mathf.Clamp(screenPos.x, edgeBuffer, Screen.width - edgeBuffer);
         screenPos.y = Mathf.Clamp(screenPos.y, edgeBuffer, Screen.height - edgeBuffer);
-
         indicator.position = screenPos;
 
-        // 화살표 회전
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f;
-        indicator.rotation = Quaternion.Euler(0, 0, angle);
+        indicator.rotation = Quaternion.identity;
+    }
+
+    IEnumerator BlinkIndicator(RectTransform indicator)
+    {
+        Image img = indicator.GetComponent<Image>();
+        if (img == null) yield break;
+
+        while (true)
+        {
+            SetIndicatorAlpha(indicator, 1f);
+            yield return new WaitForSeconds(0.3f);
+            SetIndicatorAlpha(indicator, 0.2f);
+            yield return new WaitForSeconds(0.3f);
+        }
+    }
+
+    void SetIndicatorAlpha(RectTransform indicator, float alpha)
+    {
+        Image img = indicator.GetComponent<Image>();
+        if (img != null)
+        {
+            Color c = img.color;
+            c.a = alpha;
+            img.color = c;
+        }
+    }
+
+    Color GetColorFromType(ColorType type)
+    {
+        switch (type)
+        {
+            case ColorType.Red: return Color.red;
+            case ColorType.Green: return Color.green;
+            case ColorType.Blue: return Color.blue;
+            case ColorType.Yellow: return Color.yellow;
+            case ColorType.Cyan: return Color.cyan;
+            case ColorType.Magenta: return Color.magenta;
+            case ColorType.White: return Color.white;
+            case ColorType.Black: return Color.black;
+            case ColorType.Gray: return Color.gray;
+            default: return Color.white;
+        }
     }
 }
