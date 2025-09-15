@@ -17,6 +17,8 @@ GameObject:
   - component: {fileID: 5822240849622324189}
   - component: {fileID: 1818194576719011869}
   - component: {fileID: -1267571591749026520}
+  - component: {fileID: 5321587576772630097}
+  - component: {fileID: 4019375718976828264}
   m_Layer: 10
   m_Name: P1
   m_TagString: Player
@@ -220,7 +222,7 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 0
-  dashForce: 8
+  dashForce: 6.5
   dashDuration: 0.2
   maxJumpCount: 2
 --- !u!114 &1818194576719011869
@@ -276,6 +278,40 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &5321587576772630097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7011468713277402235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d45b7203f5178640b3c2fc6ee5b4174, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!95 &4019375718976828264
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7011468713277402235}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9d08284d517250348bc67c54e46154b5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8812166200187830082
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,14 +18,34 @@ public abstract class Item : MonoBehaviour
     public Vector2 shootingdir;
     public bool thisisnoforceobject = false;
     public bool thisownerfading = true;
+
+    //netWork
+    private float _synkTime = 0f;
+    byte[] _bff;
     public virtual void Awake()
     {
         rigidbody = GetComponent<Rigidbody2D>();
-
-        //아이템에 아이디를 부여
-        //Debug.Log($"Item Id : {Counter}");
         Id = Counter++;
     }
+    private void Update()
+    {
+        if(!isshooting && !isshooting)
+        {
+            _synkTime += Time.deltaTime;
+            if (_synkTime >= 1)
+            {
+                _synkTime = 0f;
+                Send();
+            }
+        }
+    }
+
+    public void Send()
+    {
+        _bff = Server.Instance.SerializationItemPos(Id, transform.position);
+        Server.Instance.Send(_bff);
+    }
+
     protected virtual void OnCollisionStay2D(Collision2D collision)
     {
         int layer = collision.gameObject.layer;
@@ -52,7 +72,6 @@ public abstract class Item : MonoBehaviour
             StartCoroutine(Attacking(collision.gameObject)); //버그
         }
     }
-    
     public virtual void Launching()
     {
 

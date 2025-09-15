@@ -122,7 +122,6 @@ public class Boomaerang : Item
 
         if (entity != null)
         {
-            Debug.Log($"{gameObject.name} is attakcing {entity.name}");
             entity.Attack(preowner, damage, knockbackmulti);
         }
 

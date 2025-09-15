@@ -72,7 +72,6 @@ public class OtherAction : Player
 
     private void ThrowItem(GameObject item, Vector2 dir, byte chargeGuage)
     {
-        Debug.Log($"GameObject : {item}, Vector2  : {dir}, byte : {chargeGuage}");
         if (HoldObject == null) return;
 
         Item itemScript = item.GetComponent<Item>();
@@ -103,8 +102,6 @@ public class OtherAction : Player
         if (!itemScript.thisisnoforceobject)
         {
             hrb.linearVelocity = Vector2.zero;
-            //hrb.AddForce(dir * DefaultShotForce * chargeGuage + (dir.y == 0 ? new Vector2(0, UpwardForce)
-            //    : new Vector2(0, 0)), ForceMode2D.Impulse);
             hrb.AddForce(dir * ThrowPower + (dir.y == 0 ? new Vector2(0, UpwardForce)
     : new Vector2(0, 0)), ForceMode2D.Impulse);
             hrb.angularVelocity += Random.Range(-180f, 180f);
