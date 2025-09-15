@@ -123,20 +123,15 @@ public class Server : SingletonBehaviour<Server>
     }
     public bool TryReconnect()
     {
-        Debug.Log("TryReconnect");
         return _bfMatch.TryReconnect();
     }
-    public void Login(string id, string pw)
+    public void Login(string id, string pw, Action<int> OnTryLogin)
     {
-        _bfAccount.Login(id,pw);
+        _bfAccount.Login(id, pw, OnTryLogin);
     }
-    public void Login(string id, string pw, Action<bool> OnTryMatchServer, Action<int> OnTryLogin)
+    public int TrySignup(string id, string pw , string nickname)
     {
-        _bfAccount.Login(id, pw, OnTryMatchServer, OnTryLogin);
-    }
-    public int TrySignup(string id, string pw)
-    {
-        return _bfAccount.Signup(id,pw);
+        return _bfAccount.Signup(id,pw, nickname);
     }
     public int TryUpdateNickname(string nickName)
     {
@@ -161,6 +156,14 @@ public class Server : SingletonBehaviour<Server>
     public byte[] SerializationPlayerMovementData(Vector2 dashDir,sbyte moveX, bool usingJump, bool usingDash, bool isDashing, bool usingDownDash)
     {
         return _bfInGame.SerializationPlayerMovementData(dashDir, moveX, usingJump, usingDash, isDashing, usingDownDash);
+    }
+    public byte[] SerializationItemPos(ushort id, Vector2 pos)
+    {
+        return _bfInGame.SerializationItemPos(id, pos);
+    }
+    public byte[] SerializationPlayerPos(Vector2 pos)
+    {
+        return _bfInGame.SerializationPlayerPos(pos);
     }
 }
 

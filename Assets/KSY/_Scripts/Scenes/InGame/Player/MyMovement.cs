@@ -38,6 +38,13 @@ public class MyMovement : Player
     private bool _usingDownDash = false;
     //이동하고 있는 방향 (Now Move.X Direction <Sbyte>)
     private sbyte _moveX = 0;
+    //송신 버퍼
+    private byte[] movementBff;
+    private byte[] posBff;
+
+    private float _currentTime = 0f;
+
+    private Vector2 _pos;
     #endregion
 
     private float _dashTimer = 0;
@@ -53,6 +60,8 @@ public class MyMovement : Player
 
     private void FixedUpdate()
     {
+        //수정
+        if (!CountDownScript.IsGameStarting) return;
         OnGround();
         GroundDash();
         AirDash();
@@ -66,11 +75,29 @@ public class MyMovement : Player
 
     private void Update()
     {
+        //수정
+        if (!CountDownScript.IsGameStarting) return;
+        float x = (float)System.Math.Round(transform.position.x, 3);
+        float y = (float)System.Math.Round(transform.position.y, 3);
+
+        _pos = new Vector2(x, y);
+
+        Serialize();
+
+        _currentTime += Time.deltaTime;
+
         if (Keyboard.current.sKey.wasPressedThisFrame && !_isGrounded)
         {
             _usingDownDash = true;
             _rbCompo.AddForce(Vector2.down * gravity * 1.5f, ForceMode2D.Impulse);
             Send();
+        }
+
+        if (_currentTime >= 1f)
+        {
+            _currentTime = 0f;
+            Serialize();
+            PosSend();
         }
     }
     private void OnValidate()
@@ -90,14 +117,12 @@ public class MyMovement : Player
 
         if (_isGrounded)
         {
-            Debug.Log($"_isGrounded : {_isGrounded}");
             _currentJumpCount = maxJumpCount;
             _usingJump = false;
             _usingDownDash = false;
             _usingDash = false;
         }
     }
-
     public void OnMove(InputValue value)
     {
         _moveVec = value.Get<Vector2>();
@@ -116,7 +141,6 @@ public class MyMovement : Player
 
         Send();
     }
-
     public void OnJump()
     {
         if (_currentJumpCount > 0)
@@ -128,7 +152,6 @@ public class MyMovement : Player
             Send();
         }
     }
-
     private void GroundDash()
     {
         if (_isDashing && _isGrounded)
@@ -199,25 +222,31 @@ public class MyMovement : Player
 
         }
     }
+    public void Serialize()
+    {
+        if (Server.Instance == null) return;
+        posBff = Server.Instance.SerializationPlayerPos(_pos);
+
+        //movementBff = Server.Instance.SerializationPlayerMovementData(_dashDir, _moveX, _usingJump, _usingDash, _isDashing, _usingDownDash);
+    }
 
     public override void Send()
     {
-        Debug.Log($"_downDashing : {_usingDownDash}");
-        Vector2 dashDir = _dashDir;
-        sbyte moveX = _moveX;
-        bool usingJump = _usingJump;
-        bool usingDash = _usingDash;
-        bool isDashing = _isDashing;
-        bool usingDownDash = _usingDownDash;
-
-        byte[] bff = Server.Instance.SerializationPlayerMovementData(dashDir, moveX, usingJump, usingDash, isDashing, usingDownDash);
-        Server.Instance.Send(bff);
+        movementBff = Server.Instance.SerializationPlayerMovementData(_dashDir, _moveX, _usingJump, _usingDash, _isDashing, _usingDownDash);
+        Server.Instance.Send(movementBff);
+    }
+    public void PosSend()
+    {
+        if (posBff != null)
+        {
+            Server.Instance.Send(posBff);
+        }
     }
 
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.green;
+        Gizmos.color = Color.red;
         Gizmos.DrawWireCube(transform.position + (Vector3)groundCheckVec, groundCheckVecSize);
     }
 #endif

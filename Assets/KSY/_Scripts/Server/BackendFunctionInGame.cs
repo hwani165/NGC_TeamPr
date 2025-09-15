@@ -10,9 +10,10 @@ public class BackendFunctionInGame : MonoBehaviour
 {
     private readonly FlatBufferBuilder _movementBuilder = new FlatBufferBuilder(32);
     private readonly FlatBufferBuilder _itemActionBuilder = new FlatBufferBuilder(32);
-
+    private readonly FlatBufferBuilder _playerPosBuilder = new FlatBufferBuilder(32);
     private readonly FlatBufferBuilder _platformStateBuilder = new FlatBufferBuilder(32);
     private readonly FlatBufferBuilder _spawnerInfoBuilder = new FlatBufferBuilder(32);
+    private readonly FlatBufferBuilder _itemPosBuilder = new FlatBufferBuilder(32);
 
     [Flags]
     public enum flagPlayerMovementState : byte
@@ -98,6 +99,19 @@ public class BackendFunctionInGame : MonoBehaviour
 
         return bff;
     }
+    public byte[] SerializationItemPos(ushort id, Vector2 pos)
+    {
+        //버퍼 재사용
+        _itemPosBuilder.Clear();
+
+        Offset<itemPos> offsetItemPosData = itemPos.CreateitemPos(_itemPosBuilder, id, pos.x, pos.y);
+        Offset<PlayerMessage> offsetResultData = PlayerMessage.CreatePlayerMessage(_itemPosBuilder, PlayerMessageType.item_pos, offsetItemPosData.Value);//offsetItemPosData
+
+        _itemPosBuilder.Finish(offsetResultData.Value, "PLYR");
+        byte[] bff = _itemPosBuilder.SizedByteArray();
+
+        return bff;
+    }
     public byte[] SerializationActionData(ushort itemId, bool isHolding, bool isThrowing, byte chargeGauge, Vector2 throwDir)
     {
         //버퍼 재사용
@@ -120,6 +134,21 @@ public class BackendFunctionInGame : MonoBehaviour
         //스키마 버퍼화
         _itemActionBuilder.Finish(offsetResultData.Value, "PLYR");
         byte[] bff = _itemActionBuilder.SizedByteArray();
+
+        return bff;
+    }
+    public byte[] SerializationPlayerPos(Vector2 pos)
+    {
+        _playerPosBuilder.Clear();
+
+        sbyte x = (sbyte)pos.x;
+        sbyte y = (sbyte)pos.y;
+
+        Offset<PlayerPos> offsetPlayerPosData = PlayerPos.CreatePlayerPos(_playerPosBuilder, x, y);
+        Offset<PlayerMessage> offsetResultData = PlayerMessage.CreatePlayerMessage(_playerPosBuilder, PlayerMessageType.player_pos, offsetPlayerPosData.Value);
+
+        _playerPosBuilder.Finish(offsetResultData.Value, "PLYR");
+        byte[] bff = _playerPosBuilder.SizedByteArray();
 
         return bff;
     }
@@ -158,7 +187,7 @@ public class BackendFunctionInGame : MonoBehaviour
     {
         if (!Game.Instance.IsAllReady)
         {
-            Debug.LogError("map un loaded.");
+            Debug.Log("map un loaded.");
             return;
         }
         Backend.Match.SendDataToInGameRoom(bff);
@@ -228,12 +257,10 @@ public class BackendFunctionInGame : MonoBehaviour
             //플레이어 아이템 액션 수신
             case PlayerMessageType.item_action:
                 {
-                    Debug.Log("Start item Action receive");
-
                     //데이터를 버퍼에서 꺼내옴 (역직렬화)
                     ItemAction data = message.DataAsitem_action();
                     byte state = data.ActionState;
-                    byte charge = data.Charge;
+                    byte charge = data.ChargeGauge;
                     ushort itemdID = data.ActionItemId;
                     sbyte x = data.ShotDirX;
                     sbyte y = data.ShotDirY;
@@ -242,8 +269,33 @@ public class BackendFunctionInGame : MonoBehaviour
                     Receiver.ApplyUShortData(itemdID);
                     Receiver.ApplySbyteData(x, y);
                     Receiver.ApplyByteData(state, charge);
+                    break;
+                }
+            case PlayerMessageType.player_pos:
+                {
+                    PlayerPos data = message.DataAsplayer_pos();
 
-                    Debug.Log("End item Action receive");
+                    float x = data.X;
+                    float y = data.Y;
+
+                    Receiver.ApplyPosData(x, y);
+                    break;
+                }
+            case PlayerMessageType.item_pos:
+                {
+                    Debug.Log($"<color=yellow>Start Receive item_pos</color>");
+                    itemPos data = message.DataAsitem_pos();
+
+                    ushort id = data.Id;
+                    float x = data.X;
+                    float y = data.Y;
+
+                    GameObject item = Game.Instance.MapCompo.SpawnerCompo.FindItem(id);
+                    Debug.Log($"<color=yellow>item is null : {item == null}</color>");
+
+                    item.transform.position = new Vector2(x, y);
+                    Debug.Log($"<color=yellow>Receive : {x}, {y}</color>");
+                    Debug.Log($"<color=yellow>Apply : {item.transform.position}</color>");
                     break;
                 }
             default:

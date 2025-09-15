@@ -10,6 +10,8 @@ public enum PlayerMessageType : byte
   NONE = 0,
   item_action = 1,
   movement = 2,
+  player_pos = 3,
+  item_pos = 4,
 };
 
 
@@ -26,6 +28,12 @@ static public class PlayerMessageTypeVerify
         break;
       case PlayerMessageType.movement:
         result = InputData.Player.MovementVerify.Verify(verifier, tablePos);
+        break;
+      case PlayerMessageType.player_pos:
+        result = InputData.Player.PlayerPosVerify.Verify(verifier, tablePos);
+        break;
+      case PlayerMessageType.item_pos:
+        result = InputData.Player.itemPosVerify.Verify(verifier, tablePos);
         break;
       default: result = true;
         break;

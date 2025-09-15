@@ -16,6 +16,9 @@ GameObject:
   - component: {fileID: -5878438068652748384}
   - component: {fileID: 5822240849622324189}
   - component: {fileID: 1818194576719011869}
+  - component: {fileID: -1267571591749026520}
+  - component: {fileID: 5321587576772630097}
+  - component: {fileID: 4019375718976828264}
   m_Layer: 10
   m_Name: P1
   m_TagString: Player
@@ -153,10 +156,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 5
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 1.5
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -180,7 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33c4ee5ae7565b848a9b8c512fbece44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Nickname: 
+  <Nickname>k__BackingField: 
   InputSetting: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
 --- !u!114 &-5878438068652748384
 MonoBehaviour:
@@ -195,7 +198,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <CurrentHp>k__BackingField: 0
-  _playerData: {fileID: 11400000, guid: 207044432b2cff04c94401168f5c9a79, type: 2}
   hpbar: {fileID: 2941625474100205933, guid: db84965fc2ae2654ab3cc284f3242938, type: 3}
 --- !u!114 &5822240849622324189
 MonoBehaviour:
@@ -209,18 +211,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2215cedc8a99c214aaf44cd4736ac347, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Nickname: 
+  <Nickname>k__BackingField: 
   InputSetting: {fileID: 0}
   _movementData: {fileID: 11400000, guid: a93b85cda72cc2040a9cb7418c8156e4, type: 2}
   speed: 5
   jumpForce: 10
   gravity: 9.8
-  groundCheckVecSize: {x: 0.5, y: 1.05}
+  groundCheckVecSize: {x: 0.5, y: 1.1}
   groundCheckVec: {x: 0, y: 0}
   groundMask:
     serializedVersion: 2
     m_Bits: 0
-  dashForce: 12
+  dashForce: 6.5
   dashDuration: 0.2
   maxJumpCount: 2
 --- !u!114 &1818194576719011869
@@ -235,17 +237,81 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08d4c9f15155a0341b736c7c5ef968ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Nickname: 
+  <Nickname>k__BackingField: 
   InputSetting: {fileID: 0}
   IsHolding: 0
   IsThrowing: 0
   HoldTransform: {fileID: 6507584662252668062}
   HoldObject: {fileID: 0}
   ThrowPower: 60
-  UpwardForce: 30
+  UpwardForce: 10
   PlayerRecoil: 40
   ChargeUiObject: {fileID: 7153311871473908794}
   ChargeImage: {fileID: 4893735692424855341}
+--- !u!114 &-1267571591749026520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7011468713277402235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!114 &5321587576772630097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7011468713277402235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d45b7203f5178640b3c2fc6ee5b4174, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!95 &4019375718976828264
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7011468713277402235}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9d08284d517250348bc67c54e46154b5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8812166200187830082
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,6 +351,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 470612815520314619}
     m_Modifications:
+    - target: {fileID: 2658628691086923683, guid: 0b72e714a9a8d1846a9207e824b0a28d, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4554749127242205516, guid: 0b72e714a9a8d1846a9207e824b0a28d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -319,11 +389,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4554749127242205516, guid: 0b72e714a9a8d1846a9207e824b0a28d, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4554749127242205516, guid: 0b72e714a9a8d1846a9207e824b0a28d, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4554749127242205516, guid: 0b72e714a9a8d1846a9207e824b0a28d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -376,6 +446,10 @@ PrefabInstance:
     - target: {fileID: 6928401041825513586, guid: 0b72e714a9a8d1846a9207e824b0a28d, type: 3}
       propertyPath: m_Name
       value: ChageCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 6928401041825513586, guid: 0b72e714a9a8d1846a9207e824b0a28d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8709785550119060889, guid: 0b72e714a9a8d1846a9207e824b0a28d, type: 3}
       propertyPath: m_PresetInfoIsWorld

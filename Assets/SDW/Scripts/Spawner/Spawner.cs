@@ -56,7 +56,8 @@ public class Spawner : MonoBehaviour, IReceiver, ISender
     }
     private void Update()
     {
-        if (Server.IsSuperGamer && Game.Instance.IsAllReady)
+        //¼öÁ¤
+        if ((Server.IsSuperGamer && Game.Instance.IsAllReady) && CountDownScript.IsGameStarting)
         {
             CreateItem();
         }
@@ -162,6 +163,10 @@ public class Spawner : MonoBehaviour, IReceiver, ISender
         _spawnItemId = id;
     }
     public void ApplySbyteData(sbyte sbyteData1, sbyte sbyteData2)
+    {
+        throw new NotImplementedException("If you want to use this method, you must override it.");
+    }
+    public void ApplyPosData(float x, float y)
     {
         throw new NotImplementedException("If you want to use this method, you must override it.");
     }

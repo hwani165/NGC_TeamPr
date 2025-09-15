@@ -43,19 +43,14 @@ public class Game : SingletonBehaviour<Game>
         SceneManager.sceneLoaded += (Scene s, LoadSceneMode lsm) =>
         {
             //로딩을 완료한 씬의 이름.
-            var sceneName = s.name;
+            var name = s.name;
 
             //씬의 이름을 통해 어떤 씬의 로드를 완료했는지 판단함.
-            switch (sceneName)
+            switch (name)
             {
                 case "AccountMenu":
                     {
                         LoadedAccountMenu?.Invoke();
-                        break;
-                    }
-                case "MainMenu":
-                    {
-                        LoadedMainMenu?.Invoke();
                         break;
                     }
                 //In Game Loaded
@@ -95,7 +90,7 @@ public class Game : SingletonBehaviour<Game>
         
         //서버로부터 불러왔던 나의 데이터를 가져옴
         UserData? myData = Server.Instance.GetMyData();
-        
+
         //데이터가 제대로 불러와지지 않았다면 return;
         if (myData == null)
         {
@@ -138,6 +133,7 @@ public class Game : SingletonBehaviour<Game>
     }
     private void InitPlayer(Scene s, LoadSceneMode lsm)
     {
+        Debug.Log("Start Init Player");
         //********내 데이터 처리********
 
         //씬에서 플레이어 오브젝트 P1을 찾음
@@ -163,6 +159,7 @@ public class Game : SingletonBehaviour<Game>
         MapCompo.SetPlayerStartPos(p1);
 
         //********상대방 데이터 처리********
+        Debug.Log("Start Init Other");
 
         //씬에서 플레이어 오브젝트 P2를 찾음
         Player p2; GameObject.Find("P2").TryGetComponent(out p2);
@@ -213,5 +210,10 @@ public class Game : SingletonBehaviour<Game>
                     break;
                 }
         }   
+    }
+
+    public void EndGame()
+    {
+        Debug.Log($"<color=pink>Game End<color>");
     }
 }

@@ -12,7 +12,7 @@ public class Player : MonoBehaviour, IReceiver, ISender
 {
     //User Data
     private UserData _myData = new UserData();
-    [SerializeField] private string Nickname;
+    [field:SerializeField] public string Nickname { get; private set; }
 
     //My palyer
     [SerializeField] private InputActionAsset InputSetting;
@@ -29,15 +29,17 @@ public class Player : MonoBehaviour, IReceiver, ISender
 
     public void Init()
     {
+        Debug.Log("Success : Init");
+
         //나의 플레이어라면
         if (Nickname == Server.Instance.GetMyData().Value.nickname)
         {
             //송신용 플레이어 스크립트 추가
-            if (!TryGetComponent(out _myMovement)) _myMovement = gameObject.AddComponent<MyMovement>();
-            if (!TryGetComponent(out _myAction)) _myAction = gameObject.AddComponent<MyAction>();
+            _myMovement = GetComponent<MyMovement>();
+            _myAction = GetComponent<MyAction>();
 
             //인풋 시스템 세팅
-            if(!TryGetComponent(out _playerInput)) _playerInput = gameObject.AddComponent<PlayerInput>();
+            _playerInput = GetComponent<PlayerInput>();
             _playerInput.actions = InputSetting;
             _playerInput.defaultActionMap = _actionMap;
             _playerInput.actions.Enable();
@@ -46,8 +48,8 @@ public class Player : MonoBehaviour, IReceiver, ISender
         else
         {
             //수신용 플레이어 스크립트 추가
-            if (!TryGetComponent(out _otherMovement)) _otherMovement = gameObject.AddComponent<OtherMovement>();
-            if (!TryGetComponent(out _otherAction)) _otherAction = gameObject.AddComponent<OtherAction>();
+            _otherMovement = GetComponent<OtherMovement>();
+            _otherAction = GetComponent<OtherAction>();
 
             //수신 이벤트 추가
             Backend.Match.OnMatchRelay += ReceiveData;
@@ -79,6 +81,16 @@ public class Player : MonoBehaviour, IReceiver, ISender
                     case PlayerMessageType.item_action:
                         {
                             Server.Instance.ApplyData(message, _otherAction, messageType);
+                            break;
+                        }
+                    case PlayerMessageType.player_pos:
+                        {
+                            Server.Instance.ApplyData(message, _otherMovement, messageType);
+                            break;
+                        }
+                    case PlayerMessageType.item_pos:
+                        {
+                            Server.Instance.ApplyData(message, null, messageType);
                             break;
                         }
                     default:
@@ -129,7 +141,7 @@ public class Player : MonoBehaviour, IReceiver, ISender
     {
         throw new NotImplementedException("If you want to use this method, you must override it.");
     }
-    public virtual void ApplySbyteData(sbyte dirX, sbyte dirY)
+    public virtual void ApplySbyteData(sbyte sbyteData1, sbyte sbyteData2)
     {
         throw new NotImplementedException("If you want to use this method, you must override it.");
     }
@@ -138,6 +150,10 @@ public class Player : MonoBehaviour, IReceiver, ISender
         throw new NotImplementedException("If you want to use this method, you must override it.");
     }
     public virtual void ApplyUShortData(ushort ushortData)
+    {
+        throw new NotImplementedException("If you want to use this method, you must override it.");
+    }
+    public virtual void ApplyPosData(float x, float y)
     {
         throw new NotImplementedException("If you want to use this method, you must override it.");
     }

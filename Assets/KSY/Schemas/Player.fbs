@@ -12,12 +12,25 @@ table ItemAction{
 	action_item_id:ushort;
 	shot_dir_x:byte;
 	shot_dir_y:byte;
-	charg_gauge:ubyte;
+	charge_gauge:ubyte;
+}
+
+table PlayerPos{
+	x:float;
+	y:float;
+}
+
+table itemPos{
+	id:ushort;
+	x:float;
+	y:float;
 }
 
 union PlayerMessageType{
 	item_action:ItemAction,
-	movement:Movement
+	movement:Movement,
+	player_pos:PlayerPos,
+	item_pos:itemPos
 }
 
 table PlayerMessage{

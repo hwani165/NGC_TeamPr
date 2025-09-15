@@ -1,5 +1,6 @@
 public interface IReceiver
 {
+    public void ApplyPosData(float x, float y);
     public void ApplyByteData(byte byteData);
     public void ApplyUShortData(ushort ushortData);
     public void ApplyByteData(byte byteData1, byte byteData2);

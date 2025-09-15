@@ -179,7 +179,7 @@ MonoBehaviour:
   iscooldown: 0
   isshooting: 0
   effect:
-  - {fileID: 4126250750794429402, guid: 2baae680160f5054191a13415b0ced8b, type: 3}
+  - {fileID: 4126250750794429402, guid: 5e1c94e0abf072e4ba2162c713ef75be, type: 3}
   targetLayer:
     serializedVersion: 2
     m_Bits: 1024

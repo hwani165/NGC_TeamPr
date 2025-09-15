@@ -1,11 +1,9 @@
-using BackEnd;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using static BackendFunctionInGame;
 
 public class OtherMovement : Player
 {
-    [SerializeField] private MovementDataSO _movementDast;
+    [SerializeField] private MovementDataSO _movementData;
 
     [SerializeField] private float speed = 10f;
     [SerializeField] private float jumpForce = 12f;
@@ -45,11 +43,22 @@ public class OtherMovement : Player
         groundMask = LayerMask.GetMask("Ground");
         groundCheckVecSize = new Vector2(0.5f, 1.05f);
     }
-    private void FixedUpdate()
+    private void OnValidate()
     {
+        speed = _movementData.Speed;
+        jumpForce = _movementData.JumpForce;
+        gravity = _movementData.Gravity;
+
+        dashForce = _movementData.DashForce;
+        dashDuration = _movementData.DashDuration;
+    }
+    private void Update()
+    {
+        OnGround();
+
         if (_startDashTimer)
         {
-            _dashTimer += Time.fixedDeltaTime;
+            _dashTimer += Time.deltaTime;
             GroundDash();
             AirDash();
         }
@@ -57,11 +66,7 @@ public class OtherMovement : Player
         {
             _dashTimer = 0f;
         }
-    }
 
-    private void Update()
-    {
-        OnGround();
         if (!_isDashing)
         {
             Vector2 velocity = _rbCompo.linearVelocity;
@@ -71,9 +76,12 @@ public class OtherMovement : Player
     }
     private void DownDash()
     {
-        _rbCompo.AddForce(Vector2.down * gravity * 1.5f, ForceMode2D.Impulse);
+        if(!_isGrounded)
+        {
+            Debug.Log($"_isGrounded : {_isGrounded}");
+            _rbCompo.AddForce(Vector2.down * gravity * 1.5f, ForceMode2D.Impulse);
+        }
     }
-
     private void OnGround()
     {
         Collider2D hit = Physics2D.OverlapBox((Vector2)transform.position + groundCheckVec, groundCheckVecSize, 0, groundMask);
@@ -91,7 +99,6 @@ public class OtherMovement : Player
         _usingJump = true;
         _rbCompo.linearVelocityY = jumpForce;
     }
-
     private void GroundDash()
     {
         if (_isDashing && _isGrounded)
@@ -106,7 +113,6 @@ public class OtherMovement : Player
             return;
         }
     }
-
     private void AirDash()
     {
         if (_isDashing && !_isGrounded)
@@ -131,14 +137,14 @@ public class OtherMovement : Player
             Vector2 inputDir = _moveVec.normalized;
             if (_isGrounded)
             {
+                _usingDash = false;
                 _rbCompo.linearVelocityX = 0;
-                CanDash = true;
                 if (inputDir == Vector2.zero)
                     inputDir = Vector2.down;
             }
             else
             {
-                //CanDash = false;
+                _usingDash = false;
                 _rbCompo.linearVelocity = Vector2.zero;
             }
             if (_isDashing) return;
@@ -161,7 +167,7 @@ public class OtherMovement : Player
 
         if (!_isDashing && usingDash)
         {
-            Debug.Log($"isDash : {usingDash}");
+            //Debug.Log($"isDash : {usingDash}");
             OnDash();
             GroundDash();
             AirDash();
@@ -173,20 +179,21 @@ public class OtherMovement : Player
         bool UsingJump = (state & (byte)flagPlayerMovementState.UsingJump) != 0;
         if (UsingJump)
         {
-            Debug.Log($"isjumping : {UsingJump}");
+            //Debug.Log($"isjumping : {UsingJump}");
             OnJump();
         }
 
         bool usingDownDash = (state & (byte)flagPlayerMovementState.UsingDownDash) != 0;
 
-        Debug.Log($"usingDownDash : {usingDownDash}");
-
         if (!_downDashing && usingDownDash)
         {
-            Debug.Log($"usingDownDash : {usingDownDash}");
             _downDashing = usingDownDash;
             DownDash();
         }
+    }
+    public override void ApplyPosData(float x, float y)
+    {
+        transform.position = new Vector3(x, y + 0.55f);
     }
     public override void ApplySbyteData(sbyte moveX, sbyte dashX, sbyte dashY)
     {
@@ -198,7 +205,7 @@ public class OtherMovement : Player
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.green;
+        Gizmos.color = Color.red;
         Gizmos.DrawWireCube(transform.position + (Vector3)groundCheckVec, groundCheckVecSize);
     }
 #endif

@@ -15,6 +15,7 @@ public class OtherAction : Player
     [SerializeField] private GameObject HoldObject;
     private Rigidbody2D _rb;
 
+    [SerializeField] private float ThrowPower = 30f;
     [SerializeField] private float DefaultShotForce = 60f;
     [SerializeField] private float UpwardForce = 30f;
     //던지기 반동
@@ -33,8 +34,6 @@ public class OtherAction : Player
     }
     private void Hold(GameObject obj)
     {
-        if (HoldObject != null) return;
-        Debug.Log($"obj is {obj.name}");
         //아이템 들기 처리
         if (obj.TryGetComponent(out Item itemSc))
         {
@@ -48,14 +47,31 @@ public class OtherAction : Player
             rb.simulated = false;
             rb.transform.parent = HoldTransform;
             rb.gravityScale = 2.75f;
-            rb.GetComponent<Collider2D>().isTrigger = false;
+            rb.GetComponent<Collider2D>().isTrigger = true;
 
             obj.transform.localPosition = Vector2.zero;
         }
     }
-    private void ThrowItem(GameObject item, Vector2 dir, byte force)
+
+    private void Release(GameObject obj)
     {
-        Debug.Log($"GameObject : {item}, Vector2  : {dir}, byte : {force}");
+        if (obj.TryGetComponent(out Item itemSc))
+        {
+            HoldObject = null;
+            itemSc.owner = null;
+        }
+
+        if (obj.TryGetComponent(out Rigidbody2D rb))
+        {
+            rb.simulated = true;
+            rb.transform.parent = null;
+            rb.gravityScale = 1;
+            rb.GetComponent<Collider2D>().isTrigger = false;
+        }
+    }
+
+    private void ThrowItem(GameObject item, Vector2 dir, byte chargeGuage)
+    {
         if (HoldObject == null) return;
 
         Item itemScript = item.GetComponent<Item>();
@@ -81,20 +97,18 @@ public class OtherAction : Player
         //아이템 물리연산 O
         hrb.simulated = true;
         //던지는 방향과 힘을 정함
-        itemScript.shootingdir = dir * _chargeGauge;
+        itemScript.shootingdir = dir.normalized * _chargeGauge;
 
         if (!itemScript.thisisnoforceobject)
         {
             hrb.linearVelocity = Vector2.zero;
-            hrb.AddForce(dir * DefaultShotForce * force + (dir.y == 0 ? new Vector2(0, UpwardForce)
-                : new Vector2(0, 0)), ForceMode2D.Impulse);
+            hrb.AddForce(dir * ThrowPower + (dir.y == 0 ? new Vector2(0, UpwardForce)
+    : new Vector2(0, 0)), ForceMode2D.Impulse);
             hrb.angularVelocity += Random.Range(-180f, 180f);
         }
 
         //플레이어 던지는 반동 이펙트
         _rb.linearVelocity = Vector2.zero;
-        _rb.AddForce(-dir * PlayerRecoil, ForceMode2D.Impulse);
-
         itemScript.Launching();
 
         HoldObject = null;
@@ -103,6 +117,11 @@ public class OtherAction : Player
     //수정할코드
     public override void ApplyUShortData(ushort id)
     {
+        //들고 있는 아이템이 있었다면 
+        if (HoldObject != null)
+        {
+            Release(HoldObject);
+        }
         HoldObject = Game.Instance.MapCompo.SpawnerCompo.FindItem(id);
     }
     public override void ApplyByteData(byte state, byte charge)
@@ -115,12 +134,10 @@ public class OtherAction : Player
 
         if (isHolding)
         {
-            Debug.Log($"isHolding : {isHolding}");
             Hold(HoldObject);
         }
         if (isThrowing)
         {
-            Debug.Log($"isThrowing : {isThrowing}");
             ThrowItem(HoldObject, _throwDir, _chargeGauge);
         }
     }
