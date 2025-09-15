@@ -26,19 +26,19 @@ public class MyMovement : Player
     private bool _isGrounded;
 
     #region NetWorkData
-    //Á¡ÇÁ¸¦ Çß´Â°¡? (Is Jumping Now? <bool>)
-    private bool _usingJump = false;
-    //´ë½¬¸¦ ÇÏ°í ÀÖ´Â°¡?(Is Dashing Now? <bool>)
-    private bool _isDashing = false;
-    //´ë½¬ÇÒ ¹æÇâ(Dash Direction<Vec2>)
-    private Vector2 _dashDir = Vector2.zero;
-    //´ë½¬¸¦ »ç¿ëÇß´Â°¡? (Use Dash? <bool>)
-    private bool _usingDash = false;
-    //¹ØÀ¸·Î ´ë½¬¸¦ »ç¿ëÇß´Â°¡? (Use Down Dash? <bool>)
-    private bool _usingDownDash = false;
-    //ÀÌµ¿ÇÏ°í ÀÖ´Â ¹æÇâ (Now Move.X Direction <Sbyte>)
-    private sbyte _moveX = 0;
-    //¼Û½Å ¹öÆÛ
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß´Â°ï¿½? (Is Jumping Now? <bool>)
+    public bool _usingJump = false;
+    //ï¿½ë½¬ï¿½ï¿½ ï¿½Ï°ï¿½ ï¿½Ö´Â°ï¿½?(Is Dashing Now? <bool>)
+    public bool _isDashing = false;
+    //ï¿½ë½¬ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(Dash Direction<Vec2>)
+    public Vector2 _dashDir = Vector2.zero;
+    //ï¿½ë½¬ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ß´Â°ï¿½? (Use Dash? <bool>)
+    public bool _usingDash = false;
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ë½¬ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ß´Â°ï¿½? (Use Down Dash? <bool>)
+    public bool _usingDownDash = false;
+    //ï¿½Ìµï¿½ï¿½Ï°ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ (Now Move.X Direction <Sbyte>)
+    public sbyte _moveX = 0;
+    //ï¿½Û½ï¿½ ï¿½ï¿½ï¿½ï¿½
     private byte[] movementBff;
     private byte[] posBff;
 
@@ -60,7 +60,7 @@ public class MyMovement : Player
 
     private void FixedUpdate()
     {
-        //¼öÁ¤
+        //ï¿½ï¿½ï¿½ï¿½
         if (!CountDownScript.IsGameStarting) return;
         OnGround();
         GroundDash();
@@ -75,7 +75,7 @@ public class MyMovement : Player
 
     private void Update()
     {
-        //¼öÁ¤
+        //ï¿½ï¿½ï¿½ï¿½
         if (!CountDownScript.IsGameStarting) return;
         float x = (float)System.Math.Round(transform.position.x, 3);
         float y = (float)System.Math.Round(transform.position.y, 3);

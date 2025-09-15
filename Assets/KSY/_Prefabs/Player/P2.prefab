@@ -242,7 +242,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Nickname>k__BackingField: 
-  InputSetting: {fileID: 0}
+  InputSetting: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _movementData: {fileID: 11400000, guid: a93b85cda72cc2040a9cb7418c8156e4, type: 2}
   speed: 5
   jumpForce: 10

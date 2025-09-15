@@ -4,48 +4,90 @@ using UnityEngine.InputSystem;
 public class PlayerAnimation : MonoBehaviour
 {
     private Animator _animator;
-    private Vector2 _dir;
 
     private readonly int _blendTreeHash = Animator.StringToHash("DefaultMove");
     private readonly int _isJumpHash = Animator.StringToHash("IsJump");
     private readonly int _isDashHash = Animator.StringToHash("IsDash");
+
+    private MyMovement _myMovement;
+    private OtherMovement _otherMovement;
     private void Awake()
     {
         _animator = GetComponent<Animator>();
-    }
+        if (TryGetComponent<MyMovement>(out MyMovement myMovement))
+        {
+            myMovement = _myMovement;
+        }
 
-    private void Update()
+        if (TryGetComponent<OtherMovement>(out OtherMovement otherMovement))
+        {
+            _otherMovement = otherMovement;
+        }
+    }
+    private void ForMyMovement()
     {
-        if(_dir.x != 0)
+        if (_myMovement._moveX != 0)
         {
             _animator.SetFloat(_blendTreeHash, 1);
+            if (_myMovement._moveX > 0.1)
+            {
+                GetComponent<SpriteRenderer>().flipX = false;
+            }
+            else
+            {
+                GetComponent<SpriteRenderer>().flipX = true;
+            }
         }
         else
         {
             _animator.SetFloat(_blendTreeHash, 0);
         }
-    }
 
-    public void OnMove(InputValue value)
-    {
-        _dir = value.Get<Vector2>();
-        if(_dir.x >= 0.1f)
+        if (_myMovement._usingJump)
         {
-            GetComponent<SpriteRenderer>().flipX = false;
+            _animator.SetTrigger(_isJumpHash);
         }
-        else if(_dir.x <= -0.1f)
+
+        if (_myMovement._usingDash)
         {
-            GetComponent<SpriteRenderer>().flipX = true;
+            _animator.SetTrigger(_isDashHash);
         }
     }
 
-    public void OnJump()
+    private void ForOtherMovement()
     {
-        _animator.SetTrigger(_isJumpHash);
-    }
+        if (_otherMovement._moveVec.x != 0)
+        {
+            _animator.SetFloat(_blendTreeHash, 1);
+            if (_otherMovement._moveVec.x > 0.1)
+            {
+                GetComponent<SpriteRenderer>().flipX = false;
+            }
+            else
+            {
+                GetComponent<SpriteRenderer>().flipX = true;
+            }
+        }
+        else
+        {
+            _animator.SetFloat(_blendTreeHash, 0);
+        }
 
-    public void OnDash()
+        if (_otherMovement._usingJump)
+        {
+            _animator.SetTrigger(_isJumpHash);
+        }
+
+        if (_otherMovement._usingDash)
+        {
+            _animator.SetTrigger(_isDashHash);
+        }
+    }
+    private void Update()
     {
-       _animator.SetTrigger(_isDashHash);
+        if(_myMovement != null)
+            ForMyMovement();
+        else
+            ForOtherMovement();
     }
 }
