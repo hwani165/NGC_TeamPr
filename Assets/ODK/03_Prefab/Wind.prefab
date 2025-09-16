@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 1949329107848151098}
   - component: {fileID: 4655551967093659944}
   - component: {fileID: 9206428774507335267}
-  - component: {fileID: 2689270796443451734}
-  - component: {fileID: -1547663316408440602}
+  - component: {fileID: 5497486583308851731}
+  - component: {fileID: 7015729440776693016}
   m_Layer: 31
-  m_Name: Chargeka
+  m_Name: Wind
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -7, y: -2.5, z: 0}
-  m_LocalScale: {x: 0.06, y: 0.06, z: 1}
+  m_LocalScale: {x: 0.05, y: 0.05, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -79,8 +79,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
-  m_Sprite: {fileID: 21300000, guid: 79551f887242a40f1b4aa718530406b0, type: 3}
+  m_SortingOrder: 3
+  m_Sprite: {fileID: 21300000, guid: 9dd5154a5ade54bb79b5a5b067d62acc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -162,9 +162,9 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 17.5, y: 17.5}
+  m_Size: {x: 15, y: 15}
   m_EdgeRadius: 0
---- !u!114 &2689270796443451734
+--- !u!114 &5497486583308851731
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -173,11 +173,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4069005640951247961}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f8a469886dc6534ebd699dc7b8fa7b1, type: 3}
+  m_Script: {fileID: 11500000, guid: 7ed98fc2db6cf8141a80e363069e852a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  launchesound: {fileID: 0}
-  grabsound: {fileID: 0}
+  launchesound: {fileID: 8300000, guid: a9f42ba500dc33b499a684546ab9af94, type: 3}
+  grabsound: {fileID: 8300000, guid: a9f42ba500dc33b499a684546ab9af94, type: 3}
   Id: 0
   iscooldown: 0
   isShooting: 0
@@ -188,24 +188,16 @@ MonoBehaviour:
     m_Bits: 1024
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2147483712
   owner: {fileID: 0}
   preowner: {fileID: 0}
   shootingdir: {x: 0, y: 0}
-  thisisnoforceobject: 1
+  thisisnoforceobject: 0
   thisownerfading: 1
   isHolding: 0
-  easeType: 1
-  lasteaseType: 8
-  damage: 60
-  knockbackmulti: 1
-  firstmovetime: 12
-  lastmovetime: 0
-  lifeTime: 12
-  range: 60
-  thisnotalreadyHit: 0
-  invisibleTime: 1
---- !u!82 &-1547663316408440602
+  damage: 5
+  knockbackmulti: 4
+--- !u!82 &7015729440776693016
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
