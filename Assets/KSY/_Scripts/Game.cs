@@ -265,18 +265,18 @@ public class Game : SingletonBehaviour<Game>
         byte[] bff = Server.Instance.SerializationStartEndData(mapIndex);
         Server.Instance.Send(bff);
     }
-    public void EndGame(string winner)
+    public void EndGame(bool isWin ,string winner)
     {
         Debug.Log($"<color=pink>Game End<color>");
 
         if(Server.IsSuperGamer)
         {
-            EndDataSend(winner);
+            EndDataSend(isWin, winner);
         }
     }
-    private void EndDataSend(string winner)
+    private void EndDataSend(bool isWin, string winner)
     {
-        byte[] bff = Server.Instance.SerializationStartEndData(true, winner);
+        byte[] bff = Server.Instance.SerializationStartEndData(isWin, winner);
         Server.Instance.Send(bff);
     }
 }

@@ -18,7 +18,7 @@ public class Return : MonoBehaviour
                 if (p1MaxLife <= 0)
                 {
                     string otherName = Server.Instance.GetOtherData().Value.nickname;
-                    Game.Instance.EndGame(otherName);
+                    Game.Instance.EndGame(true, otherName);
                 }
             }
             else
@@ -27,7 +27,7 @@ public class Return : MonoBehaviour
                 if (p2MaxLife <= 0)
                 {
                     string myName = Server.Instance.GetMyData().Value.nickname;
-                    Game.Instance.EndGame(myName);
+                    Game.Instance.EndGame(true, myName);
                 }
             }
 

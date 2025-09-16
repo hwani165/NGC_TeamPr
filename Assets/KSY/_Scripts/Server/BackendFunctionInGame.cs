@@ -69,7 +69,7 @@ public class BackendFunctionInGame : MonoBehaviour
         //1 
         GameEnd = 0b0001
     }
-    public byte[] SerializationEndData(bool isEnded, string winner)
+    public byte[] SerializationStartEndData(bool isEnded, string winner)
     {
         _gameStartEndBuilder.Clear();
 
@@ -84,7 +84,7 @@ public class BackendFunctionInGame : MonoBehaviour
         _gameStartEndBuilder.Finish(offsetResult.Value, "MAPP");
         byte[] bff = _gameStartEndBuilder.SizedByteArray();
 
-        Debug.Log("SerializationEndData");
+        Debug.Log("SerializationStartEndData");
         return bff;
     }
 
@@ -110,7 +110,7 @@ public class BackendFunctionInGame : MonoBehaviour
         _gameStartEndBuilder.Finish(offsetResult.Value, "MAPP");
         byte[] bff = _gameStartEndBuilder.SizedByteArray();
 
-        Debug.Log("SerializationEndData");
+        Debug.Log("SerializationStartEndData");
         return bff;
     }
     public byte[] SerializetionCurrentData(byte time, byte playerLife, string playerName)
@@ -329,11 +329,13 @@ public class BackendFunctionInGame : MonoBehaviour
                     else if(gameEnded)
                     {
                         string name = data.GameWinner;
-                        Game.Instance.EndGame(name);
+                        Game.Instance.EndGame(true, name);
                     }
-
-
-                        break;
+                    else
+                    {
+                        Game.Instance.EndGame(false, name);
+                    }
+                    break;
                 }
             case MapMessageType.current_game_info:
                 {
