@@ -1,4 +1,5 @@
 using System;
+using System.Xml;
 using BackEnd;
 using BackEnd.Tcp;
 using Google.FlatBuffers;
@@ -30,6 +31,24 @@ public class Game : SingletonBehaviour<Game>
     private bool _InGameLoaded;
     public Map MapCompo { get; private set; }
 
+    static public byte P1LIFE = 3;
+    static public byte P2LIFE = 3;
+    private byte _otherHitCount;
+
+    Player p1;
+    Player p2;
+    public byte OtherHitCount
+    {
+        get
+        {
+            return _otherHitCount;
+        }
+        set
+        {
+            _otherHitCount = (byte)Mathf.Clamp(value,0,10);
+        }
+    }
+
     public SceneType currnetScene = SceneType.Account;
     byte[] receiveBff = new byte[64];
 
@@ -45,6 +64,9 @@ public class Game : SingletonBehaviour<Game>
     }
     private void Start()
     {
+        P1LIFE = (byte)UnityEngine.Random.Range(3, 7);
+        P2LIFE = (byte)UnityEngine.Random.Range(3, 7);
+
         LoadedInGame += () => _InGameLoaded = true;
 
         //씬이 완료되었을 떄 호출되는 이벤트 등록.
@@ -87,7 +109,7 @@ public class Game : SingletonBehaviour<Game>
 
     private void ReceiveData(MatchRelayEventArgs args)
     {
-        if (args.From.NickName != Server.myname)
+        if (args.From.NickName != Server.MyName)
         {
             //수신 받은 데이터를 버퍼에 담기
             receiveBff = args.BinaryUserData;
@@ -119,7 +141,7 @@ public class Game : SingletonBehaviour<Game>
         //********내 데이터 처리********
 
         //씬에서 플레이어 오브젝트 P1을 찾음
-        Player p1;  GameObject.Find("P1").TryGetComponent(out p1);
+        GameObject.Find("P1").TryGetComponent(out p1);
         
         //서버로부터 불러왔던 나의 데이터를 가져옴
         UserData? myData = Server.Instance.GetMyData();
@@ -143,7 +165,7 @@ public class Game : SingletonBehaviour<Game>
         //********상대방 데이터 처리********
 
         //씬에서 플레이어 오브젝트 P2를 찾음
-        Player p2; GameObject.Find("P2").TryGetComponent(out p2);
+        GameObject.Find("P2").TryGetComponent(out p2);
 
         //서버로부터 불러왔던 상대방 데이터를 가져옴
         UserData? otherData = Server.Instance.GetOtherData();
@@ -170,7 +192,7 @@ public class Game : SingletonBehaviour<Game>
         //********내 데이터 처리********
 
         //씬에서 플레이어 오브젝트 P1을 찾음
-        Player p1; GameObject.Find("P1").TryGetComponent(out p1);
+        GameObject.Find("P1").TryGetComponent(out p1);
 
         //서버로부터 불러왔던 나의 데이터를 가져옴
         UserData? myData = Server.Instance.GetMyData();
@@ -195,7 +217,7 @@ public class Game : SingletonBehaviour<Game>
         Debug.Log("Start Init Other");
 
         //씬에서 플레이어 오브젝트 P2를 찾음
-        Player p2; GameObject.Find("P2").TryGetComponent(out p2);
+        GameObject.Find("P2").TryGetComponent(out p2);
 
         //서버로부터 불러왔던 상대방 데이터를 가져옴
         UserData? otherData = Server.Instance.GetOtherData();
@@ -236,22 +258,31 @@ public class Game : SingletonBehaviour<Game>
                         int mapIndex = UnityEngine.Random.Range(0, _mapNames.Length);
 
                         //선정한 맵의 이름을 가져옴
-                        SelectedMapSend((byte)mapIndex);
+                        GameDataSend((byte)mapIndex);
                         SelectMap((byte)mapIndex);
                     }
                     break;
                 }
         }   
     }
-    public void GameEnd(string winner)
+    public void SendPlayerHealth(string damagedPlayerName, byte playerHealth)
     {
-        Debug.Log($"Game End. Winner is {winner}");
-        //게임 끝났을 때 호출
-    }
-    public void UpdatePlayerHealth(string damagedPlayerName, byte playerHealth)
-    {
-        Debug.Log($"{damagedPlayerName} health = {playerHealth}");
+        byte[] bff = Server.Instance.SerializationCurrentData(damagedPlayerName, playerHealth);
+        Server.Instance.Send(bff);
         //플레이어 체력이 깎였을 때 호출 
+    }
+    public void ReceivePlayerHealth(string name, byte health)
+    {
+        if(name == "P1")
+        {
+            p2.MyEntity.Health = health;
+            MapCompo.P1Health.text = $"{Server.OtherName} health : {health}";
+        }
+        else if(name == "P2")
+        {
+            p1.MyEntity.Health = health;
+            MapCompo.P2Health.text = $"{Server.MyName} health : {health}";
+        }
     }
     public void UpdateTime(byte Time)
     {
@@ -262,37 +293,45 @@ public class Game : SingletonBehaviour<Game>
         string mapName = _mapNames[mapIndex];
         SceneManager.LoadScene(mapName);
     }
-    private void SelectedMapSend(byte mapIndex)
+    private void GameDataSend(byte mapIndex)
     {
-        byte[] bff = Server.Instance.SerializationStartEndData(mapIndex);
+        byte[] bff = Server.Instance.SerializationStartEndData(mapIndex, P1LIFE, P2LIFE);
         Server.Instance.Send(bff);
     }
-    public void EndGameServer(string winner)
+    public void EndGameServer(byte hitCount)
     {
         Debug.Log($"<color=pink>Game End<color>");
-
-        if(Server.IsSuperGamer && !isEndedGame)
-        {
-            isEndedGame = true;
-            EndDataSend(winner);
-
-            GameObject gameOverUI = MapCompo.gameOverUI;
-            gameOverUI.GetComponentInChildren<TMP_Text>().text = $"이긴 사람 : {winner}";
-            gameOverUI.SetActive(true);
-            Time.timeScale = 0;
-        }
+        isEndedGame = true;
+        EndDataSend(hitCount);
     }
-    public void EndGameClient(string winner)
+    public void EndGame(byte hitCount)
     {
         if (isEndedGame) return;
-        GameObject gameOverUI = MapCompo.gameOverUI;
-        gameOverUI.GetComponentInChildren<TMP_Text>().text = $"이긴 사람 : {winner}";
+
+        string otherNick = Server.OtherName;
+        string myNick = Server.MyName;
+        GameObject gameOverUI = MapCompo.GameOverUI;
+
+        if (hitCount > OtherHitCount)
+        {
+            gameOverUI.GetComponentInChildren<TMP_Text>().text = $"이긴 사람 : {otherNick}";
+        }
+        else if (hitCount < OtherHitCount)
+        {
+            gameOverUI.GetComponentInChildren<TMP_Text>().text = $"이긴 사람 : {myNick}";
+        }
+        else
+        {
+            gameOverUI.GetComponentInChildren<TMP_Text>().text = $"이긴 사람 : 없음 ㅋㅋ";
+
+        }
+
         gameOverUI.SetActive(true);
         Time.timeScale = 0;
     }
-    private void EndDataSend(string winner)
+    private void EndDataSend(byte hitCount)
     {
-        byte[] bff = Server.Instance.SerializationStartEndData(winner);
+        byte[] bff = Server.Instance.SerializationStartEndData(hitCount);
         Server.Instance.Send(bff);
     }
 }

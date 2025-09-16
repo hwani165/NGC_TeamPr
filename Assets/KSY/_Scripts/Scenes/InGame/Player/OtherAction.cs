@@ -95,13 +95,16 @@ public class OtherAction : Player
         Item itemScript = HoldObject.GetComponent<Item>();
         Rigidbody2D hrb = HoldObject.GetComponent<Rigidbody2D>();
 
-        if (chargeGuage >= 2)
+        Debug.Log($"Other Action ChargeGuage: {chargeGuage}");
+
+        if (chargeGuage >= 3)
         {
-            Debug.Log("Eat Item");
+            Debug.Log($"OtherAction Eat");
             itemScript.preowner = transform;
             itemScript.shootingdir = Vector2.zero;
             itemScript.Eat();
             HoldObject = null;
+            Debug.Log($"Other Eat End");
             return;
         }
         else if (throwDir == Vector2.zero) return;

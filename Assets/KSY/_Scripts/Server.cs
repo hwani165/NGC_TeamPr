@@ -13,7 +13,8 @@ public class Server : SingletonBehaviour<Server>
     private BackendFunctionMatch _bfMatch;
     private UserData _myData = new UserData();
     private UserData _otherData = new UserData();
-    public static string myname;
+    public static string MyName;
+    public static string OtherName;
     public static bool IsSuperGamer { get; private set; } = false;
     private void Awake()
     {
@@ -52,6 +53,8 @@ public class Server : SingletonBehaviour<Server>
         //받아왔던 데이터를 할당.
         _otherData.nickname = nickname;
 
+        OtherName = nickname;
+
         //데이터 초기화를 표시
         _otherData.hasInit = true;
     }
@@ -65,7 +68,7 @@ public class Server : SingletonBehaviour<Server>
 
         //받아온 데이터를 할당.
         _myData.nickname = nickname;
-        myname = nickname;
+        MyName = nickname;
 
         //데이터 초기화를 표시
         _myData.hasInit = true;
@@ -145,17 +148,13 @@ public class Server : SingletonBehaviour<Server>
     {
         return _bfInGame.SerializationItemDes(id);
     }
-    public byte[] SerializationStartEndData(string winner)
+    public byte[] SerializationStartEndData(byte hitCount)
     {
-        return _bfInGame.SerializationStartEndData(winner);
+        return _bfInGame.SerializationStartEndData(hitCount);
     }
-    public byte[] SerializationStartEndData(byte mapIndex)
+    public byte[] SerializationStartEndData(byte mapIndex, byte P1LIFE, byte P2LIFE)
     {
-        return _bfInGame.SerializationEndData(mapIndex);
-    }
-    public byte[] SerializetionCurrnetData(byte time, byte playerLife, string playerName)
-    {
-        return _bfInGame.SerializetionCurrentData(time, playerLife, playerName);
+        return _bfInGame.SerializationEndData(mapIndex, P1LIFE, P2LIFE);
     }
     public byte[] SerializationPlatformStateData(byte id, bool isOnPlatform, bool isBrokenPlatform)
     {
@@ -169,9 +168,13 @@ public class Server : SingletonBehaviour<Server>
     {
         return _bfInGame.SerializationActionData(itemId, isHolding, isThrowing, chargeGauge, throwDir);
     }
-    public byte[] SerializationPlayerMovementData(Vector2 dashDir,sbyte moveX, bool usingJump, bool usingDash, bool isDashing, bool usingDownDash)
+    public byte[] SerializationCurrentData(string name, byte health)
     {
-        return _bfInGame.SerializationPlayerMovementData(dashDir, moveX, usingJump, usingDash, isDashing, usingDownDash);
+        return _bfInGame.SerializetionCurrentData(name, health);
+    }
+    public byte[] SerializationPlayerMovementData(sbyte moveX, bool usingJump, bool usingDownDash)
+    {
+        return _bfInGame.SerializationPlayerMovementData(moveX, usingJump, usingDownDash);
     }
     public byte[] SerializationItemPos(ushort id, Vector2 pos)
     {

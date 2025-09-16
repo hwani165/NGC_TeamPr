@@ -49,11 +49,6 @@ public class PlayerAnimation : MonoBehaviour
         {
             _animator.SetTrigger(_isJumpHash);
         }
-
-        if (_myMovement._usingDash)
-        {
-            _animator.SetTrigger(_isDashHash);
-        }
     }
 
     private void ForOtherMovement()
@@ -78,11 +73,6 @@ public class PlayerAnimation : MonoBehaviour
         if (_otherMovement._usingJump)
         {
             _animator.SetTrigger(_isJumpHash);
-        }
-
-        if (_otherMovement._usingDash)
-        {
-            _animator.SetTrigger(_isDashHash);
         }
     }
     

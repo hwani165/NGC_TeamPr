@@ -13,21 +13,16 @@ table SpawnerInfo{
 
 table StartEndGameInfo{
 	map_index:ubyte;
+	p1_life:ubyte;
+	p2_life:ubyte;
 	game_end:ubyte;
 	game_winner:string;
-}
-
-table CurrentGameInfo{
-	time:ubyte;
-	player_life:ubyte;
-	player_name:string;
 }
 
 union MapMessageType{
 	platform_state:PlatformState,
 	spawner_info:SpawnerInfo,
 	start_end_game_info:StartEndGameInfo,
-	current_game_info:CurrentGameInfo
 }
 
 table MapMessage{

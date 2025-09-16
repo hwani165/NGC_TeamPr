@@ -28,12 +28,6 @@ public class BackendFunctionInGame : MonoBehaviour
         UsingJump = 0b0001,
 
         //2
-        IsDashing = 0b0010,
-
-        //4
-        UsingDash = 0b0100,
-
-        //8
         UsingDownDash = 0b1000
     }
     [Flags]
@@ -69,14 +63,11 @@ public class BackendFunctionInGame : MonoBehaviour
         //1 
         GameEnd = 0b0001
     }
-    public byte[] SerializationStartEndData(string winner)
+    public byte[] SerializationStartEndData(byte hitCount)
     {
         _gameStartEndBuilder.Clear();
 
-        byte gameEndState = 0b0000;
-
-        StringOffset offsetWinner = _gameStartEndBuilder.CreateString(winner);
-        Offset<StartEndGameInfo> offsetStartGameEnd = StartEndGameInfo.CreateStartEndGameInfo(_gameStartEndBuilder, 9, gameEndState, offsetWinner);
+        Offset<StartEndGameInfo> offsetStartGameEnd = StartEndGameInfo.CreateStartEndGameInfo(_gameStartEndBuilder, 9, 9, 9, hitCount);
         Offset<MapMessage> offsetResult = MapMessage.CreateMapMessage(_gameStartEndBuilder, MapMessageType.start_end_game_info, offsetStartGameEnd.Value);
 
         _gameStartEndBuilder.Finish(offsetResult.Value, "MAPP");
@@ -98,42 +89,27 @@ public class BackendFunctionInGame : MonoBehaviour
 
         return bff;
     }
-    public byte[] SerializationEndData(byte mapIndex)
+    public byte[] SerializationEndData(byte mapIndex, byte P1LIFE, byte P2LIFE)
     {
         _gameStartEndBuilder.Clear();
 
-        Offset<StartEndGameInfo> offsetStartGameEnd = StartEndGameInfo.CreateStartEndGameInfo(_gameStartEndBuilder, mapIndex);
+        Offset<StartEndGameInfo> offsetStartGameEnd = StartEndGameInfo.CreateStartEndGameInfo(_gameStartEndBuilder, mapIndex, P1LIFE, P2LIFE);
         Offset<MapMessage> offsetResult = MapMessage.CreateMapMessage(_gameStartEndBuilder, MapMessageType.start_end_game_info, offsetStartGameEnd.Value);
 
         _gameStartEndBuilder.Finish(offsetResult.Value, "MAPP");
         byte[] bff = _gameStartEndBuilder.SizedByteArray();
-
-        Debug.Log("SerializationStartEndData");
         return bff;
     }
-    public byte[] SerializetionCurrentData(byte time, byte playerLife, string playerName)
+    public byte[] SerializetionCurrentData(string playerName, byte playerLife)
     {
         _gameCurrentBuilder.Clear();
 
-        Offset<MapMessage> offsetResult;
+        StringOffset offsetPlayerName = _gameCurrentBuilder.CreateString(playerName);
+        Offset<CurrentPlayerInfo> offsetCurrentGame = CurrentPlayerInfo.CreateCurrentPlayerInfo(_gameCurrentBuilder, playerLife, offsetPlayerName);
+        Offset<PlayerMessage> offsetResult = PlayerMessage.CreatePlayerMessage(_gameCurrentBuilder, PlayerMessageType.current_player_info, offsetCurrentGame.Value);
 
-        if (playerLife != 9)
-        {
-            StringOffset offsetPlayerName = _gameCurrentBuilder.CreateString(playerName);
-            Offset<CurrentGameInfo> offsetCurrentGame = CurrentGameInfo.CreateCurrentGameInfo(_gameCurrentBuilder, time, playerLife, offsetPlayerName);
-            offsetResult = MapMessage.CreateMapMessage(_gameCurrentBuilder, MapMessageType.current_game_info, offsetCurrentGame.Value);
-        }
-        else
-        {
-            StringOffset offsetPlayerName = _gameCurrentBuilder.CreateString(playerName);
-            Offset<CurrentGameInfo> offsetCurrentGame = CurrentGameInfo.CreateCurrentGameInfo(_gameCurrentBuilder, time);
-            offsetResult = MapMessage.CreateMapMessage(_gameCurrentBuilder, MapMessageType.current_game_info, offsetCurrentGame.Value);
-        }
-
-        _gameCurrentBuilder.Finish(offsetResult.Value, "MAPP");
+        _gameCurrentBuilder.Finish(offsetResult.Value, "PLYR");
         byte[] bff = _gameCurrentBuilder.SizedByteArray();
-
-        Debug.Log("SerializetionCurrentData");
         return bff;
     }
 
@@ -234,26 +210,22 @@ public class BackendFunctionInGame : MonoBehaviour
 
         return bff;
     }
-    public byte[] SerializationPlayerMovementData(Vector2 dashDir, sbyte dataMoveX, bool isGrounded, bool usingDash, bool isDashing, bool usingDownDash)
+    public byte[] SerializationPlayerMovementData(sbyte dataMoveX, bool usingJump, bool usingDownDash)
     {
         //버퍼 재사용
         _movementBuilder.Clear();
 
         //이동 방향값
         sbyte moveX = dataMoveX;
-        sbyte dashX = (sbyte)dashDir.x;
-        sbyte dashY = (sbyte)dashDir.y;
 
         //비트 마스킹
         byte state = 0b0000;
 
-        if (isGrounded) state |= (byte)flagPlayerMovementState.UsingJump;
-        if (isDashing) state |= (byte)flagPlayerMovementState.IsDashing;
-        if (usingDash) state |= (byte)flagPlayerMovementState.UsingDash;
+        if (usingJump) state |= (byte)flagPlayerMovementState.UsingJump;
         if (usingDownDash) state |= (byte)flagPlayerMovementState.UsingDownDash;
 
         //오프셋 세팅 + 데이터 할당
-        Offset<Movement> offsetMovementData = Movement.CreateMovement(_movementBuilder, state, moveX, dashX, dashY);
+        Offset<Movement> offsetMovementData = Movement.CreateMovement(_movementBuilder, state, moveX);
         Offset<PlayerMessage> offsetResultData = PlayerMessage.CreatePlayerMessage(_movementBuilder, PlayerMessageType.movement, offsetMovementData.Value);
 
         //스키마 버퍼화
@@ -320,6 +292,10 @@ public class BackendFunctionInGame : MonoBehaviour
                     {
                         Debug.Log("Receive Map Data");
 
+                        //서로 서로가 서로의 p2이니 p1 데이터를 p2에, p2 데이터를 p1에 집어넣음
+                        Game.P2LIFE = data.P1Life;
+                        Game.P1LIFE = data.P2Life;
+
                         Game.Instance.SelectMap(mapIndex);
                         return;
                     }
@@ -327,25 +303,8 @@ public class BackendFunctionInGame : MonoBehaviour
                     {
                         Debug.Log("Receive Game End");
 
-                        string name = data.GameWinner;
-                        Game.Instance.EndGameClient(name);
-                    }
-                    break;
-                }
-            case MapMessageType.current_game_info:
-                {
-                    CurrentGameInfo data = message.MapMessageTypeAscurrent_game_info();
-                    byte playerLife = data.PlayerLife;
-
-                    if(playerLife != 9)
-                    {
-                        string playerName = data.PlayerName;
-                        Game.Instance.UpdatePlayerHealth(playerName, playerLife);
-                    }
-                    else
-                    {
-                        byte time = data.Time;
-                        Game.Instance.UpdateTime(time);
+                        byte hitCount = data.GameEnd;
+                        Game.Instance.EndGame(hitCount);
                     }
                     break;
                 }
@@ -366,12 +325,10 @@ public class BackendFunctionInGame : MonoBehaviour
                     //데이터를 버퍼에서 꺼내옴 (역직렬화)
                     Movement data = message.DataAsmovement();
                     sbyte moveX = data.MoveX;
-                    sbyte dashX = data.DashX;
-                    sbyte dashY = data.DashY;
                     byte movementState = data.MovementState;
 
                     //데이터를 수신자에게 적용
-                    Receiver.ApplySbyteData(moveX, dashX, dashY);
+                    Receiver.ApplySbyteData(moveX);
                     Receiver.ApplyByteData(movementState);
                     break;
                 }
@@ -416,6 +373,18 @@ public class BackendFunctionInGame : MonoBehaviour
                     item.GetComponent<Rigidbody2D>().MovePosition(new Vector2(x, y));
                     //Debug.Log($"<color=yellow>Receive : {x}, {y}</color>");
                     //Debug.Log($"<color=yellow>Apply : {item.transform.position}</color>");
+                    break;
+                }
+            case PlayerMessageType.current_player_info:
+                {
+                    CurrentPlayerInfo data = message.DataAscurrent_player_info();
+                    byte playerLife = data.PlayerLife;
+
+                    if (playerLife != 9)
+                    {
+                        string playerName = data.PlayerName;
+                        Game.Instance.SendPlayerHealth(playerName, playerLife);
+                    }
                     break;
                 }
             case PlayerMessageType.item_des:

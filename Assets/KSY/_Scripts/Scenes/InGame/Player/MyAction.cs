@@ -72,7 +72,7 @@ public class MyAction : Player
             else ChargeImage.color = Color.white;
 
             // 차징 UI 채워주기
-            ChargeImage.fillAmount = _chargeGauge / 3f;
+            ChargeImage.fillAmount = _chargeGauge / 2f;//3
         }
         // [E 키를 뗐을 때] → 차징값이 남아 있으면 던지기
         else if (_chargeGauge > 0)
@@ -185,12 +185,16 @@ public class MyAction : Player
         // 차지 게이지가 2 이상이라면 먹기
         if (_chargeGauge >= 3)
         {
+            Debug.Log($"MyAction Eat");
+            IsThrowing = true;
             Send();
 
             itemScript.preowner = transform;
             itemScript.shootingdir = Vector2.zero;
             itemScript.Eat();
             HoldObject = null;
+            IsThrowing = false;
+            Debug.Log($"My Eat End");
             return;
         }
         // 방향이 없으면 던지지 않음

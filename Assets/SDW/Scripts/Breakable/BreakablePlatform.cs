@@ -37,8 +37,6 @@ namespace SDW
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            Debug.Log($"충돌: {collision.gameObject.name}, 레이어: {collision.gameObject.layer}");
-
             if (collision.gameObject.layer != LayerMask.NameToLayer("Item")) return;
 
             //부서졌는가?

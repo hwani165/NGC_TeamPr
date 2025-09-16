@@ -11,7 +11,7 @@ public class Return : MonoBehaviour
         {
             Entity e = collision.gameObject.GetComponent<Entity>();
 
-            e.PlayerLife -= 1;
+            Game.Instance.OtherHitCount -= 1;
 
             int rand = Random.Range(0, responPos.Length);
             collision.transform.position = responPos[rand].position;

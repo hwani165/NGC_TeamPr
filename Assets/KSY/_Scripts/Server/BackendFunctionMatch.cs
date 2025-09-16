@@ -89,7 +89,7 @@ public class BackendFunctionMatch : MonoBehaviour
         //+ 자기 자신에게도 호출됨.
         Backend.Match.OnMatchInGameAccess += (MatchInGameSessionEventArgs args) => {
             //나의 입장 수신이라면 반환
-            if (args.GameRecord.m_nickname == Server.myname)
+            if (args.GameRecord.m_nickname == Server.MyName)
             {
                 return;
             }
@@ -114,7 +114,7 @@ public class BackendFunctionMatch : MonoBehaviour
             if (Gamerecords.Count == 2)
             {
                 //상대방 정보를 가져옴
-                MatchUserGameRecord otherInfo = Gamerecords.Find((r) => r.m_nickname != Server.myname);
+                MatchUserGameRecord otherInfo = Gamerecords.Find((r) => r.m_nickname != Server.MyName);
                 Server.Instance.InitOtherData(otherInfo);
             }
 

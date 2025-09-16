@@ -13,6 +13,7 @@ public enum PlayerMessageType : byte
   player_pos = 3,
   item_pos = 4,
   item_des = 5,
+  current_player_info = 6,
 };
 
 
@@ -38,6 +39,9 @@ static public class PlayerMessageTypeVerify
         break;
       case PlayerMessageType.item_des:
         result = InputData.Player.itemDesVerify.Verify(verifier, tablePos);
+        break;
+      case PlayerMessageType.current_player_info:
+        result = InputData.Player.CurrentPlayerInfoVerify.Verify(verifier, tablePos);
         break;
       default: result = true;
         break;

@@ -7,21 +7,33 @@ public class Entity : MonoBehaviour
     [SerializeField] private AudioClip healSound;
     [SerializeField] private AudioSource audioSource;
 
-    [SerializeField] private GameObject gameOverUI;
-
-    public byte PlayerLife;
+    public byte Health;
+    public bool IsMyPlayer;
 
     public void Awake()
     {
         audioSource = GetComponent<AudioSource>();
 
-        PlayerLife = (byte)Random.Range(3, 11);
+
+        IsMyPlayer = gameObject.name == "P1";
+        Health = IsMyPlayer ? Game.P1LIFE : Game.P2LIFE;
     }
     private void Update()
     {
-        if(PlayerLife <= 0)
+        if(Health <= 0)
         {
-            Game.Instance.EndGameServer(Server.Instance.GetOtherData().Value.nickname);
+            Game.Instance.EndGameServer(Game.Instance.OtherHitCount);
+        }
+    }
+    public void UpdateHealthUI()
+    {
+        if (IsMyPlayer)
+        {
+            Game.Instance.MapCompo.P1Health.text = $"{Server.MyName} health : {Health}";
+        }
+        else
+        {
+            Game.Instance.MapCompo.P2Health.text = $"{Server.OtherName} health : {Health}";
         }
     }
     private IEnumerator OnHit()
@@ -34,12 +46,20 @@ public class Entity : MonoBehaviour
     {
         if (damage >= 1)
             audioSource.PlayOneShot(hitSound);
-        else if (damage < 0)
-                audioSource.PlayOneShot(healSound);
+        else 
+            audioSource.PlayOneShot(healSound);
 
         // HP °¨¼Ò
-        PlayerLife -= 1;
-        Debug.Log(PlayerLife);
+        Health -= 1;
+        Game.Instance.SendPlayerHealth(gameObject.name, Health);
+
+        if(!IsMyPlayer)
+        {
+            Game.Instance.OtherHitCount += 1;
+            Game.Instance.MapCompo.HitCountT.text = $"hit count : {Game.Instance.OtherHitCount}";
+        }
+
+        UpdateHealthUI();
         StartCoroutine(OnHit());
 
         Rigidbody2D rb = GetComponent<Rigidbody2D>();

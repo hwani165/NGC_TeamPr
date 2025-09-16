@@ -26,7 +26,6 @@ public struct MapMessage : IFlatbufferObject
   public InputData.Map.PlatformState MapMessageTypeAsplatform_state() { return MapMessageType<InputData.Map.PlatformState>().Value; }
   public InputData.Map.SpawnerInfo MapMessageTypeAsspawner_info() { return MapMessageType<InputData.Map.SpawnerInfo>().Value; }
   public InputData.Map.StartEndGameInfo MapMessageTypeAsstart_end_game_info() { return MapMessageType<InputData.Map.StartEndGameInfo>().Value; }
-  public InputData.Map.CurrentGameInfo MapMessageTypeAscurrent_game_info() { return MapMessageType<InputData.Map.CurrentGameInfo>().Value; }
 
   public static Offset<InputData.Map.MapMessage> CreateMapMessage(FlatBufferBuilder builder,
       InputData.Map.MapMessageType map_message_type_type = InputData.Map.MapMessageType.NONE,

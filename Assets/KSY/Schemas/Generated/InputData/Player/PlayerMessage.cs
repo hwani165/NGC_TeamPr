@@ -28,6 +28,7 @@ public struct PlayerMessage : IFlatbufferObject
   public InputData.Player.PlayerPos DataAsplayer_pos() { return Data<InputData.Player.PlayerPos>().Value; }
   public InputData.Player.itemPos DataAsitem_pos() { return Data<InputData.Player.itemPos>().Value; }
   public InputData.Player.itemDes DataAsitem_des() { return Data<InputData.Player.itemDes>().Value; }
+  public InputData.Player.CurrentPlayerInfo DataAscurrent_player_info() { return Data<InputData.Player.CurrentPlayerInfo>().Value; }
 
   public static Offset<InputData.Player.PlayerMessage> CreatePlayerMessage(FlatBufferBuilder builder,
       InputData.Player.PlayerMessageType data_type = InputData.Player.PlayerMessageType.NONE,

@@ -21,20 +21,9 @@ public class OtherMovement : Player
 
     private bool _isGrounded;
     #region NetWorkData
-    //������ �ߴ°�? (Is Jumping Now? <bool>)
     public bool _usingJump = false;
-    //�뽬�� �ϰ� �ִ°�?(Is Dashing Now? <bool>)
-    public bool _isDashing;
-    //�뽬�� ����(Dash Direction<Vec2>)
-    public Vector2 _dashDir;
-    //�뽬�� ����ߴ°�? (Use Dash? <bool>)
-    public bool _usingDash = false;
-    //�̵��ϰ� �ִ� ���� (Now Move.X Direction <Sbyte>)
     public bool _downDashing = false;
     #endregion
-
-    private bool _startDashTimer = false;
-    private float _dashTimer;
 
     private void Start()
     {
@@ -52,27 +41,17 @@ public class OtherMovement : Player
         dashForce = _movementData.DashForce;
         dashDuration = _movementData.DashDuration;
     }
+    private void FixedUpdate()
+    {
+        Vector2 velocity = _rbCompo.linearVelocity;
+        velocity.x = _moveVec.x * speed;
+        _rbCompo.linearVelocityX = velocity.x;
+    }
     private void Update()
     {
         OnGround();
 
-        if (_startDashTimer)
-        {
-            _dashTimer += Time.deltaTime;
-            GroundDash();
-            OnDash();
-        }
-        else
-        {
-            _dashTimer = 0f;
-        }
 
-        if (!_isDashing)
-        {
-            Vector2 velocity = _rbCompo.linearVelocity;
-            velocity.x = _moveVec.x * speed;
-            _rbCompo.linearVelocityX = velocity.x;
-        }
     }
     private void DownDash()
     {
@@ -91,7 +70,6 @@ public class OtherMovement : Player
         {
             _downDashing = false;
             _usingJump = false;
-            _usingDash = false;
         }
     }
     public void OnJump()
@@ -99,61 +77,8 @@ public class OtherMovement : Player
         _usingJump = true;
         _rbCompo.linearVelocityY = jumpForce;
     }
-    private void GroundDash()
-    {
-        if (_isDashing && _isGrounded)
-        {
-            _startDashTimer = true;
-            _rbCompo.AddForce(new Vector2(_dashDir.x, 0) * dashForce, ForceMode2D.Impulse);
-            if (_dashTimer <= 0f)
-            {
-                _isDashing = false;
-                _startDashTimer = false;
-            }
-            return;
-        }
-    }
-    public void OnDash()
-    {
-        if (!_usingDash)
-        {
-            Vector2 inputDir = _moveVec.normalized;
-            if (_isGrounded)
-            {
-                _usingDash = false;
-                _rbCompo.linearVelocityX = 0;
-                if (inputDir == Vector2.zero)
-                    inputDir = Vector2.down;
-            }
-            else
-            {
-                _usingDash = false;
-                _rbCompo.linearVelocity = Vector2.zero;
-            }
-            if (_isDashing) return;
-            else
-            {
-                inputDir = new Vector2(Mathf.Sign(_moveVec.x), 0);
-            }
-
-            _dashDir = inputDir.normalized;
-            _isDashing = true;
-            _dashTimer = dashDuration;
-        }
-    }
     public override void ApplyByteData(byte state)
     {
-        bool usingDash = (state & (byte)flagPlayerMovementState.UsingDash) != 0;
-        _usingDash = usingDash;
-
-        if (!_isDashing && usingDash)
-        {
-            OnDash();
-        }
-
-        bool isDashing = (state & (byte)flagPlayerMovementState.IsDashing) != 0;
-        _isDashing = isDashing;
-
         bool UsingJump = (state & (byte)flagPlayerMovementState.UsingJump) != 0;
         if (UsingJump)
         {
@@ -177,7 +102,6 @@ public class OtherMovement : Player
     {
         float _moveX = moveX;
         _moveVec.x = _moveX;
-        _dashDir = new Vector2(dashX, dashY);
     }
 
 #if UNITY_EDITOR

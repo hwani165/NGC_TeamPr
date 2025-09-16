@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using BackEnd;
 using Google.FlatBuffers;
 using InputData.Map;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -12,7 +13,12 @@ public class Map : MonoBehaviour
 
     [field:SerializeField]public Spawner SpawnerCompo { get; private set; }
     [SerializeField] private Transform[] _startPos = new Transform[2];
-    public GameObject gameOverUI;
+
+    public GameObject GameOverUI;
+    public TMP_Text P1Health;
+    public TMP_Text P2Health;
+    public TMP_Text HitCountT;
+
 
     private Dictionary<byte, Platform> _platfomrs;
     #region Unity Event Function

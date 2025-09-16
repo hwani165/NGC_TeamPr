@@ -27,7 +27,7 @@ public class Player : MonoBehaviour, IReceiver, ISender
     private OtherMovement _otherMovement;
     private OtherAction _otherAction;
 
-    private Entity _entity;
+    public Entity MyEntity;
 
     public void Init()
     {
@@ -55,7 +55,7 @@ public class Player : MonoBehaviour, IReceiver, ISender
             Backend.Match.OnMatchRelay += ReceiveData;
         }
 
-        _entity = GetComponent<Entity>();
+        MyEntity = GetComponent<Entity>();
     }
     private void ReceiveData(MatchRelayEventArgs args)
     {
@@ -100,6 +100,11 @@ public class Player : MonoBehaviour, IReceiver, ISender
                             Server.Instance.ApplyData(message, null, messageType);
                             break;
                         }
+                    case PlayerMessageType.current_player_info:
+                        {
+                            Server.Instance.ApplyData(message, null, messageType);
+                            break;
+                        }
                     default:
                         {
                             Debug.LogError("this enum value is nonexistent");
@@ -119,6 +124,8 @@ public class Player : MonoBehaviour, IReceiver, ISender
 
         //플레이어 객체에 userData가 할당되었음을 표시
         _myData.hasInit = true;
+
+        GetComponent<Entity>().UpdateHealthUI();
     }
 
     //IReceiver

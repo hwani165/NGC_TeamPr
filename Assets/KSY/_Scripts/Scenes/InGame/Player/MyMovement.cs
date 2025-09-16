@@ -26,19 +26,10 @@ public class MyMovement : Player
     private bool _isGrounded;
 
     #region NetWorkData
-    //������ �ߴ°�? (Is Jumping Now? <bool>)
     public bool _usingJump = false;
-    //�뽬�� �ϰ� �ִ°�?(Is Dashing Now? <bool>)
-    public bool _isDashing = false;
-    //�뽬�� ����(Dash Direction<Vec2>)
-    public Vector2 _dashDir = Vector2.zero;
-    //�뽬�� ����ߴ°�? (Use Dash? <bool>)
-    public bool _usingDash = false;
-    //������ �뽬�� ����ߴ°�? (Use Down Dash? <bool>)
     public bool _usingDownDash = false;
-    //�̵��ϰ� �ִ� ���� (Now Move.X Direction <Sbyte>)
     public sbyte _moveX = 0;
-    //�۽� ����
+
     private byte[] movementBff;
     private byte[] posBff;
 
@@ -61,22 +52,13 @@ public class MyMovement : Player
     private void FixedUpdate()
     {
         OnGround();
-        GroundDash();
-        if (!_isDashing)
-        {
-            Vector2 velocity = _rbCompo.linearVelocity;
-            velocity.x = _moveVec.x * speed;
-            _rbCompo.linearVelocityX = velocity.x;
-        }
+        Vector2 velocity = _rbCompo.linearVelocity;
+        velocity.x = _moveVec.x * speed;
+        _rbCompo.linearVelocityX = velocity.x;
     }
 
     private void Update()
     {
-        float x = (float)System.Math.Round(transform.position.x, 3);
-        float y = (float)System.Math.Round(transform.position.y, 3);
-
-        _pos = new Vector2(x, y);
-
         Serialize();
 
         _currentTime += Time.deltaTime;
@@ -115,7 +97,6 @@ public class MyMovement : Player
             _currentJumpCount = maxJumpCount;
             _usingJump = false;
             _usingDownDash = false;
-            _usingDash = false;
         }
     }
     public void OnMove(InputValue value)
@@ -147,68 +128,20 @@ public class MyMovement : Player
             Send();
         }
     }
-    private void GroundDash()
-    {
-        if (_isDashing && _isGrounded)
-        {
-            _rbCompo.AddForce(new Vector2(_dashDir.x, 0) * dashForce, ForceMode2D.Impulse);
-            _dashTimer -= Time.fixedDeltaTime;
-            if (_dashTimer <= 0f)
-            {
-                _isDashing = false;
-            }
-            return;
-        }
-    }
-    public void OnDash(InputValue value)
-    {
-        if (_currentJumpCount <= 0) return;
-
-        if (!_usingDash)
-        {
-            if (_isGrounded)
-            {
-                _currentJumpCount--;
-                _rbCompo.linearVelocityX = 0;
-                _usingDash = true;
-            }
-            else
-            {
-                _usingDash = false;
-                _rbCompo.linearVelocity = Vector2.zero;
-            }
-
-            if (_isDashing) return;
-
-            Vector2 inputDir = _moveVec.normalized;
-
-            if (_isGrounded)
-            {
-                if (inputDir == Vector2.zero)
-                    inputDir = Vector2.down;
-            }
-            else
-            {
-                inputDir = new Vector2(Mathf.Sign(_moveVec.x), 0);
-            }
-
-            _dashDir = inputDir.normalized;
-            _isDashing = true;
-            _dashTimer = dashDuration;
-
-            Send();
-
-        }
-    }
     public void Serialize()
     {
+        float x = (float)System.Math.Round(transform.position.x, 3);
+        float y = (float)System.Math.Round(transform.position.y, 3);
+
+        _pos = new Vector2(x, y);
+
         if (Server.Instance == null) return;
         posBff = Server.Instance.SerializationPlayerPos(_pos);
     }
 
     public override void Send()
     {
-        movementBff = Server.Instance.SerializationPlayerMovementData(_dashDir, _moveX, _usingJump, _usingDash, _isDashing, _usingDownDash);
+        movementBff = Server.Instance.SerializationPlayerMovementData(_moveX, _usingJump, _usingDownDash);
         Server.Instance.Send(movementBff);
     }
     public void PosSend()

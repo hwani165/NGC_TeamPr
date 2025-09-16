@@ -3,8 +3,6 @@ namespace InputData.Player;
 table Movement {
   movement_state:ubyte;
   move_x:byte;
-  dash_x:byte;
-  dash_y:byte;
 }
 
 table ItemAction{
@@ -13,6 +11,11 @@ table ItemAction{
 	shot_dir_x:byte;
 	shot_dir_y:byte;
 	charge_gauge:ubyte;
+}
+
+table CurrentPlayerInfo{
+	player_life:ubyte;
+	player_name:string;
 }
 
 table PlayerPos{
@@ -35,7 +38,8 @@ union PlayerMessageType{
 	movement:Movement,
 	player_pos:PlayerPos,
 	item_pos:itemPos,
-	item_des:itemDes
+	item_des:itemDes,
+	current_player_info:CurrentPlayerInfo
 }
 
 table PlayerMessage{

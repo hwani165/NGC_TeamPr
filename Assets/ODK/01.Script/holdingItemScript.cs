@@ -37,7 +37,7 @@ public abstract class Item : MonoBehaviour
     private void Update()
     {
         _synkTime += Time.deltaTime;
-        if (_synkTime >= 1)
+        if (_synkTime >= 0.7)
         {
             if (Server.IsSuperGamer)
             {
@@ -45,27 +45,6 @@ public abstract class Item : MonoBehaviour
                 Send();
             }
         }
-        //if(!isShooting && !isHolding)
-        //{
-        //    _synkTime += Time.deltaTime;
-        //    if (_synkTime >= 1)
-        //    {
-        //        if(Server.IsSuperGamer)
-        //        {
-        //            _synkTime = 0f;
-        //            Send();
-        //        }
-        //    }
-        //}
-        //else if(isShooting || isHolding)
-        //{
-        //    _synkTime2 += Time.deltaTime;
-        //    if (_synkTime2 >= 1)
-        //    {
-        //        _synkTime2 = 0f;
-        //        Send();
-        //    }
-        //}
     }
 
     public void Send()
@@ -131,7 +110,13 @@ public abstract class Item : MonoBehaviour
 
     public virtual void Eat()
     {
-        owner.GetComponent<Entity>().Attack(transform, 10, 0f);
+        Entity targetEntity = owner.GetComponent<Entity>();
+
+        if(targetEntity.name == "P1" && targetEntity.Health <= 1)
+        {
+            targetEntity.Attack(transform, 10, 0f);
+        }
+
         isShooting = false;
         Instantiate(effect[0], owner.transform.position, Quaternion.identity);
         owner = null;
