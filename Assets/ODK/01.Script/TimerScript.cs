@@ -32,7 +32,6 @@ public class TimerScript : MonoBehaviour
             if (elapsedTime <= 5f && !iscount)
             {
                 iscount = true;
-                isRunning = false;
                 StartCoroutine(CountDown(5)); // 끝났을 때 카운트다운
             }
             UpdateTimerDisplay();
@@ -83,11 +82,11 @@ public class TimerScript : MonoBehaviour
             tmp.text = secondsLeft.ToString();
             tmp.color = new Color(1f, 0f, 0f, 1f);
             tmp.DOColor(new Color(1f, 0f, 0f, 0f), 0.8f).SetEase(Ease.InOutSine);
-
             yield return new WaitForSeconds(1f);
             secondsLeft--;
         }
-
+        isRunning = false;
+        timerText.text = "00:00";
         tmp.color = new Color(1f, 0f, 0f, 1f);
         tmp.text = "FINISH!";
         StopTimer();

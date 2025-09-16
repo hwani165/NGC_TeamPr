@@ -44,12 +44,13 @@ public class CountDownScript : MonoBehaviour
         yield return new WaitForSeconds(2f); // 애니메이션 완료 대기
 
         // 승리 텍스트 초기 색상 설정
-        wintext.GetComponent<TextMeshProUGUI>().color = new Color(1f, 0f, 0f, 1f);
+        wintext.GetComponent<TextMeshProUGUI>().color = new Color(1f, 1f, 1f, 0f);
         // 텍스트 페이드아웃 효과
-        wintext.GetComponent<TextMeshProUGUI>().DOColor(new Color(1f, 0f, 0f, 0f), 0.8f).SetEase(Ease.InOutSine);
+        wintext.GetComponent<TextMeshProUGUI>().DOColor(new Color(1f, 1f, 1f, 1f), 1f).SetEase(Ease.InOutSine);
 
         int reds = scoreScript.redScore;   // Red 팀 점수
         int blues = scoreScript.blueScore; // Blue 팀 점수
+  
 
         // 점수 비교 후 승리자 또는 무승부 표시
         if (reds > blues)
@@ -64,6 +65,9 @@ public class CountDownScript : MonoBehaviour
         {
             wintext.GetComponent<TextMeshProUGUI>().text = "Draw!";
         }
+        Game.Instance.EndGame();
+
+        yield return new WaitForSeconds(5f);
     }
 
     private void Start()
