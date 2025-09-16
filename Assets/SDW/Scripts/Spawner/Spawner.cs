@@ -56,7 +56,6 @@ public class Spawner : MonoBehaviour, IReceiver, ISender
     }
     private void Update()
     {
-        //¼öÁ¤
         if ((Server.IsSuperGamer && Game.Instance.IsAllReady) && CountDownScript.IsGameStarting)
         {
             CreateItem();
@@ -86,10 +85,6 @@ public class Spawner : MonoBehaviour, IReceiver, ISender
     }
     private void CreateItem()
     {
-        if (_itemCount > _maxCount)
-        {
-            _spawnTimmer = 0;
-        }
         if (_itemCount < _maxCount)
         {
             _spawnTimmer += Time.deltaTime;

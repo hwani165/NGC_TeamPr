@@ -163,7 +163,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.07783258, y: 0.0749501}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -173,7 +173,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.3055657, y: 1.6425459}
+  m_Size: {x: 1.3, y: 1.6}
   m_EdgeRadius: 0
 --- !u!50 &1967098350157579044
 Rigidbody2D:
@@ -229,6 +229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitSound: {fileID: 8300000, guid: 3a1407ca4a03af94fa992d3f66a0a627, type: 3}
+  healSound: {fileID: 0}
   audioSource: {fileID: 5210735691532921437}
   <CurrentHp>k__BackingField: 0
   hpbar: {fileID: 5951835715575870842, guid: 38c7fbde68025544f87ee1bbaac9d734, type: 3}

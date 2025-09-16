@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Data.Common;
 using UnityEngine;
 
 public class Bomb : Item
@@ -26,7 +27,15 @@ public class Bomb : Item
             isShooting = false;
             owner = null;
             
-            StartCoroutine(Attacking(collision.gameObject));
+            try
+            {
+                StartCoroutine(Attacking(collision.gameObject));
+
+            }
+            catch
+            {
+                Debug.Log(collision.gameObject.name);
+            }
         }
     }
     public override IEnumerator Attacking(GameObject target)

@@ -110,7 +110,15 @@ public class Boomaerang : Item
 
                 // 히트 처리
                 alreadyHit.Add(entity);
-                StartCoroutine(Attacking(collision.gameObject));
+
+                try
+                {
+                    StartCoroutine(Attacking(collision.gameObject));
+                }
+                catch
+                {
+                    Debug.Log(collision.gameObject.name);
+                }
             }
         }
     }
