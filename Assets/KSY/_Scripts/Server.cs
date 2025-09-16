@@ -1,4 +1,5 @@
 using System;
+using System.Xml.Linq;
 using BackEnd;
 using BackEnd.Tcp;
 using InputData.Map;
@@ -12,6 +13,7 @@ public class Server : SingletonBehaviour<Server>
     private BackendFunctionMatch _bfMatch;
     private UserData _myData = new UserData();
     private UserData _otherData = new UserData();
+    public static string myname;
     public static bool IsSuperGamer { get; private set; } = false;
     private void Awake()
     {
@@ -63,9 +65,7 @@ public class Server : SingletonBehaviour<Server>
 
         //받아온 데이터를 할당.
         _myData.nickname = nickname;
-
-        //자주 데이터를 쓰는 곳에 자원 절약을 위해 할당해놈
-        _bfMatch.myNickname = nickname;
+        myname = nickname;
 
         //데이터 초기화를 표시
         _myData.hasInit = true;

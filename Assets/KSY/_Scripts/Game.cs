@@ -1,6 +1,10 @@
 using System;
 using System.Collections.Generic;
 using BackEnd;
+using BackEnd.Tcp;
+using Google.FlatBuffers;
+using InputData.Map;
+using InputData.Player;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -25,6 +29,7 @@ public class Game : SingletonBehaviour<Game>
     public Map MapCompo { get; private set; }
 
     public SceneType currnetScene = SceneType.Account;
+    byte[] receiveBff = new byte[64];
 
     #region Unity Event Function
     private void Awake()
@@ -65,13 +70,40 @@ public class Game : SingletonBehaviour<Game>
         };
 
         //모든 유저가 준비되었을 때 호출되는 이벤트
-        Backend.Match.OnMatchInGameStart = () => {
+        Backend.Match.OnMatchInGameStart = () =>
+        {
             IsAllReady = true;
+            EnterScene(SceneType.InGame);
 
             //인 게임 씬이 다 로드된 다음에 플레이어 초기화.
             if (!_InGameLoaded) LoadedInGame += InitPlayer;
             else InitPlayer();
         };
+
+        Backend.Match.OnMatchRelay += ReceiveData;
+    }
+
+    private void ReceiveData(MatchRelayEventArgs args)
+    {
+        if (args.From.NickName != Server.myname)
+        {
+            //수신 받은 데이터를 버퍼에 담기
+            receiveBff = args.BinaryUserData;
+            ByteBuffer _receiveBff = new ByteBuffer(receiveBff);
+
+            //플랫폼 관련 데이터라면 넘겨주기;
+            if (MapMessage.MapMessageBufferHasIdentifier(_receiveBff))
+            {
+                Debug.Log("MapMessageBufferHasIdentifier");
+                MapMessage message = MapMessage.GetRootAsMapMessage(_receiveBff);
+                MapMessageType messageType = message.MapMessageTypeType;
+
+                if(messageType == MapMessageType.start_end_game_info)
+                {
+                    Server.Instance.ApplyData(message, null, messageType);
+                }
+            }
+        }
     }
     private void Update()
     {
@@ -196,12 +228,15 @@ public class Game : SingletonBehaviour<Game>
                 }
             case SceneType.InGame:
                 {
-                    if(Server.IsSuperGamer)
+                    currnetScene = SceneType.InGame;
+
+                    if (Server.IsSuperGamer)
                     {
                         //랜덤한 맵을 선정함.
                         int mapIndex = UnityEngine.Random.Range(0, _mapNames.Length - 1);
+
                         //선정한 맵의 이름을 가져옴
-                        SelectingMapIndexSend((byte)mapIndex);
+                        SelectedMapSend((byte)mapIndex);
                         SelectMap((byte)mapIndex);
                     }
                     break;
@@ -211,10 +246,12 @@ public class Game : SingletonBehaviour<Game>
     public void GameEnd(string winner)
     {
         Debug.Log($"Game End. Winner is {winner}");
+        //게임 끝났을 때 호출
     }
     public void UpdatePlayerHealth(string damagedPlayerName, byte playerHealth)
     {
         Debug.Log($"{damagedPlayerName} health = {playerHealth}");
+        //플레이어 체력이 깎였을 때 호출 
     }
     public void UpdateTime(byte Time)
     {
@@ -225,7 +262,7 @@ public class Game : SingletonBehaviour<Game>
         string mapName = _mapNames[mapIndex];
         SceneManager.LoadScene(mapName);
     }
-    private void SelectingMapIndexSend(byte mapIndex)
+    private void SelectedMapSend(byte mapIndex)
     {
         byte[] bff = Server.Instance.SerializationStartEndData(mapIndex);
         Server.Instance.Send(bff);

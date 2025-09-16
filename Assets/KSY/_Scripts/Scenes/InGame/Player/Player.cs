@@ -104,6 +104,7 @@ public class Player : MonoBehaviour, IReceiver, ISender
             //플랫폼 관련 데이터라면 넘겨주기;
             else if (MapMessage.MapMessageBufferHasIdentifier(_receiveBff))
             {
+                Debug.Log("MapMessageBufferHasIdentifier");
                 MapMessage message = MapMessage.GetRootAsMapMessage(_receiveBff);
                 MapMessageType messageType = message.MapMessageTypeType;
 

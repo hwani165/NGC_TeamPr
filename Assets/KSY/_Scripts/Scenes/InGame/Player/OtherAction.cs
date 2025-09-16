@@ -115,6 +115,7 @@ public class OtherAction : Player
 
         //플레이어 던지는 반동 이펙트
         _rb.linearVelocity = Vector2.zero;
+        _rb.AddForce(-_throwDir * PlayerRecoil, ForceMode2D.Impulse);
 
         itemScript.isShooting = true;
         //itemScript.isHolding = false;

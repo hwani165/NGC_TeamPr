@@ -5,8 +5,6 @@ using BackEnd.Tcp;
 using UnityEngine;
 public class BackendFunctionMatch : MonoBehaviour
 {
-    //event
-    public string myNickname = null; 
     public event Action EnterMatch, SuccessMatch, CanceledMatch;
     public event Action SuccessCreateRoom, FailedCreateRoom, EnterRoom;
 
@@ -91,7 +89,7 @@ public class BackendFunctionMatch : MonoBehaviour
         //+ 자기 자신에게도 호출됨.
         Backend.Match.OnMatchInGameAccess += (MatchInGameSessionEventArgs args) => {
             //나의 입장 수신이라면 반환
-            if (args.GameRecord.m_nickname == myNickname)
+            if (args.GameRecord.m_nickname == Server.myname)
             {
                 return;
             }
@@ -116,7 +114,7 @@ public class BackendFunctionMatch : MonoBehaviour
             if (Gamerecords.Count == 2)
             {
                 //상대방 정보를 가져옴
-                MatchUserGameRecord otherInfo = Gamerecords.Find((r) => r.m_nickname != myNickname);
+                MatchUserGameRecord otherInfo = Gamerecords.Find((r) => r.m_nickname != Server.myname);
                 Server.Instance.InitOtherData(otherInfo);
             }
 
@@ -188,7 +186,6 @@ public class BackendFunctionMatch : MonoBehaviour
 
                     }
                 };
-                Game.Instance.EnterScene(SceneType.InGame);
             }
             //게임방 접속 실패 처리
             else
