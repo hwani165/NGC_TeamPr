@@ -1,6 +1,4 @@
-using BackEnd;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using static BackendFunctionInGame;
 
 public class OtherMovement : Player
@@ -19,20 +17,20 @@ public class OtherMovement : Player
     [SerializeField] private float dashDuration = 0.2f;
 
     private Rigidbody2D _rbCompo;
-    private Vector2 _moveVec;
+    public Vector2 _moveVec;
 
     private bool _isGrounded;
     #region NetWorkData
     //������ �ߴ°�? (Is Jumping Now? <bool>)
-    private bool _usingJump = false;
+    public bool _usingJump = false;
     //�뽬�� �ϰ� �ִ°�?(Is Dashing Now? <bool>)
-    private bool _isDashing;
+    public bool _isDashing;
     //�뽬�� ����(Dash Direction<Vec2>)
-    private Vector2 _dashDir;
+    public Vector2 _dashDir;
     //�뽬�� ����ߴ°�? (Use Dash? <bool>)
-    private bool _usingDash = false;
+    public bool _usingDash = false;
     //�̵��ϰ� �ִ� ���� (Now Move.X Direction <Sbyte>)
-    private bool _downDashing = false;
+    public bool _downDashing = false;
     #endregion
 
     private bool _startDashTimer = false;
@@ -62,7 +60,7 @@ public class OtherMovement : Player
         {
             _dashTimer += Time.deltaTime;
             GroundDash();
-            AirDash();
+            OnDash();
         }
         else
         {
@@ -115,27 +113,10 @@ public class OtherMovement : Player
             return;
         }
     }
-    private void AirDash()
-    {
-        if (_isDashing && !_isGrounded)
-        {
-            _startDashTimer = true;
-            _rbCompo.linearVelocity = _dashDir * dashForce / 2f;
-            if (_dashTimer <= 0f)
-            {
-                _isDashing = false;
-                _startDashTimer = false;
-            }
-            //air dash effect
-            return;
-        }
-    }
-
     public void OnDash()
     {
         if (!_usingDash)
         {
-
             Vector2 inputDir = _moveVec.normalized;
             if (_isGrounded)
             {
@@ -158,8 +139,6 @@ public class OtherMovement : Player
             _dashDir = inputDir.normalized;
             _isDashing = true;
             _dashTimer = dashDuration;
-            GroundDash();
-            AirDash();
         }
     }
     public override void ApplyByteData(byte state)
@@ -169,10 +148,7 @@ public class OtherMovement : Player
 
         if (!_isDashing && usingDash)
         {
-            //Debug.Log($"isDash : {usingDash}");
             OnDash();
-            GroundDash();
-            AirDash();
         }
 
         bool isDashing = (state & (byte)flagPlayerMovementState.IsDashing) != 0;
@@ -195,7 +171,7 @@ public class OtherMovement : Player
     }
     public override void ApplyPosData(float x, float y)
     {
-        transform.position = new Vector3(x, y + 0.55f);
+        _rbCompo.MovePosition(new Vector3(x, y));
     }
     public override void ApplySbyteData(sbyte moveX, sbyte dashX, sbyte dashY)
     {

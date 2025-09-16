@@ -8,9 +8,9 @@ public abstract class Item : MonoBehaviour
     public ushort Id;
 
     public bool iscooldown = false;
-    public bool isshooting = false;
+    public bool isShooting = false;
     [SerializeField] protected GameObject[] effect;
-    protected Rigidbody2D rigidbody;
+    protected Rigidbody2D rb;
     [SerializeField] protected LayerMask targetLayer;
     [SerializeField] protected LayerMask groundLayer;
     public GameObject owner;
@@ -20,21 +20,35 @@ public abstract class Item : MonoBehaviour
     public bool thisownerfading = true;
 
     //netWork
+    [SerializeField] public bool isHolding = false;
     private float _synkTime = 0f;
+    private float _synkTime2 = 0f;
     byte[] _bff;
     public virtual void Awake()
     {
-        rigidbody = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
         Id = Counter++;
     }
     private void Update()
     {
-        if(!isshooting && !isshooting)
+        if(!isShooting && !isHolding)
         {
             _synkTime += Time.deltaTime;
             if (_synkTime >= 1)
             {
-                _synkTime = 0f;
+                if(Server.IsSuperGamer)
+                {
+                    _synkTime = 0f;
+                    Send();
+                }
+            }
+        }
+        else if(isShooting || isHolding)
+        {
+            _synkTime2 += Time.deltaTime;
+            if (_synkTime2 >= 1)
+            {
+                _synkTime2 = 0f;
                 Send();
             }
         }
@@ -49,9 +63,9 @@ public abstract class Item : MonoBehaviour
     protected virtual void OnCollisionStay2D(Collision2D collision)
     {
         int layer = collision.gameObject.layer;
-        if (((1 << layer) & groundLayer) != 0 && isshooting && !iscooldown)
+        if (((1 << layer) & groundLayer) != 0 && isShooting && !iscooldown)
         {
-            isshooting = false;
+            isShooting = false;
             owner = null;
             Instantiate(effect[0], transform.position, Quaternion.identity);
             StartCoroutine(Attacking(collision.gameObject));
@@ -64,9 +78,9 @@ public abstract class Item : MonoBehaviour
         
 
         if (((1 << layer) & targetLayer) != 0 &&
-            collision.gameObject != owner && isshooting)
+            collision.gameObject != owner && isShooting)
         {
-            isshooting = false;
+            isShooting = false;
             owner = null;
             Instantiate(effect[0], transform.position, Quaternion.identity);
             StartCoroutine(Attacking(collision.gameObject)); //¹ö±×
@@ -94,7 +108,7 @@ public abstract class Item : MonoBehaviour
     public virtual void Eat()
     {
         owner.GetComponent<Entity>().Attack(transform, 10, 0f);
-        isshooting = false;
+        isShooting = false;
         Instantiate(effect[0], owner.transform.position, Quaternion.identity);
         owner = null;
         Destroy(gameObject);

@@ -89,7 +89,7 @@ public class ItemShotScript : MonoBehaviour
             }
 
 
-            if (holditem.owner == null && !holditem.iscooldown && !holditem.isshooting)
+            if (holditem.owner == null && !holditem.iscooldown && !holditem.isShooting)
             {
                 if (holdObject != null)
                 {
@@ -136,7 +136,7 @@ public class ItemShotScript : MonoBehaviour
             }
 
 
-            if (holditem.owner == null && !holditem.iscooldown && !holditem.isshooting)
+            if (holditem.owner == null && !holditem.iscooldown && !holditem.isShooting)
             {
                 // ���� ��� �ִ� ������ ó��
                 if (holdObject != null)
@@ -172,7 +172,7 @@ public class ItemShotScript : MonoBehaviour
         if (holdObject == null) return;
         Vector2 dir = GetInputDirection();
         Item itemScript = holdObject.GetComponent<Item>();
-        itemScript.isshooting = true;
+        itemScript.isShooting = true;
         Rigidbody2D hrb = holdObject.GetComponent<Rigidbody2D>();
         if (charge >= 2.5)
         {

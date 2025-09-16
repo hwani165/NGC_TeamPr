@@ -19,9 +19,15 @@ public class MyAction : Player
     [SerializeField] private GameObject ChargeUiObject;
     [SerializeField] private Image ChargeImage;
 
+    private GameObject SoundGroup;
     private float _chargeGauge = 0f;
     private void Awake()
     {
+        DontDestroyOnLoadObjs objs = FindAnyObjectByType<DontDestroyOnLoadObjs>();
+        if (objs != null)
+        {
+            SoundGroup = objs.gameObject;
+        }
         rb = GetComponent<Rigidbody2D>();
         if (HoldTransform == null) HoldTransform = transform.Find("Hold");
         if (ChargeUiObject == null) ChargeUiObject = transform.Find("ChageCanvas").gameObject;
@@ -95,7 +101,7 @@ public class MyAction : Player
                 return;
             }
 
-            if (item.owner == null && !item.iscooldown && !item.isshooting)
+            if (item.owner == null && !item.iscooldown && !item.isShooting)
             {
                 if (HoldObject != null)
                 {
@@ -130,7 +136,7 @@ public class MyAction : Player
                 Physics2D.IgnoreCollision(myCol, itemCol, true);
                 return;
             }
-            else if (item.owner == null && !item.iscooldown && !item.isshooting)
+            else if (item.owner == null && !item.iscooldown && !item.isShooting)
             {
                 if (HoldObject != null)
                 {
@@ -154,7 +160,7 @@ public class MyAction : Player
         if (HoldObject == null) return;
         _throwDir = GetInputDirection();
         Item itemScript = HoldObject.GetComponent<Item>();
-        itemScript.isshooting = true;
+        itemScript.isShooting = true;
         Rigidbody2D hrb = HoldObject.GetComponent<Rigidbody2D>();
         if (_chargeGauge >= 3)
         {
@@ -171,6 +177,7 @@ public class MyAction : Player
 
         IsHolding = false;
         IsThrowing = true;
+        PlayThrowSound();
         Send();
 
         itemScript.preowner = transform;
@@ -197,10 +204,20 @@ public class MyAction : Player
         rb.AddForce(-_throwDir * PlayerRecoil, ForceMode2D.Impulse);
 
         itemScript.Launching();
+
+        itemScript.isShooting = true;
+        itemScript.isHolding = false;
+
         HoldObject = null;
 
         IsThrowing = false;
     }
+
+    private void PlayThrowSound()
+    {
+        SoundGroup.transform.GetChild(0).GetComponent<AudioSource>().Play();
+    }
+
     private void Hold(GameObject obj)
     {
         IsHolding = true;
@@ -209,6 +226,7 @@ public class MyAction : Player
         if (obj.TryGetComponent(out Item itemSc))
         {
             HoldObject = obj;
+            itemSc.isHolding = true;
             itemSc.owner = gameObject;
             itemSc.Grab();
         }

@@ -515,6 +515,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ffdaca4fce380743af9a2feb62a52ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  responPos: []
 --- !u!61 &230350054
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -637,6 +638,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ffdaca4fce380743af9a2feb62a52ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  responPos: []
 --- !u!61 &289457165
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1444,7 +1446,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -1, z: 10}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalScale: {x: 7, y: 7, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 841731588}
@@ -1480,7 +1482,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 790883733}
@@ -2643,6 +2645,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ffdaca4fce380743af9a2feb62a52ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  responPos: []
 --- !u!61 &1328141603
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2894,7 +2897,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68b3605ae765b9441afec5b2483b282d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <SpawnerCompo>k__BackingField: {fileID: 0}
+  <SpawnerCompo>k__BackingField: {fileID: 427157921085621043}
   _startPos:
   - {fileID: 296689936}
   - {fileID: 234049976}
@@ -4136,7 +4139,7 @@ Transform:
   m_GameObject: {fileID: 1925711321}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.68, z: 0}
+  m_LocalPosition: {x: 0, y: -1.01, z: 0}
   m_LocalScale: {x: 5, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4435,11 +4438,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1993951210 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7223545040940423908, guid: 71fc21f1d5f82c1459201aba99b9fe69, type: 3}
-  m_PrefabInstance: {fileID: 427157921085621041}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2048370326
 GameObject:
   m_ObjectHideFlags: 0
@@ -4466,8 +4464,8 @@ Transform:
   m_GameObject: {fileID: 2048370326}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.66, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: -0.7, z: 0}
+  m_LocalScale: {x: 1, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 790883733}
@@ -4572,6 +4570,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ffdaca4fce380743af9a2feb62a52ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  responPos: []
 --- !u!61 &2101910430
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4835,7 +4834,7 @@ PrefabInstance:
     - target: {fileID: 4954540387000086025, guid: 71fc21f1d5f82c1459201aba99b9fe69, type: 3}
       propertyPath: spawnObject
       value: 
-      objectReference: {fileID: 1993951210}
+      objectReference: {fileID: 0}
     - target: {fileID: 7223545040940423908, guid: 71fc21f1d5f82c1459201aba99b9fe69, type: 3}
       propertyPath: m_Name
       value: Spawner
@@ -4851,6 +4850,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3585933244460073547, guid: 71fc21f1d5f82c1459201aba99b9fe69, type: 3}
   m_PrefabInstance: {fileID: 427157921085621041}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &427157921085621043 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4954540387000086025, guid: 71fc21f1d5f82c1459201aba99b9fe69, type: 3}
+  m_PrefabInstance: {fileID: 427157921085621041}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb88b2734542ce6418c8b6290b0fc34a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5348866585084775773
 PrefabInstance:
   m_ObjectHideFlags: 0

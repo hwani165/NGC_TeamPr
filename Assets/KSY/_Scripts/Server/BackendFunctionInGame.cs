@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.InteropServices;
 using BackEnd;
 using Google.FlatBuffers;
 using InputData.Map;
@@ -14,6 +13,9 @@ public class BackendFunctionInGame : MonoBehaviour
     private readonly FlatBufferBuilder _platformStateBuilder = new FlatBufferBuilder(32);
     private readonly FlatBufferBuilder _spawnerInfoBuilder = new FlatBufferBuilder(32);
     private readonly FlatBufferBuilder _itemPosBuilder = new FlatBufferBuilder(32);
+    private readonly FlatBufferBuilder _gameStartEndBuilder = new FlatBufferBuilder(64);
+    private readonly FlatBufferBuilder _gameCurrentBuilder = new FlatBufferBuilder(64);
+
 
     [Flags]
     public enum flagPlayerMovementState : byte
@@ -56,6 +58,61 @@ public class BackendFunctionInGame : MonoBehaviour
 
         //2
         IsThrowing = 0b0010,
+    }
+    [Flags]
+    public enum flagGameInfo : byte
+    {
+        //0
+        None = 0b0000,
+
+        //1 
+        GameEnd = 0b0001
+    }
+    public byte[] SerializationEndData(byte mapIndex, bool isEnded, string winner)
+    {
+        _gameStartEndBuilder.Clear();
+
+        if (winner != null)
+        {
+            byte gameEndState = 0b0000;
+
+            if (isEnded) gameEndState |= (byte)flagGameInfo.GameEnd;
+
+            StringOffset offsetWinner = _gameStartEndBuilder.CreateString(winner);
+            Offset<StartEndGameInfo> offsetStartGameEnd = StartEndGameInfo.CreateStartEndGameInfo(_gameStartEndBuilder, 9, gameEndState, offsetWinner);
+            Offset<MapMessage> offsetResult = MapMessage.CreateMapMessage(_gameStartEndBuilder,MapMessageType.start_end_game_info,offsetStartGameEnd.Value);
+        }    
+
+        if(mapIndex != 9)
+        {
+            Offset<StartEndGameInfo> offsetStartGameEnd = StartEndGameInfo.CreateStartEndGameInfo(_gameStartEndBuilder, mapIndex);
+            Offset<MapMessage> offsetResult = MapMessage.CreateMapMessage(_gameStartEndBuilder, MapMessageType.start_end_game_info, offsetStartGameEnd.Value);
+        }
+
+        byte[] bff = _gameStartEndBuilder.SizedByteArray();
+
+        return bff;
+    }
+    public byte[] SerializetionCurrnetData(byte time, byte playerLife, string playerName)
+    {
+        _gameCurrentBuilder.Clear();
+
+        if (playerLife != 9)
+        {
+            StringOffset offsetPlayerName = _gameCurrentBuilder.CreateString(playerName);
+            Offset<CurrnetGameInfo> offsetCurrentGame = CurrnetGameInfo.CreateCurrnetGameInfo(_gameCurrentBuilder, time, playerLife, offsetPlayerName);
+            Offset<MapMessage> offsetResult = MapMessage.CreateMapMessage(_gameCurrentBuilder, MapMessageType.currnet_game_info, offsetCurrentGame.Value);
+        }
+        else
+        {
+            StringOffset offsetPlayerName = _gameCurrentBuilder.CreateString(playerName);
+            Offset<CurrnetGameInfo> offsetCurrentGame = CurrnetGameInfo.CreateCurrnetGameInfo(_gameCurrentBuilder, time);
+            Offset<MapMessage> offsetResult = MapMessage.CreateMapMessage(_gameCurrentBuilder, MapMessageType.currnet_game_info, offsetCurrentGame.Value);
+        }
+
+        byte[] bff = _gameStartEndBuilder.SizedByteArray();
+
+        return bff;
     }
 
     //데이터 직렬화
@@ -104,7 +161,10 @@ public class BackendFunctionInGame : MonoBehaviour
         //버퍼 재사용
         _itemPosBuilder.Clear();
 
-        Offset<itemPos> offsetItemPosData = itemPos.CreateitemPos(_itemPosBuilder, id, pos.x, pos.y);
+        float x = MathF.Round(pos.x, 2);
+        float y = MathF.Round(pos.y, 2);
+
+        Offset<itemPos> offsetItemPosData = itemPos.CreateitemPos(_itemPosBuilder, id, x, y);
         Offset<PlayerMessage> offsetResultData = PlayerMessage.CreatePlayerMessage(_itemPosBuilder, PlayerMessageType.item_pos, offsetItemPosData.Value);//offsetItemPosData
 
         _itemPosBuilder.Finish(offsetResultData.Value, "PLYR");
@@ -291,11 +351,10 @@ public class BackendFunctionInGame : MonoBehaviour
                     float y = data.Y;
 
                     GameObject item = Game.Instance.MapCompo.SpawnerCompo.FindItem(id);
-                    Debug.Log($"<color=yellow>item is null : {item == null}</color>");
-
-                    item.transform.position = new Vector2(x, y);
-                    Debug.Log($"<color=yellow>Receive : {x}, {y}</color>");
-                    Debug.Log($"<color=yellow>Apply : {item.transform.position}</color>");
+                    //Debug.Log($"<color=yellow>item is null : {item == null}</color>");
+                    item.GetComponent<Rigidbody2D>().MovePosition(new Vector2(x, y));
+                    //Debug.Log($"<color=yellow>Receive : {x}, {y}</color>");
+                    //Debug.Log($"<color=yellow>Apply : {item.transform.position}</color>");
                     break;
                 }
             default:

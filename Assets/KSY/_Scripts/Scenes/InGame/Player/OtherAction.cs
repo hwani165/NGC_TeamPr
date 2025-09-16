@@ -23,10 +23,15 @@ public class OtherAction : Player
     [SerializeField] private GameObject ChargeUiObject;
     [SerializeField] private Image ChargeImage;
 
-
+    private GameObject SoundGroup;
 
     private void Awake()
     {
+        DontDestroyOnLoadObjs objs = FindAnyObjectByType<DontDestroyOnLoadObjs>();
+        if (objs != null)
+        {
+            SoundGroup = objs.gameObject;
+        }
         _rb = GetComponent<Rigidbody2D>();
         if (HoldTransform == null) HoldTransform = transform.Find("Hold");
         if (ChargeUiObject == null) ChargeUiObject = transform.Find("ChageCanvas").gameObject;
@@ -57,6 +62,7 @@ public class OtherAction : Player
     {
         if (obj.TryGetComponent(out Item itemSc))
         {
+            //itemSc.isHolding = false;
             HoldObject = null;
             itemSc.owner = null;
         }
@@ -89,7 +95,7 @@ public class OtherAction : Player
         HoldObject.transform.parent = null;
         HoldObject.transform.position = transform.position + ((Vector3)dir * 1.25f);
 
-        itemScript.isshooting = true;
+        itemScript.isShooting = true;
         itemScript.preowner = transform;
         itemScript.CooldownActive();
 
@@ -103,15 +109,24 @@ public class OtherAction : Player
         {
             hrb.linearVelocity = Vector2.zero;
             hrb.AddForce(dir * ThrowPower + (dir.y == 0 ? new Vector2(0, UpwardForce)
-    : new Vector2(0, 0)), ForceMode2D.Impulse);
+            : new Vector2(0, 0)), ForceMode2D.Impulse);
             hrb.angularVelocity += Random.Range(-180f, 180f);
         }
 
         //플레이어 던지는 반동 이펙트
         _rb.linearVelocity = Vector2.zero;
+
+        itemScript.isShooting = true;
+        //itemScript.isHolding = false;
+
         itemScript.Launching();
 
         HoldObject = null;
+        PlayThrowSound();
+    }
+    private void PlayThrowSound()
+    {
+        SoundGroup.transform.GetChild(0).GetComponent<AudioSource>().Play();
     }
 
     //수정할코드
