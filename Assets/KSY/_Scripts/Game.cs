@@ -276,7 +276,7 @@ public class Game : SingletonBehaviour<Game>
             isEndedGame = true;
             EndDataSend(winner);
 
-            GameObject gameOverUI = GameObject.Find("Canvas/End");
+            GameObject gameOverUI = MapCompo.gameOverUI;
             gameOverUI.GetComponentInChildren<TMP_Text>().text = $"이긴 사람 : {winner}";
             gameOverUI.SetActive(true);
             Time.timeScale = 0;
@@ -285,7 +285,7 @@ public class Game : SingletonBehaviour<Game>
     public void EndGameClient(string winner)
     {
         if (isEndedGame) return;
-        GameObject gameOverUI = GameObject.Find("Canvas/End");
+        GameObject gameOverUI = MapCompo.gameOverUI;
         gameOverUI.GetComponentInChildren<TMP_Text>().text = $"이긴 사람 : {winner}";
         gameOverUI.SetActive(true);
         Time.timeScale = 0;

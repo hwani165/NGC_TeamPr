@@ -325,6 +325,8 @@ public class BackendFunctionInGame : MonoBehaviour
                     }
                     else
                     {
+                        Debug.Log("Receive Game End");
+
                         string name = data.GameWinner;
                         Game.Instance.EndGameClient(name);
                     }

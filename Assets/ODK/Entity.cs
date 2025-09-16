@@ -37,6 +37,7 @@ public class Entity : MonoBehaviour
 
         // HP °¨¼Ò
         PlayerLife -= 1;
+        Debug.Log(PlayerLife);
         OnHit();
 
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
