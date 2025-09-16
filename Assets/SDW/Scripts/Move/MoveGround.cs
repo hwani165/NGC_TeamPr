@@ -29,8 +29,6 @@ namespace SDW
 
         private void Update()
         {
-            //¼öÁ¤
-            if (!CountDownScript.IsGameStarting) return;
             Move();
 
             if(onPlatform != null)

@@ -60,8 +60,6 @@ public class MyMovement : Player
 
     private void FixedUpdate()
     {
-        //����
-        if (!CountDownScript.IsGameStarting) return;
         OnGround();
         GroundDash();
         if (!_isDashing)
@@ -74,8 +72,6 @@ public class MyMovement : Player
 
     private void Update()
     {
-        //����
-        if (!CountDownScript.IsGameStarting) return;
         float x = (float)System.Math.Round(transform.position.x, 3);
         float y = (float)System.Math.Round(transform.position.y, 3);
 

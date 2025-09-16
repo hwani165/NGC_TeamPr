@@ -14,33 +14,33 @@ public class HPBar : MonoBehaviour
     private Tween hpTween;
 
     private float maxHPWidth;
-    private void Start()
-    {
-        StartSetting();
-    }
-    public void StartSetting()
-    {
+    //private void Start()
+    //{
+    //    StartSetting();
+    //}
+    //public void StartSetting()
+    //{
 
-        maxHPWidth = hpBarImage.rectTransform.sizeDelta.x;
+    //    maxHPWidth = hpBarImage.rectTransform.sizeDelta.x;
 
-        SetHP();
-    }
-    public void SetHP()
-    {
+    //    SetHP();
+    //}
+    //public void SetHP()
+    //{
 
-        float hpRatio = entity.CurrentHp / entity.MaxHP;
+    //    //float hpRatio = entity.CurrentHp / entity.MaxHP;
 
-        hpTween?.Kill();
+    //    hpTween?.Kill();
 
-        hpBarImage.rectTransform.sizeDelta = new Vector2(maxHPWidth * hpRatio, hpBarImage.rectTransform.sizeDelta.y);
-        hpTween = DOTween.To(
-            () => subHpBarImage.rectTransform.sizeDelta.x,
-            x => subHpBarImage.rectTransform.sizeDelta = new Vector2(x, subHpBarImage.rectTransform.sizeDelta.y),
-            maxHPWidth * hpRatio,
-            0.25f
-        ).SetEase(Ease.InOutSine);
+    //    hpBarImage.rectTransform.sizeDelta = new Vector2(maxHPWidth * hpRatio, hpBarImage.rectTransform.sizeDelta.y);
+    //    hpTween = DOTween.To(
+    //        () => subHpBarImage.rectTransform.sizeDelta.x,
+    //        x => subHpBarImage.rectTransform.sizeDelta = new Vector2(x, subHpBarImage.rectTransform.sizeDelta.y),
+    //        maxHPWidth * hpRatio,
+    //        0.25f
+    //    ).SetEase(Ease.InOutSine);
 
 
-    }
+    //}
 
 }

@@ -145,9 +145,9 @@ public class Server : SingletonBehaviour<Server>
     {
         return _bfInGame.SerializationItemDes(id);
     }
-    public byte[] SerializationStartEndData(bool isEnded, string winner)
+    public byte[] SerializationStartEndData(string winner)
     {
-        return _bfInGame.SerializationStartEndData(isEnded, winner);
+        return _bfInGame.SerializationStartEndData(winner);
     }
     public byte[] SerializationStartEndData(byte mapIndex)
     {

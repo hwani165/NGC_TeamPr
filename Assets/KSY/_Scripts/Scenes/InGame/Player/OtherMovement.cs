@@ -54,8 +54,6 @@ public class OtherMovement : Player
     }
     private void Update()
     {
-        if (!CountDownScript.IsGameStarting) return;
-
         OnGround();
 
         if (_startDashTimer)
