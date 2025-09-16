@@ -14,11 +14,6 @@ public class ScoreScript : MonoBehaviour
 
     public TimerScript timerScript;
 
-    void Start()
-    {
-        
-    }
-
     [ContextMenu("RedScoreUp")]
     void RedScoreUp()
     {

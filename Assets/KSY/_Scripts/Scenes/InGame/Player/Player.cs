@@ -27,6 +27,8 @@ public class Player : MonoBehaviour, IReceiver, ISender
     private OtherMovement _otherMovement;
     private OtherAction _otherAction;
 
+    private Entity _entity;
+
     public void Init()
     {
         //나의 플레이어라면
@@ -52,6 +54,8 @@ public class Player : MonoBehaviour, IReceiver, ISender
             //수신 이벤트 추가
             Backend.Match.OnMatchRelay += ReceiveData;
         }
+
+        _entity = GetComponent<Entity>();
     }
     private void ReceiveData(MatchRelayEventArgs args)
     {

@@ -46,7 +46,7 @@ public class TimerScript : MonoBehaviour
 
     private void Update()
     {
-        if (isRunning)
+        if (isRunning && Server.IsSuperGamer)
         {
             // 매 프레임마다 남은 시간 감소
             elapsedTime -= Time.deltaTime;

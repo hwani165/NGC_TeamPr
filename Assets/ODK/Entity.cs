@@ -13,6 +13,10 @@ public class Entity : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
     }
+    private void Serialization()
+    {
+
+    }
     public void Attack(Transform tra, float damage, float knockback)
     {
         if (damage >= 1)

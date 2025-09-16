@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0421a3a1b30836f4884830ee30ae7af0, type: 3}
   m_Name: MovementData
   m_EditorClassIdentifier: 
-  Speed: 5
-  JumpForce: 10
+  Speed: 4
+  JumpForce: 6
   Gravity: 9.8
   DashForce: 6.5
   DashDuration: 0.2

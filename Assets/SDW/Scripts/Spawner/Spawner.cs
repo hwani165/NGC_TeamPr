@@ -33,17 +33,12 @@ public class Spawner : MonoBehaviour, IReceiver, ISender
     public static Action OnItemSpawned;
     public static Action OnItemCollected;
 
-    private Transform[] _spawnerPoints;
+    [SerializeField] private Transform[] _spawnerPoints;
 
     //network data
     private ushort _spawnItemId;
     private byte _spawnPointIndex;
     private byte _spawnItemIndex;
-
-    private void Awake()
-    {
-        _spawnerPoints = GetComponentsInChildren<Transform>();
-    }
     private void OnEnable()
     {
         OnItemSpawned += IncreaseItemCount;
