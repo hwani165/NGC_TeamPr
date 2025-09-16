@@ -12,6 +12,7 @@ public class Map : MonoBehaviour
 
     [field:SerializeField]public Spawner SpawnerCompo { get; private set; }
     [SerializeField] private Transform[] _startPos = new Transform[2];
+    public GameObject gameOverUI;
 
     private Dictionary<byte, Platform> _platfomrs;
     #region Unity Event Function
