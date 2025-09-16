@@ -1,2 +1,15 @@
 fileFormatVersion: 2
 guid: efa96cf80f74ddb4e8a11a649de5ef99
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - hitSound: {fileID: 8300000, guid: 3a1407ca4a03af94fa992d3f66a0a627, type: 3}
+  - healSound: {fileID: 8300000, guid: 8852eac89a715cf4eab0b4cf11f0fc4e, type: 3}
+  - audioSource: {instanceID: 0}
+  - hpbar: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

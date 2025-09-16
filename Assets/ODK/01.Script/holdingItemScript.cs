@@ -4,6 +4,10 @@ using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
 public abstract class Item : MonoBehaviour
 {
+    public AudioClip launchesound;
+    public AudioClip grabsound;
+
+    protected AudioSource audioSource;
     public static ushort Counter;
     public ushort Id;
 
@@ -28,6 +32,7 @@ public abstract class Item : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         Id = Counter++;
+        audioSource = GetComponent<AudioSource>();
     }
     private void Update()
     {
@@ -105,10 +110,12 @@ public abstract class Item : MonoBehaviour
     }
     public virtual void Launching()
     {
-
+        audioSource.PlayOneShot(launchesound);
     }
     public virtual void Grab()
     {
+        audioSource.PlayOneShot(grabsound);
+        
 
     }
     public virtual IEnumerator Attacking(GameObject target)
