@@ -254,6 +254,12 @@ MonoBehaviour:
     m_Bits: 0
   dashForce: 6.5
   dashDuration: 0.2
+  _moveVec: {x: 0, y: 0}
+  _usingJump: 0
+  _isDashing: 0
+  _dashDir: {x: 0, y: 0}
+  _usingDash: 0
+  _downDashing: 0
 --- !u!114 &3125485611311227130
 MonoBehaviour:
   m_ObjectHideFlags: 0

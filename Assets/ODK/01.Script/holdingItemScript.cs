@@ -43,7 +43,7 @@ public abstract class Item : MonoBehaviour
                 }
             }
         }
-        else if(isShooting)
+        else if(isShooting || isHolding)
         {
             _synkTime2 += Time.deltaTime;
             if (_synkTime2 >= 1)

@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.InteropServices;
 using BackEnd;
 using Google.FlatBuffers;
 using InputData.Map;
@@ -14,6 +13,9 @@ public class BackendFunctionInGame : MonoBehaviour
     private readonly FlatBufferBuilder _platformStateBuilder = new FlatBufferBuilder(32);
     private readonly FlatBufferBuilder _spawnerInfoBuilder = new FlatBufferBuilder(32);
     private readonly FlatBufferBuilder _itemPosBuilder = new FlatBufferBuilder(32);
+    private readonly FlatBufferBuilder _gameStartEndBuilder = new FlatBufferBuilder(64);
+    private readonly FlatBufferBuilder _gameCurrentBuilder = new FlatBufferBuilder(64);
+
 
     [Flags]
     public enum flagPlayerMovementState : byte
@@ -56,6 +58,61 @@ public class BackendFunctionInGame : MonoBehaviour
 
         //2
         IsThrowing = 0b0010,
+    }
+    [Flags]
+    public enum flagGameInfo : byte
+    {
+        //0
+        None = 0b0000,
+
+        //1 
+        GameEnd = 0b0001
+    }
+    public byte[] SerializationEndData(byte mapIndex, bool isEnded, string winner)
+    {
+        _gameStartEndBuilder.Clear();
+
+        if (winner != null)
+        {
+            byte gameEndState = 0b0000;
+
+            if (isEnded) gameEndState |= (byte)flagGameInfo.GameEnd;
+
+            StringOffset offsetWinner = _gameStartEndBuilder.CreateString(winner);
+            Offset<StartEndGameInfo> offsetStartGameEnd = StartEndGameInfo.CreateStartEndGameInfo(_gameStartEndBuilder, 9, gameEndState, offsetWinner);
+            Offset<MapMessage> offsetResult = MapMessage.CreateMapMessage(_gameStartEndBuilder,MapMessageType.start_end_game_info,offsetStartGameEnd.Value);
+        }    
+
+        if(mapIndex != 9)
+        {
+            Offset<StartEndGameInfo> offsetStartGameEnd = StartEndGameInfo.CreateStartEndGameInfo(_gameStartEndBuilder, mapIndex);
+            Offset<MapMessage> offsetResult = MapMessage.CreateMapMessage(_gameStartEndBuilder, MapMessageType.start_end_game_info, offsetStartGameEnd.Value);
+        }
+
+        byte[] bff = _gameStartEndBuilder.SizedByteArray();
+
+        return bff;
+    }
+    public byte[] SerializetionCurrnetData(byte time, byte playerLife, string playerName)
+    {
+        _gameCurrentBuilder.Clear();
+
+        if (playerLife != 9)
+        {
+            StringOffset offsetPlayerName = _gameCurrentBuilder.CreateString(playerName);
+            Offset<CurrnetGameInfo> offsetCurrentGame = CurrnetGameInfo.CreateCurrnetGameInfo(_gameCurrentBuilder, time, playerLife, offsetPlayerName);
+            Offset<MapMessage> offsetResult = MapMessage.CreateMapMessage(_gameCurrentBuilder, MapMessageType.currnet_game_info, offsetCurrentGame.Value);
+        }
+        else
+        {
+            StringOffset offsetPlayerName = _gameCurrentBuilder.CreateString(playerName);
+            Offset<CurrnetGameInfo> offsetCurrentGame = CurrnetGameInfo.CreateCurrnetGameInfo(_gameCurrentBuilder, time);
+            Offset<MapMessage> offsetResult = MapMessage.CreateMapMessage(_gameCurrentBuilder, MapMessageType.currnet_game_info, offsetCurrentGame.Value);
+        }
+
+        byte[] bff = _gameStartEndBuilder.SizedByteArray();
+
+        return bff;
     }
 
     //데이터 직렬화

@@ -199,14 +199,14 @@ public class Game : SingletonBehaviour<Game>
                 }
             case SceneType.InGame:
                 {
-                    ////랜덤한 맵을 선정함.
-                    //int mapIndex = UnityEngine.Random.Range(0, _mapNames.Length - 1);
-                    ////선정한 맵의 이름을 가져옴
-                    //string mapName = _mapNames[mapIndex];
-                    ////가져온 이름의 씬(맵)을 로드함.
-                    //SceneManager.LoadScene(mapName);
+                    //랜덤한 맵을 선정함.
+                    int mapIndex = UnityEngine.Random.Range(0, _mapNames.Length - 1);
+                    //선정한 맵의 이름을 가져옴
+                    string mapName = _mapNames[mapIndex];
+                    //가져온 이름의 씬(맵)을 로드함.
+                    SceneManager.LoadScene(mapName);
 
-                    SceneManager.LoadScene("KSY_Map_1");
+                    //SceneManager.LoadScene("KSY_Map_1");
                     break;
                 }
         }   

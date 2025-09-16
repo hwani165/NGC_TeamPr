@@ -43,7 +43,6 @@ public class OtherAction : Player
         if (obj.TryGetComponent(out Item itemSc))
         {
             HoldObject = obj;
-            itemSc.isHolding = true;
             itemSc.owner = gameObject;
             itemSc.Grab();
         }
@@ -63,7 +62,7 @@ public class OtherAction : Player
     {
         if (obj.TryGetComponent(out Item itemSc))
         {
-            itemSc.isHolding = false;
+            //itemSc.isHolding = false;
             HoldObject = null;
             itemSc.owner = null;
         }
@@ -118,7 +117,7 @@ public class OtherAction : Player
         _rb.linearVelocity = Vector2.zero;
 
         itemScript.isShooting = true;
-        itemScript.isHolding = false;
+        //itemScript.isHolding = false;
 
         itemScript.Launching();
 
