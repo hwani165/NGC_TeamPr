@@ -647,7 +647,7 @@ Transform:
   m_GameObject: {fileID: 344498803}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 5, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2306,7 +2306,7 @@ DistanceJoint2D:
   m_Anchor: {x: -0.15, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 1
-  m_Distance: 1.0049876
+  m_Distance: 5.1971145
   m_MaxDistanceOnly: 0
 --- !u!50 &922995458
 Rigidbody2D:
@@ -3158,7 +3158,7 @@ Transform:
   m_GameObject: {fileID: 1319932930}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -5, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4007,7 +4007,7 @@ DistanceJoint2D:
   m_Anchor: {x: 0.15, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 1
-  m_Distance: 1.0046935
+  m_Distance: 5.1941705
   m_MaxDistanceOnly: 0
 --- !u!50 &1524085522
 Rigidbody2D:
@@ -5560,8 +5560,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnerData: {fileID: 11400000, guid: 84c6cfc2e10b41e41a41518fec589a94, type: 2}
-  _spawnSecconds: 2
-  _maxCount: 5
+  _spawnSecconds: 2.5
+  _maxCount: 3
   _itemPrefabs:
   - {fileID: 4069005640951247961, guid: cfc7f19d0e00a4242a5f8669b78bdae4, type: 3}
   - {fileID: 2505702280169982577, guid: fd38465d845272545bb1325ce803ae59, type: 3}
