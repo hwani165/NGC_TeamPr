@@ -42,7 +42,8 @@ public class OtherAction : Player
         //수정
         if (HoldObject != null)
         {
-            HoldObject.GetComponent<Item>().owner = null;
+            Item itemScc = HoldObject.GetComponent<Item>();
+            itemScc.owner = null;
             Rigidbody2D oldRb = HoldObject.GetComponent<Rigidbody2D>();
             oldRb.simulated = true;
             oldRb.gravityScale = 2.75f;
@@ -91,12 +92,12 @@ public class OtherAction : Player
     private void ThrowItem(GameObject item, Vector2 throwDir, byte chargeGuage)
     {
         if (HoldObject == null) return;
-
-        Item itemScript = item.GetComponent<Item>();
+        Item itemScript = HoldObject.GetComponent<Item>();
         Rigidbody2D hrb = HoldObject.GetComponent<Rigidbody2D>();
 
-        if (_chargeGauge >= 3)
+        if (chargeGuage >= 2)
         {
+            Debug.Log("Eat Item");
             itemScript.preowner = transform;
             itemScript.shootingdir = Vector2.zero;
             itemScript.Eat();

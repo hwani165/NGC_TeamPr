@@ -185,6 +185,8 @@ public class MyAction : Player
         // 차지 게이지가 2 이상이라면 먹기
         if (_chargeGauge >= 3)
         {
+            Send();
+
             itemScript.preowner = transform;
             itemScript.shootingdir = Vector2.zero;
             itemScript.Eat();
@@ -295,7 +297,7 @@ public class MyAction : Player
     public override void Send()
     {
         ushort id = HoldObject.GetComponent<Item>().Id;
-        byte chargeGauge = (byte)_chargeGauge;
+        byte chargeGauge = _chargeGauge;
         byte[] bff = Server.Instance.SerializationActionData(id, IsHolding, IsThrowing, chargeGauge, _throwDir);
         Server.Instance.Send(bff);
     }

@@ -1,5 +1,4 @@
 using System.Collections;
-using TMPro;
 using UnityEngine;
 
 public class Entity : MonoBehaviour
@@ -16,13 +15,12 @@ public class Entity : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
 
-        PlayerLife = (byte)Random.Range(1, 6);
+        PlayerLife = (byte)Random.Range(3, 11);
     }
     private void Update()
     {
         if(PlayerLife <= 0)
         {
-
             Game.Instance.EndGameServer(Server.Instance.GetOtherData().Value.nickname);
         }
     }
@@ -42,7 +40,7 @@ public class Entity : MonoBehaviour
         // HP °¨¼Ò
         PlayerLife -= 1;
         Debug.Log(PlayerLife);
-        OnHit();
+        StartCoroutine(OnHit());
 
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         
