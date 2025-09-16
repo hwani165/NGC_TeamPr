@@ -225,6 +225,12 @@ MonoBehaviour:
   dashForce: 6.5
   dashDuration: 0.2
   maxJumpCount: 2
+  _usingJump: 0
+  _isDashing: 0
+  _dashDir: {x: 0, y: 0}
+  _usingDash: 0
+  _usingDownDash: 0
+  _moveX: 0
 --- !u!114 &1818194576719011869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,7 +249,7 @@ MonoBehaviour:
   IsThrowing: 0
   HoldTransform: {fileID: 6507584662252668062}
   HoldObject: {fileID: 0}
-  ThrowPower: 60
+  ThrowPower: 40
   UpwardForce: 10
   PlayerRecoil: 40
   ChargeUiObject: {fileID: 7153311871473908794}

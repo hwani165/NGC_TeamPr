@@ -278,7 +278,7 @@ MonoBehaviour:
   IsItemShoting: 0
   HoldTransform: {fileID: 5220984627050395924}
   HoldObject: {fileID: 0}
-  ThrowPower: 30
+  ThrowPower: 40
   DefaultShotForce: 60
   UpwardForce: 10
   PlayerRecoil: 40
