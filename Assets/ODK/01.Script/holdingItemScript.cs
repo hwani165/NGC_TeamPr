@@ -99,7 +99,7 @@ public abstract class Item : MonoBehaviour
             Instantiate(effect[0], transform.position, Quaternion.identity);
             try
             {
-                StartCoroutine(Attacking(collision.gameObject)); //¹ö±×
+                StartCoroutine(Attacking(collision.gameObject)); 
             }
             catch
             {

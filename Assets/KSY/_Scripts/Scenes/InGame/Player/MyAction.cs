@@ -21,7 +21,8 @@ public class MyAction : Player
     [SerializeField] private Image ChargeImage;         // 차징 게이지 이미지
 
     private GameObject SoundGroup;   // 사운드 그룹 (던질 때 소리 재생용)
-    private float _chargeGauge = 0f; // 차징 게이지 (0~3)
+    private byte _chargeGauge = 0; // 차징 게이지 (0~3)
+    private float _chargeGauageTimmer = 0f;
 
     private void Awake()
     {
@@ -40,7 +41,23 @@ public class MyAction : Player
         if (ChargeUiObject == null) ChargeUiObject = transform.Find("ChageCanvas").gameObject;
         if (ChargeImage == null) ChargeImage = transform.Find("ChageCanvas/ChageBackground/ChageImage").GetComponent<Image>();
     }
+    private void UpdateChageGauge()
+    {
+        _chargeGauageTimmer += Time.deltaTime /*+ ((2f - _chargeGauge) * Time.deltaTime)*/;
 
+        if (_chargeGauageTimmer >= 1)
+        {
+            _chargeGauageTimmer = 0f;
+            _chargeGauge += 1;
+        }
+
+        // 차징이 3 이상이면 고정
+        if (_chargeGauge > 3)
+        {
+            _chargeGauge = 3;
+            return;
+        }
+    }
     void Update()
     {
         // [E 키를 누르고 있을 때] → 차징 중
@@ -48,12 +65,7 @@ public class MyAction : Player
         {
             ChargeUiObject.SetActive(true); // UI 보이기
 
-            // 차징이 3 이상이면 고정
-            if (_chargeGauge > 3f)
-            {
-                _chargeGauge = 3f;
-                return;
-            }
+            UpdateChageGauge();
 
             // 차징이 2.5 이상이면 빨간색, 아니면 흰색
             if (_chargeGauge >= 2.5f) ChargeImage.color = Color.red;
@@ -61,15 +73,13 @@ public class MyAction : Player
 
             // 차징 UI 채워주기
             ChargeImage.fillAmount = _chargeGauge / 3f;
-
-            // 차징 게이지 증가 (차징이 클수록 점점 느려짐)
-            _chargeGauge += Time.deltaTime + ((2f - _chargeGauge) * Time.deltaTime);
         }
         // [E 키를 뗐을 때] → 차징값이 남아 있으면 던지기
-        else if (_chargeGauge > 0f)
+        else if (_chargeGauge > 0)
         {
             ThrowItem(); // 아이템 던지기
-            _chargeGauge = 0f; // 초기화
+            _chargeGauge = 0; // 초기화
+            _chargeGauageTimmer = 0f;
             ChargeUiObject.gameObject.SetActive(false); // UI 숨김
         }
     }
@@ -82,8 +92,6 @@ public class MyAction : Player
         if (Input.GetKey(KeyCode.RightArrow)) dir.x += 1f;
         if (Input.GetKey(KeyCode.UpArrow)) dir.y += 1f;
         if (Input.GetKey(KeyCode.DownArrow)) dir.y -= 1f;
-
-        if (dir != Vector2.zero) dir.Normalize(); // 방향 정규화
         return dir;
     }
 
@@ -167,13 +175,14 @@ public class MyAction : Player
     private void ThrowItem()
     {
         if (HoldObject == null) return;
-
         _throwDir = GetInputDirection(); // 입력 방향
+
         Item itemScript = HoldObject.GetComponent<Item>();
-        itemScript.isShooting = true;
         Rigidbody2D hrb = HoldObject.GetComponent<Rigidbody2D>();
 
-        // 최대 차징이면 → 먹기 효과 발동 (던지지 않고 바로 소모)
+        itemScript.isShooting = true;
+
+        // 차지 게이지가 2 이상이라면 먹기
         if (_chargeGauge >= 3)
         {
             itemScript.preowner = transform;
@@ -183,34 +192,34 @@ public class MyAction : Player
             return;
         }
         // 방향이 없으면 던지지 않음
-        else if (_throwDir == Vector2.zero)
-        {
-            return;
-        }
+        else if (_throwDir == Vector2.zero) return;
 
-        // 상태 갱신
+        //내 상태를 던지는 상태로 갱신
         IsHolding = false;
         IsThrowing = true;
         PlayThrowSound();
+
+        //네트워크 데이터 전송
         Send();
 
-        // 아이템 부모 해제
+        //방향 노말라이즈
+        _throwDir.Normalize();
+
+        //아이템 부모 해제 + 위치 지정
         itemScript.preowner = transform;
         HoldObject.transform.parent = null;
-
-        // 아이템 위치 → 플레이어 앞쪽
         HoldObject.transform.position = transform.position + (Vector3)(GetInputDirection() * 1.25f);
 
         // 쿨타임 시작
         itemScript.CooldownActive();
         hrb.simulated = true;
 
-        // 네트워크용 방향 저장
-        itemScript.shootingdir = _throwDir * (sbyte)_chargeGauge;
-
-        // 물리 효과 적용
+        //부메랑이라면 처리
         if (!itemScript.thisisnoforceobject)
         {
+            //부메랑용 방향 저장
+            itemScript.shootingdir = _throwDir * _chargeGauge;
+
             hrb.linearVelocity = Vector2.zero;
 
             // 전방 + 위쪽 힘 추가
@@ -230,7 +239,7 @@ public class MyAction : Player
         itemScript.isHolding = false;
 
         // 손 비우기
-        HoldObject = null;
+        Release(HoldObject);
         IsThrowing = false;
     }
 
@@ -262,6 +271,23 @@ public class MyAction : Player
             rb.gravityScale = 2.75f;
             rb.GetComponent<Collider2D>().isTrigger = false;
             obj.transform.localPosition = Vector2.zero; // 정확히 손 위치로 고정
+        }
+    }
+    private void Release(GameObject obj)
+    {
+        if (obj.TryGetComponent(out Item itemSc))
+        {
+            //itemSc.isHolding = false;
+            HoldObject = null;
+            itemSc.owner = null;
+        }
+
+        if (obj.TryGetComponent(out Rigidbody2D rb))
+        {
+            rb.simulated = true;
+            rb.transform.parent = null;
+            rb.gravityScale = 1;
+            rb.GetComponent<Collider2D>().isTrigger = false;
         }
     }
 

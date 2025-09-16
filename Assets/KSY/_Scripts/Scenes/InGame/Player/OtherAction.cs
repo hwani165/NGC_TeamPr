@@ -88,11 +88,13 @@ public class OtherAction : Player
         }
     }
 
-    private void ThrowItem(GameObject item, Vector2 dir, byte chargeGuage)
+    private void ThrowItem(GameObject item, Vector2 throwDir, byte chargeGuage)
     {
         if (HoldObject == null) return;
 
         Item itemScript = item.GetComponent<Item>();
+        Rigidbody2D hrb = HoldObject.GetComponent<Rigidbody2D>();
+
         if (_chargeGauge >= 3)
         {
             itemScript.preowner = transform;
@@ -101,26 +103,29 @@ public class OtherAction : Player
             HoldObject = null;
             return;
         }
+        else if (throwDir == Vector2.zero) return;
 
-        if (dir == Vector2.zero) return;
+        //방향 노말라이즈
+        throwDir.Normalize();
 
+        //아이템 부모 해제 + 위치 지정
+        itemScript.preowner = transform;
         HoldObject.transform.parent = null;
-        HoldObject.transform.position = transform.position + ((Vector3)dir * 1.25f);
+        HoldObject.transform.position = transform.position + (Vector3)(throwDir * 1.25f);
 
         itemScript.isShooting = true;
         itemScript.preowner = transform;
         itemScript.CooldownActive();
 
-        Rigidbody2D hrb = HoldObject.GetComponent<Rigidbody2D>();
-        //아이템 물리연산 O
+        //아이템 물리연산 체크
         hrb.simulated = true;
-        //던지는 방향과 힘을 정함
-        itemScript.shootingdir = dir.normalized * _chargeGauge;
 
+        //만약 부메랑이면 처리
         if (!itemScript.thisisnoforceobject)
         {
+            itemScript.shootingdir = throwDir * _chargeGauge;
             hrb.linearVelocity = Vector2.zero;
-            hrb.AddForce(dir * ThrowPower + (dir.y == 0 ? new Vector2(0, UpwardForce)
+            hrb.AddForce(throwDir * ThrowPower + (throwDir.y == 0 ? new Vector2(0, UpwardForce)
             : new Vector2(0, 0)), ForceMode2D.Impulse);
             hrb.angularVelocity += Random.Range(-180f, 180f);
         }
@@ -130,10 +135,7 @@ public class OtherAction : Player
         _rb.AddForce(-_throwDir * PlayerRecoil, ForceMode2D.Impulse);
 
         itemScript.isShooting = true;
-        //itemScript.isHolding = false;
-
         itemScript.Launching();
-
         HoldObject = null;
         PlayThrowSound();
     }
