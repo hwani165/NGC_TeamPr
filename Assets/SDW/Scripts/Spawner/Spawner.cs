@@ -126,6 +126,13 @@ public class Spawner : MonoBehaviour, IReceiver, ISender
         GameObject item = _items[id];
         return item;
     }
+
+    public void RemoveItem(ushort id)
+    {
+        GameObject item = _items[id];
+        Destroy(item);
+        _items.Remove(id);
+    }
     private void IncreaseItemCount()
     {
         _itemCount++;

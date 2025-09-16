@@ -29,8 +29,6 @@ public class Player : MonoBehaviour, IReceiver, ISender
 
     public void Init()
     {
-        Debug.Log("Success : Init");
-
         //나의 플레이어라면
         if (Nickname == Server.Instance.GetMyData().Value.nickname)
         {
@@ -93,23 +91,17 @@ public class Player : MonoBehaviour, IReceiver, ISender
                             Server.Instance.ApplyData(message, null, messageType);
                             break;
                         }
+                    case PlayerMessageType.item_des:
+                        {
+                            Server.Instance.ApplyData(message, null, messageType);
+                            break;
+                        }
                     default:
                         {
                             Debug.LogError("this enum value is nonexistent");
                             break;
                         }
                 }
-
-            }
-            //플랫폼 관련 데이터라면 넘겨주기;
-            else if (MapMessage.MapMessageBufferHasIdentifier(_receiveBff))
-            {
-                Debug.Log("MapMessageBufferHasIdentifier");
-                MapMessage message = MapMessage.GetRootAsMapMessage(_receiveBff);
-                MapMessageType messageType = message.MapMessageTypeType;
-
-                //찾은 플랫폼에 수신받은 데이터를 적용함.
-                Server.Instance.ApplyData(message, null, messageType);
             }
         }
     }

@@ -39,7 +39,7 @@ public class CountDownScript : MonoBehaviour
     // 페이드 슬라이드가 닫히며 승리 텍스트 표시
     public IEnumerator FadingSlideClose()
     {
-        Game.Instance.EndGame();
+        //Game.Instance.EndGame();//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         yield return new WaitForSeconds(1f); // 1초 대기
         fadingSlide.DOAnchorPosY(0f, 2f).SetEase(Ease.OutExpo); // 슬라이드 내려오기
         yield return new WaitForSeconds(2f); // 애니메이션 완료 대기

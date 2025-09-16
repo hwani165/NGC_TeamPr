@@ -39,6 +39,18 @@ public class OtherAction : Player
     }
     private void Hold(GameObject obj)
     {
+        //수정
+        if (HoldObject != null)
+        {
+            HoldObject.GetComponent<Item>().owner = null;
+            Rigidbody2D oldRb = HoldObject.GetComponent<Rigidbody2D>();
+            oldRb.simulated = true;
+            oldRb.gravityScale = 2.75f;
+            oldRb.transform.parent = null;
+            oldRb.GetComponent<Collider2D>().isTrigger = false;
+            HoldObject.GetComponent<Item>().CooldownActive();
+        }
+
         //아이템 들기 처리
         if (obj.TryGetComponent(out Item itemSc))
         {

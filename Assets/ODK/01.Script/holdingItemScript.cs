@@ -31,27 +31,36 @@ public abstract class Item : MonoBehaviour
     }
     private void Update()
     {
-        if(!isShooting && !isHolding)
+        _synkTime += Time.deltaTime;
+        if (_synkTime >= 1)
         {
-            _synkTime += Time.deltaTime;
-            if (_synkTime >= 1)
+            if (Server.IsSuperGamer)
             {
-                if(Server.IsSuperGamer)
-                {
-                    _synkTime = 0f;
-                    Send();
-                }
-            }
-        }
-        else if(isShooting || isHolding)
-        {
-            _synkTime2 += Time.deltaTime;
-            if (_synkTime2 >= 1)
-            {
-                _synkTime2 = 0f;
+                _synkTime = 0f;
                 Send();
             }
         }
+        //if(!isShooting && !isHolding)
+        //{
+        //    _synkTime += Time.deltaTime;
+        //    if (_synkTime >= 1)
+        //    {
+        //        if(Server.IsSuperGamer)
+        //        {
+        //            _synkTime = 0f;
+        //            Send();
+        //        }
+        //    }
+        //}
+        //else if(isShooting || isHolding)
+        //{
+        //    _synkTime2 += Time.deltaTime;
+        //    if (_synkTime2 >= 1)
+        //    {
+        //        _synkTime2 = 0f;
+        //        Send();
+        //    }
+        //}
     }
 
     public void Send()
@@ -75,7 +84,7 @@ public abstract class Item : MonoBehaviour
     {
         int layer = collision.gameObject.layer;
 
-        
+
 
         if (((1 << layer) & targetLayer) != 0 &&
             collision.gameObject != owner && isShooting)
@@ -83,7 +92,15 @@ public abstract class Item : MonoBehaviour
             isShooting = false;
             owner = null;
             Instantiate(effect[0], transform.position, Quaternion.identity);
-            StartCoroutine(Attacking(collision.gameObject)); //버그
+            try
+            {
+                StartCoroutine(Attacking(collision.gameObject)); //버그
+            }
+            catch
+            {
+                Debug.Log(collision.gameObject.name);
+                Debug.Log(collision.gameObject);
+            }
         }
     }
     public virtual void Launching()
@@ -133,9 +150,7 @@ public abstract class Item : MonoBehaviour
 
     private void OnDestroy()
     {
-
-        //Game.Instance.Map.Spawner.Items.Remove(Id);
-
-        Spawner.OnItemCollected?.Invoke();
+        byte[] bff = Server.Instance.SerializationItemDes(Id);
+        Server.Instance.Send(bff);
     }
 }

@@ -46,11 +46,15 @@ public class Map : MonoBehaviour
         {
             if(_startPos[0] != null)
             {
+                Debug.Log($"{p.name}'s pos is startPos[0]");
+
                 p.transform.position = _startPos[0].position;
                 _startPos[0] = null;
             }
             else
             {
+                Debug.Log($"{p.name}'s pos is startPos[1]");
+
                 p.transform.position = _startPos[1].position;
             }
         }
@@ -58,11 +62,15 @@ public class Map : MonoBehaviour
         {
             if (_startPos[1] != null)
             {
+                Debug.Log($"{p.name}'s pos is startPos[1]");
+
                 p.transform.position = _startPos[1].position;
                 _startPos[1] = null;
             }
             else
             {
+                Debug.Log($"{p.name}'s pos is startPos[0]");
+
                 p.transform.position = _startPos[0].position;
             }
         }

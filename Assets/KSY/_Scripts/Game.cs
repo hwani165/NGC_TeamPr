@@ -98,10 +98,8 @@ public class Game : SingletonBehaviour<Game>
                 MapMessage message = MapMessage.GetRootAsMapMessage(_receiveBff);
                 MapMessageType messageType = message.MapMessageTypeType;
 
-                if(messageType == MapMessageType.start_end_game_info)
-                {
-                    Server.Instance.ApplyData(message, null, messageType);
-                }
+                //찾은 플랫폼에 수신받은 데이터를 적용함.
+                Server.Instance.ApplyData(message, null, messageType);
             }
         }
     }

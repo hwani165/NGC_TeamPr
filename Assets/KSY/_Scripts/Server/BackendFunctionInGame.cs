@@ -13,6 +13,7 @@ public class BackendFunctionInGame : MonoBehaviour
     private readonly FlatBufferBuilder _platformStateBuilder = new FlatBufferBuilder(32);
     private readonly FlatBufferBuilder _spawnerInfoBuilder = new FlatBufferBuilder(32);
     private readonly FlatBufferBuilder _itemPosBuilder = new FlatBufferBuilder(32);
+    private readonly FlatBufferBuilder _itemPDesBuilder = new FlatBufferBuilder(32);
     private readonly FlatBufferBuilder _gameStartEndBuilder = new FlatBufferBuilder(64);
     private readonly FlatBufferBuilder _gameCurrentBuilder = new FlatBufferBuilder(64);
 
@@ -84,6 +85,19 @@ public class BackendFunctionInGame : MonoBehaviour
         byte[] bff = _gameStartEndBuilder.SizedByteArray();
 
         Debug.Log("SerializationEndData");
+        return bff;
+    }
+
+    public byte[] SerializationItemDes(ushort id)
+    {
+        _itemPDesBuilder.Clear();
+
+        Offset<itemDes> offsetItemDes = itemDes.CreateitemDes(_itemPDesBuilder, id);
+        Offset<PlayerMessage> offsetResult = PlayerMessage.CreatePlayerMessage(_itemPDesBuilder, PlayerMessageType.item_des, offsetItemDes.Value);
+
+        _itemPDesBuilder.Finish(offsetResult.Value, "PLYR");
+        byte[] bff = _itemPDesBuilder.SizedByteArray();
+
         return bff;
     }
     public byte[] SerializationEndData(byte mapIndex)
@@ -405,6 +419,14 @@ public class BackendFunctionInGame : MonoBehaviour
                     item.GetComponent<Rigidbody2D>().MovePosition(new Vector2(x, y));
                     //Debug.Log($"<color=yellow>Receive : {x}, {y}</color>");
                     //Debug.Log($"<color=yellow>Apply : {item.transform.position}</color>");
+                    break;
+                }
+            case PlayerMessageType.item_des:
+                {
+                    itemDes data = message.DataAsitem_des();
+
+                    ushort id = data.Id;
+                    Game.Instance.MapCompo.SpawnerCompo.RemoveItem(id);
                     break;
                 }
             default:

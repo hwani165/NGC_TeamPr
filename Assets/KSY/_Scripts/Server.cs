@@ -141,6 +141,10 @@ public class Server : SingletonBehaviour<Server>
     {
         _bfMatch.FindMatch();
     }
+    public byte[] SerializationItemDes(ushort id)
+    {
+        return _bfInGame.SerializationItemDes(id);
+    }
     public byte[] SerializationStartEndData(bool isEnded, string winner)
     {
         return _bfInGame.SerializationEndData(isEnded, winner);
