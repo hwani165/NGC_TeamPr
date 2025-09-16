@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Entity : MonoBehaviour
@@ -5,29 +6,38 @@ public class Entity : MonoBehaviour
     [SerializeField] private AudioClip hitSound;
     [SerializeField] private AudioClip healSound;
     [SerializeField] private AudioSource audioSource;
-    public float MaxHP { get; private set; } = 1000f;
-    [field: SerializeField] public float CurrentHp { get; private set; } = 0f;
-    [SerializeField] private CircleHpBarScript hpbar;
+
+    public byte PlayerLife;
 
     public void Awake()
     {
         audioSource = GetComponent<AudioSource>();
-    }
-    private void Serialization()
-    {
 
+        PlayerLife = (byte)Random.Range(1, 6);
+    }
+    private void Update()
+    {
+        if(PlayerLife <= 0)
+        {
+            Game.Instance.EndGameServer(Server.Instance.GetOtherData().Value.nickname);
+        }
+    }
+    private IEnumerator OnHit()
+    {
+        GetComponent<SpriteRenderer>().color = Color.red;
+        yield return new WaitForSeconds(1f);
+        GetComponent<SpriteRenderer>().color = Color.white;
     }
     public void Attack(Transform tra, float damage, float knockback)
     {
         if (damage >= 1)
             audioSource.PlayOneShot(hitSound);
         else if (damage < 0)
-                audioSource.PlayOneShot(healSound); 
+                audioSource.PlayOneShot(healSound);
 
         // HP °¨¼Ò
-        CurrentHp += damage;
-        CurrentHp = Mathf.Clamp(CurrentHp, 0, MaxHP);
-        hpbar.SetHP(CurrentHp);
+        PlayerLife -= 1;
+        OnHit();
 
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         
@@ -49,13 +59,10 @@ public class Entity : MonoBehaviour
             float baseForceX = knockback * 7f;
             float baseForceY = knockback * 4f;
 
-            float hpRatio = CurrentHp / MaxHP; // 0~1
-            float hpScale = 1f + hpRatio * 2.5f;
-
             Vector2 force = new Vector2(
                 knockbackDir.x * baseForceX,
                 knockbackDir.y * baseForceY
-            ) * hpScale;
+            ) * 1;
 
             rb.AddForce(force, ForceMode2D.Impulse);
         }

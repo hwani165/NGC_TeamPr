@@ -69,13 +69,11 @@ public class BackendFunctionInGame : MonoBehaviour
         //1 
         GameEnd = 0b0001
     }
-    public byte[] SerializationStartEndData(bool isEnded, string winner)
+    public byte[] SerializationStartEndData(string winner)
     {
         _gameStartEndBuilder.Clear();
 
         byte gameEndState = 0b0000;
-
-        if (isEnded) gameEndState |= (byte)flagGameInfo.GameEnd;
 
         StringOffset offsetWinner = _gameStartEndBuilder.CreateString(winner);
         Offset<StartEndGameInfo> offsetStartGameEnd = StartEndGameInfo.CreateStartEndGameInfo(_gameStartEndBuilder, 9, gameEndState, offsetWinner);
@@ -317,7 +315,6 @@ public class BackendFunctionInGame : MonoBehaviour
                     Debug.Log("Receive Start Data");
                     StartEndGameInfo data = message.MapMessageTypeAsstart_end_game_info();
                     byte mapIndex = data.MapIndex;
-                    bool gameEnded = ((byte)flagGameInfo.GameEnd & data.GameEnd) != 0;
 
                     if (mapIndex != 9)
                     {
@@ -326,14 +323,10 @@ public class BackendFunctionInGame : MonoBehaviour
                         Game.Instance.SelectMap(mapIndex);
                         return;
                     }
-                    else if(gameEnded)
-                    {
-                        string name = data.GameWinner;
-                        Game.Instance.EndGame(true, name);
-                    }
                     else
                     {
-                        Game.Instance.EndGame(false, name);
+                        string name = data.GameWinner;
+                        Game.Instance.EndGameClient(name);
                     }
                     break;
                 }

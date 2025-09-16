@@ -1,12 +1,12 @@
 using System;
-using System.Collections.Generic;
 using BackEnd;
 using BackEnd.Tcp;
 using Google.FlatBuffers;
 using InputData.Map;
-using InputData.Player;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
 
 public enum SceneType
 {
@@ -20,6 +20,8 @@ public class Game : SingletonBehaviour<Game>
     [SerializeField] private string[] _mapNames;
 
     //씬이 다 로드된 후에 호출됨 
+    public bool isEndedGame = false;
+
     public event Action LoadedAccountMenu;
     public event Action LoadedMainMenu;
     public event Action LoadedInGame;
@@ -265,18 +267,32 @@ public class Game : SingletonBehaviour<Game>
         byte[] bff = Server.Instance.SerializationStartEndData(mapIndex);
         Server.Instance.Send(bff);
     }
-    public void EndGame(bool isWin ,string winner)
+    public void EndGameServer(string winner)
     {
         Debug.Log($"<color=pink>Game End<color>");
 
-        if(Server.IsSuperGamer)
+        if(Server.IsSuperGamer && !isEndedGame)
         {
-            EndDataSend(isWin, winner);
+            isEndedGame = true;
+            EndDataSend(winner);
+
+            GameObject gameOverUI = GameObject.Find("Canvas/End");
+            gameOverUI.GetComponentInChildren<TMP_Text>().text = $"이긴 사람 : {winner}";
+            gameOverUI.SetActive(true);
+            Time.timeScale = 0;
         }
     }
-    private void EndDataSend(bool isWin, string winner)
+    public void EndGameClient(string winner)
     {
-        byte[] bff = Server.Instance.SerializationStartEndData(isWin, winner);
+        if (isEndedGame) return;
+        GameObject gameOverUI = GameObject.Find("Canvas/End");
+        gameOverUI.GetComponentInChildren<TMP_Text>().text = $"이긴 사람 : {winner}";
+        gameOverUI.SetActive(true);
+        Time.timeScale = 0;
+    }
+    private void EndDataSend(string winner)
+    {
+        byte[] bff = Server.Instance.SerializationStartEndData(winner);
         Server.Instance.Send(bff);
     }
 }
