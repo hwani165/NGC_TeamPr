@@ -8,7 +8,6 @@ public enum SceneType
 {
     None = 0,
     Account,
-    MainMenu,
     InGame
 }
 public class Game : SingletonBehaviour<Game>
@@ -24,6 +23,8 @@ public class Game : SingletonBehaviour<Game>
     public bool IsAllReady { get; private set; }
     private bool _InGameLoaded;
     public Map MapCompo { get; private set; }
+
+    public SceneType currnetScene = SceneType.Account;
 
     #region Unity Event Function
     private void Awake()
@@ -189,31 +190,58 @@ public class Game : SingletonBehaviour<Game>
         {
             case SceneType.Account:
                 {
+                    currnetScene = SceneType.Account;
                     SceneManager.LoadScene("AccountMenu");
-                    break;
-                }
-            case SceneType.MainMenu:
-                {
-                    SceneManager.LoadScene("MainMenu");
                     break;
                 }
             case SceneType.InGame:
                 {
-                    //∑£¥˝«— ∏ ¿ª º±¡§«‘.
-                    int mapIndex = UnityEngine.Random.Range(0, _mapNames.Length - 1);
-                    //º±¡§«— ∏ ¿« ¿Ã∏ß¿ª ∞°¡Æø»
-                    string mapName = _mapNames[mapIndex];
-                    //∞°¡Æø¬ ¿Ã∏ß¿« æ¿(∏ )¿ª ∑ŒµÂ«‘.
-                    SceneManager.LoadScene(mapName);
-
-                    //SceneManager.LoadScene("KSY_Map_1");
+                    if(Server.IsSuperGamer)
+                    {
+                        //∑£¥˝«— ∏ ¿ª º±¡§«‘.
+                        int mapIndex = UnityEngine.Random.Range(0, _mapNames.Length - 1);
+                        //º±¡§«— ∏ ¿« ¿Ã∏ß¿ª ∞°¡Æø»
+                        SelectingMapIndexSend((byte)mapIndex);
+                        SelectMap((byte)mapIndex);
+                    }
                     break;
                 }
         }   
     }
-
-    public void EndGame()
+    public void GameEnd(string winner)
+    {
+        Debug.Log($"Game End. Winner is {winner}");
+    }
+    public void UpdatePlayerHealth(string damagedPlayerName, byte playerHealth)
+    {
+        Debug.Log($"{damagedPlayerName} health = {playerHealth}");
+    }
+    public void UpdateTime(byte Time)
+    {
+        Debug.Log(Time);
+    }
+    public void SelectMap(byte mapIndex)
+    {
+        string mapName = _mapNames[mapIndex];
+        SceneManager.LoadScene(mapName);
+    }
+    private void SelectingMapIndexSend(byte mapIndex)
+    {
+        byte[] bff = Server.Instance.SerializationStartEndData(mapIndex);
+        Server.Instance.Send(bff);
+    }
+    public void EndGame(string winner)
     {
         Debug.Log($"<color=pink>Game End<color>");
+
+        if(Server.IsSuperGamer)
+        {
+            EndDataSend(winner);
+        }
+    }
+    private void EndDataSend(string winner)
+    {
+        byte[] bff = Server.Instance.SerializationStartEndData(true, winner);
+        Server.Instance.Send(bff);
     }
 }

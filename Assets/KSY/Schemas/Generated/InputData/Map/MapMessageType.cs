@@ -11,7 +11,7 @@ public enum MapMessageType : byte
   platform_state = 1,
   spawner_info = 2,
   start_end_game_info = 3,
-  currnet_game_info = 4,
+  current_game_info = 4,
 };
 
 
@@ -32,7 +32,7 @@ static public class MapMessageTypeVerify
       case MapMessageType.start_end_game_info:
         result = InputData.Map.StartEndGameInfoVerify.Verify(verifier, tablePos);
         break;
-      case MapMessageType.currnet_game_info:
+      case MapMessageType.current_game_info:
         result = InputData.Map.CurrentGameInfoVerify.Verify(verifier, tablePos);
         break;
       default: result = true;

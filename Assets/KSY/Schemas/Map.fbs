@@ -27,7 +27,7 @@ union MapMessageType{
 	platform_state:PlatformState,
 	spawner_info:SpawnerInfo,
 	start_end_game_info:StartEndGameInfo,
-	currnet_game_info:CurrentGameInfo
+	current_game_info:CurrentGameInfo
 }
 
 table MapMessage{

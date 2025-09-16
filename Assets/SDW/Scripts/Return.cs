@@ -15,9 +15,10 @@ public class Return : MonoBehaviour
             if(collision.gameObject.name == "P1")
             {
                 p1MaxLife--;
-                if(p1MaxLife <= 0)
+                if (p1MaxLife <= 0)
                 {
-                    Game.Instance.EndGame();
+                    string otherName = Server.Instance.GetOtherData().Value.nickname;
+                    Game.Instance.EndGame(otherName);
                 }
             }
             else
@@ -25,7 +26,8 @@ public class Return : MonoBehaviour
                 p2MaxLife--;
                 if (p2MaxLife <= 0)
                 {
-                    Game.Instance.EndGame();
+                    string myName = Server.Instance.GetMyData().Value.nickname;
+                    Game.Instance.EndGame(myName);
                 }
             }
 

@@ -68,46 +68,49 @@ public class BackendFunctionInGame : MonoBehaviour
         //1 
         GameEnd = 0b0001
     }
-    public byte[] SerializationEndData(byte mapIndex, bool isEnded, string winner)
+    public byte[] SerializationEndData(bool isEnded, string winner)
     {
         _gameStartEndBuilder.Clear();
 
-        if (winner != null)
-        {
-            byte gameEndState = 0b0000;
+        byte gameEndState = 0b0000;
 
-            if (isEnded) gameEndState |= (byte)flagGameInfo.GameEnd;
+        if (isEnded) gameEndState |= (byte)flagGameInfo.GameEnd;
 
-            StringOffset offsetWinner = _gameStartEndBuilder.CreateString(winner);
-            Offset<StartEndGameInfo> offsetStartGameEnd = StartEndGameInfo.CreateStartEndGameInfo(_gameStartEndBuilder, 9, gameEndState, offsetWinner);
-            Offset<MapMessage> offsetResult = MapMessage.CreateMapMessage(_gameStartEndBuilder,MapMessageType.start_end_game_info,offsetStartGameEnd.Value);
-        }    
-
-        if(mapIndex != 9)
-        {
-            Offset<StartEndGameInfo> offsetStartGameEnd = StartEndGameInfo.CreateStartEndGameInfo(_gameStartEndBuilder, mapIndex);
-            Offset<MapMessage> offsetResult = MapMessage.CreateMapMessage(_gameStartEndBuilder, MapMessageType.start_end_game_info, offsetStartGameEnd.Value);
-        }
+        StringOffset offsetWinner = _gameStartEndBuilder.CreateString(winner);
+        Offset<StartEndGameInfo> offsetStartGameEnd = StartEndGameInfo.CreateStartEndGameInfo(_gameStartEndBuilder, 9, gameEndState, offsetWinner);
+        Offset<MapMessage> offsetResult = MapMessage.CreateMapMessage(_gameStartEndBuilder, MapMessageType.start_end_game_info, offsetStartGameEnd.Value);
 
         byte[] bff = _gameStartEndBuilder.SizedByteArray();
 
         return bff;
     }
-    public byte[] SerializetionCurrnetData(byte time, byte playerLife, string playerName)
+    public byte[] SerializationEndData(byte mapIndex)
+    {
+        _gameStartEndBuilder.Clear();
+
+        Offset<StartEndGameInfo> offsetStartGameEnd = StartEndGameInfo.CreateStartEndGameInfo(_gameStartEndBuilder, mapIndex);
+        Offset<MapMessage> offsetResult = MapMessage.CreateMapMessage(_gameStartEndBuilder, MapMessageType.start_end_game_info, offsetStartGameEnd.Value);
+        
+
+        byte[] bff = _gameStartEndBuilder.SizedByteArray();
+
+        return bff;
+    }
+    public byte[] SerializetionCurrentData(byte time, byte playerLife, string playerName)
     {
         _gameCurrentBuilder.Clear();
 
         if (playerLife != 9)
         {
             StringOffset offsetPlayerName = _gameCurrentBuilder.CreateString(playerName);
-            Offset<CurrnetGameInfo> offsetCurrentGame = CurrnetGameInfo.CreateCurrnetGameInfo(_gameCurrentBuilder, time, playerLife, offsetPlayerName);
-            Offset<MapMessage> offsetResult = MapMessage.CreateMapMessage(_gameCurrentBuilder, MapMessageType.currnet_game_info, offsetCurrentGame.Value);
+            Offset<CurrentGameInfo> offsetCurrentGame = CurrentGameInfo.CreateCurrentGameInfo(_gameCurrentBuilder, time, playerLife, offsetPlayerName);
+            Offset<MapMessage> offsetResult = MapMessage.CreateMapMessage(_gameCurrentBuilder, MapMessageType.current_game_info, offsetCurrentGame.Value);
         }
         else
         {
             StringOffset offsetPlayerName = _gameCurrentBuilder.CreateString(playerName);
-            Offset<CurrnetGameInfo> offsetCurrentGame = CurrnetGameInfo.CreateCurrnetGameInfo(_gameCurrentBuilder, time);
-            Offset<MapMessage> offsetResult = MapMessage.CreateMapMessage(_gameCurrentBuilder, MapMessageType.currnet_game_info, offsetCurrentGame.Value);
+            Offset<CurrentGameInfo> offsetCurrentGame = CurrentGameInfo.CreateCurrentGameInfo(_gameCurrentBuilder, time);
+            Offset<MapMessage> offsetResult = MapMessage.CreateMapMessage(_gameCurrentBuilder, MapMessageType.current_game_info, offsetCurrentGame.Value);
         }
 
         byte[] bff = _gameStartEndBuilder.SizedByteArray();
@@ -261,7 +264,7 @@ public class BackendFunctionInGame : MonoBehaviour
             //플랫폼의 상태와 관련된 메세지 처리
             case MapMessageType.platform_state:
                 {
-                    //(송신한)수신 받을 플랫폼의 아이디를 찾음
+                    //(송신한) 수신 받을 플랫폼의 아이디를 찾음
                     byte senderId = message.MapMessageTypeAsplatform_state().Id;
 
                     //(송신한) 수신 받을 플랫폼을 아이디로 찾음
@@ -286,6 +289,43 @@ public class BackendFunctionInGame : MonoBehaviour
 
                     Receiver.ApplyUShortData(spawnItemId);
                     Receiver.ApplyByteData(spawnItemIndex, spawnPointIndex);
+                    break;
+                }
+            case MapMessageType.start_end_game_info:
+                {
+                    StartEndGameInfo data = message.MapMessageTypeAsstart_end_game_info();
+                    byte mapIndex = data.MapIndex;
+                    bool gameEnded = ((byte)flagGameInfo.GameEnd & data.GameEnd) != 0;
+
+                    if (mapIndex != 9)
+                    {
+                        Game.Instance.SelectMap(mapIndex);
+                        return;
+                    }
+                    else if(gameEnded)
+                    {
+                        string name = data.GameWinner;
+                        Game.Instance.EndGame(name);
+                    }
+
+
+                        break;
+                }
+            case MapMessageType.current_game_info:
+                {
+                    CurrentGameInfo data = message.MapMessageTypeAscurrent_game_info();
+                    byte playerLife = data.PlayerLife;
+
+                    if(playerLife != 9)
+                    {
+                        string playerName = data.PlayerName;
+                        Game.Instance.UpdatePlayerHealth(playerName, playerLife);
+                    }
+                    else
+                    {
+                        byte time = data.Time;
+                        Game.Instance.UpdateTime(time);
+                    }
                     break;
                 }
             default:

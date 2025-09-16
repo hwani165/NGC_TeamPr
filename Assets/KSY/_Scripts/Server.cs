@@ -141,6 +141,18 @@ public class Server : SingletonBehaviour<Server>
     {
         _bfMatch.FindMatch();
     }
+    public byte[] SerializationStartEndData(bool isEnded, string winner)
+    {
+        return _bfInGame.SerializationEndData(isEnded, winner);
+    }
+    public byte[] SerializationStartEndData(byte mapIndex)
+    {
+        return _bfInGame.SerializationEndData(mapIndex);
+    }
+    public byte[] SerializetionCurrnetData(byte time, byte playerLife, string playerName)
+    {
+        return _bfInGame.SerializetionCurrentData(time, playerLife, playerName);
+    }
     public byte[] SerializationPlatformStateData(byte id, bool isOnPlatform, bool isBrokenPlatform)
     {
         return _bfInGame.SerializationPlatformStateData(id, isOnPlatform, isBrokenPlatform);
