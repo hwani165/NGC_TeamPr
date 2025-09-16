@@ -2,12 +2,24 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
+    [SerializeField] private AudioClip hitSound;
+    [SerializeField] private AudioClip healSound;
+    [SerializeField] private AudioSource audioSource;
     public float MaxHP { get; private set; } = 1000f;
     [field: SerializeField] public float CurrentHp { get; private set; } = 0f;
     [SerializeField] private CircleHpBarScript hpbar;
 
+    public void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
     public void Attack(Transform tra, float damage, float knockback)
     {
+        if (damage >= 1)
+            audioSource.PlayOneShot(hitSound);
+        else if (damage < 0)
+                audioSource.PlayOneShot(healSound); 
+
         // HP °¨¼Ò
         CurrentHp += damage;
         CurrentHp = Mathf.Clamp(CurrentHp, 0, MaxHP);

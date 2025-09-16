@@ -67,6 +67,7 @@ public class Boomaerang : Item
 
     public override void Launching()
     {
+        base.Launching();
         if (isboomeranged)
         {
             return;
