@@ -233,7 +233,7 @@ public class Game : SingletonBehaviour<Game>
                     if (Server.IsSuperGamer)
                     {
                         //랜덤한 맵을 선정함.
-                        int mapIndex = UnityEngine.Random.Range(0, _mapNames.Length - 1);
+                        int mapIndex = UnityEngine.Random.Range(0, _mapNames.Length);
 
                         //선정한 맵의 이름을 가져옴
                         SelectedMapSend((byte)mapIndex);

@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class Entity : MonoBehaviour
@@ -6,6 +7,8 @@ public class Entity : MonoBehaviour
     [SerializeField] private AudioClip hitSound;
     [SerializeField] private AudioClip healSound;
     [SerializeField] private AudioSource audioSource;
+
+    [SerializeField] private GameObject gameOverUI;
 
     public byte PlayerLife;
 
@@ -19,6 +22,7 @@ public class Entity : MonoBehaviour
     {
         if(PlayerLife <= 0)
         {
+
             Game.Instance.EndGameServer(Server.Instance.GetOtherData().Value.nickname);
         }
     }
