@@ -18,7 +18,7 @@ public class Map : MonoBehaviour
     public TMP_Text P1Health;
     public TMP_Text P2Health;
     public TMP_Text HitCountT;
-
+    public TMP_Text OverInfoT;
 
     private Dictionary<byte, Platform> _platfomrs;
     #region Unity Event Function

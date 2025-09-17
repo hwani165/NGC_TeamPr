@@ -274,13 +274,11 @@ public class Game : SingletonBehaviour<Game>
     {
         if(name == "P1")
         {
-            Debug.Log($"P1");
             p2.MyEntity.Health = health;
             MapCompo.P2Health.text = $"{Server.OtherName} health : {health}";
         }
         else if(name == "P2")
         {
-            Debug.Log($"P1");
             p1.MyEntity.Health = health;
             MapCompo.P1Health.text = $"{Server.MyName} health : {health}";
         }
@@ -304,21 +302,28 @@ public class Game : SingletonBehaviour<Game>
         string otherNick = Server.OtherName;
         string myNick = Server.MyName;
         GameObject gameOverUI = MapCompo.GameOverUI;
+        TMP_Text overInfoT = MapCompo.OverInfoT;
+        TMP_Text HitCountT = MapCompo.HitCountT;
 
         if (hitCount > OtherHitCount)
         {
-            gameOverUI.GetComponentInChildren<TMP_Text>().text = $"이긴 사람 : {otherNick}";
+            gameOverUI.GetComponentInChildren<TMP_Text>().text = $"승자 : {otherNick}";
+            overInfoT.text = $"나를 맞춘 횟수 : {hitCount}\n내가 상대를 맞춘 횟수 : {OtherHitCount}";
         }
         else if (hitCount < OtherHitCount)
         {
-            gameOverUI.GetComponentInChildren<TMP_Text>().text = $"이긴 사람 : {myNick}";
+
+            gameOverUI.GetComponentInChildren<TMP_Text>().text = $"승자 : {myNick}";
+            overInfoT.text = $"상대를 맞춘 횟수 : {hitCount}\n상대가 나를 맞춘 횟수 : {hitCount}";
         }
         else
         {
             gameOverUI.GetComponentInChildren<TMP_Text>().text = $"무승부";
-
+            overInfoT.text = $"서로가 서로에게 맞춘 횟수가 동일합니다. 총 횟수 : {hitCount}";
+            ;
         }
 
+        HitCountT.gameObject.SetActive(false);
         gameOverUI.SetActive(true);
         Time.timeScale = 0;
     }
