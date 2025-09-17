@@ -108,30 +108,6 @@ public class BackendFunctionInGame : MonoBehaviour
         byte[] bff = _gameCurrentBuilder.SizedByteArray();
         return bff;
     }
-    ////데이터 직렬화
-    //public byte[] SerializationPlatformStateData(byte id, bool isOnPlatform, bool isBrokenPlatform)
-    //{
-    //    //버퍼 재사용
-    //    _platformStateBuilder.Clear();
-
-    //    //비트 마스킹
-    //    byte platformState = 0b0000;
-
-    //    if (isOnPlatform) platformState |= (byte)flagPlatformState.IsOnPlatform;
-    //    if (isBrokenPlatform) platformState |= (byte)flagPlatformState.IsBrokenPlatform;
-
-    //    //오프셋 세팅
-    //    Offset<PlatformState> offsetPlatformState = PlatformState.CreatePlatformState(_platformStateBuilder, id, platformState);
-
-    //    ////데이터 할당
-    //    Offset<MapMessage> offsetResult = MapMessage.CreateMapMessage(_platformStateBuilder, MapMessageType.platform_state, offsetPlatformState.Value);
-
-    //    //스키마 버퍼화
-    //    _platformStateBuilder.Finish(offsetResult.Value, "MAPP");
-    //    byte[] bff = _platformStateBuilder.SizedByteArray();
-
-    //    return bff;
-    //}
     public byte[] SerializationSpawnerInfoData(ushort spawnItemId, byte spawnItemIndex, byte spawnPotinIndex)
     {
         //버퍼 재사용
@@ -246,21 +222,6 @@ public class BackendFunctionInGame : MonoBehaviour
     {
         switch (type)
         {
-            //플랫폼의 상태와 관련된 메세지 처리
-            case MapMessageType.platform_state:
-                {
-                    //(송신한) 수신 받을 플랫폼의 아이디를 찾음
-                    byte senderId = message.MapMessageTypeAsplatform_state().Id;
-
-                    //(송신한) 수신 받을 플랫폼을 아이디로 찾음
-                    Platform platform = Game.Instance.MapCompo.FindPlatform(senderId);
-
-                    //MapMessage에서 데이터를 꺼내서 적용함.
-                    PlatformState data = message.MapMessageTypeAsplatform_state();
-                    byte platformState = data.PlatformState_;
-                    platform.ApplyByteData(platformState);
-                    break;
-                }
             //아이템 스포너의 정보와 관련된 메세지 처리
             case MapMessageType.spawner_info:
                 {
@@ -363,10 +324,7 @@ public class BackendFunctionInGame : MonoBehaviour
                     float y = data.Y;
 
                     GameObject item = Game.Instance.MapCompo.SpawnerCompo.FindItem(id);
-                    //Debug.Log($"<color=yellow>item is null : {item == null}</color>");
-                    item.GetComponent<Rigidbody2D>().MovePosition(new Vector2(x, y));
-                    //Debug.Log($"<color=yellow>Receive : {x}, {y}</color>");
-                    //Debug.Log($"<color=yellow>Apply : {item.transform.position}</color>");
+                    item.GetComponent<Rigidbody2D>().MovePosition(new Vector2(x, y + 1f));
                     break;
                 }
             case PlayerMessageType.current_player_info:

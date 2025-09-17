@@ -316,7 +316,7 @@ public class Game : SingletonBehaviour<Game>
         {
 
             gameOverUI.GetComponentInChildren<TMP_Text>().text = $"승자 : {myNick}";
-            overInfoT.text = $"상대를 맞춘 횟수 : {hitCount}\n상대가 나를 맞춘 횟수 : {hitCount}";
+            overInfoT.text = $"상대를 맞춘 횟수 : {OtherHitCount}\n상대가 나를 맞춘 횟수 : {hitCount}";
         }
         else
         {

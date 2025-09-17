@@ -214,7 +214,7 @@ public class MyAction : Player
         //아이템 부모 해제 + 위치 지정
         itemScript.preowner = transform;
         HoldObject.transform.parent = null;
-        HoldObject.transform.position = transform.position + (Vector3)(GetInputDirection() * 1.25f);
+        HoldObject.transform.position = transform.position + (Vector3)(GetInputDirection() * 1.75f);
 
         // 쿨타임 시작
         itemScript.CooldownActive();
