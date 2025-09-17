@@ -177,7 +177,7 @@ public class MyAction : Player
         _throwDir = GetInputDirection(); // 입력 방향
 
         if (HoldObject == null) return;
-        else if (_throwDir == Vector2.zero) return;
+        if (_throwDir == Vector2.zero && _throwDir == Vector2.down) return;
 
         IsThrowing = true;
         Item itemScript = HoldObject.GetComponent<Item>();

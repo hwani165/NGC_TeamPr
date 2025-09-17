@@ -14,16 +14,8 @@ public class Entity : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
 
-
         IsMyPlayer = gameObject.name == "P1";
-        Health = IsMyPlayer ? (sbyte)Game.P1LIFE : (sbyte)Game.P2LIFE;
-    }
-    private void Update()
-    {
-        if(Health <= 0)
-        {
-            Game.Instance.EndDataSend(Game.Instance.OtherHitCount);
-        }
+        Health = IsMyPlayer ? Game.P1LIFE : Game.P2LIFE;
     }
     public void UpdateHealthUI()
     {
@@ -49,12 +41,17 @@ public class Entity : MonoBehaviour
         else 
             audioSource.PlayOneShot(healSound);
 
-        // HP 감소
+        //HP 증감
         Health += damage;
-        
+
+        if (Health <= 0)
+        {
+            Game.Instance.EndDataSend(Game.Instance.OtherHitCount);
+        }
+
         Game.Instance.SendPlayerHealth(gameObject.name, Health);
 
-        if(!IsMyPlayer && damage > 0)
+        if(!IsMyPlayer && damage < 0)
         {
             Game.Instance.OtherHitCount += 1;
             Game.Instance.MapCompo.HitCountT.text = $"hit count : {Game.Instance.OtherHitCount}";

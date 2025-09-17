@@ -18,10 +18,10 @@ public class HealPack : Item
     {
         base.Attacking(target);
 
-        //if (target.GetComponent<Entity>() != null)
-        //{
-        //    target.GetComponent<Entity>().Attack(preowner, damage, knockbackmulti);
-        //}
+        if (target.GetComponent<Entity>() != null)
+        {
+            target.GetComponent<Entity>().Attack(preowner, damage, knockbackmulti);
+        }
         Destroy(gameObject);
         yield return null;
         

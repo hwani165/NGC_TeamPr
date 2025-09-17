@@ -31,13 +31,13 @@ public class Game : SingletonBehaviour<Game>
     private bool _InGameLoaded;
     public Map MapCompo { get; private set; }
 
-    static public byte P1LIFE = 3;
-    static public byte P2LIFE = 3;
-    private byte _otherHitCount;
+    static public sbyte P1LIFE = 3;
+    static public sbyte P2LIFE = 3;
+    private sbyte _otherHitCount;
 
     Player p1;
     Player p2;
-    public byte OtherHitCount
+    public sbyte OtherHitCount
     {
         get
         {
@@ -45,7 +45,7 @@ public class Game : SingletonBehaviour<Game>
         }
         set
         {
-            _otherHitCount = (byte)Mathf.Clamp(value,0,10);
+            _otherHitCount = (sbyte)Mathf.Clamp(value,0,sbyte.MaxValue);
         }
     }
 
@@ -64,8 +64,8 @@ public class Game : SingletonBehaviour<Game>
     }
     private void Start()
     {
-        P1LIFE = (byte)UnityEngine.Random.Range(3, 7);
-        P2LIFE = (byte)UnityEngine.Random.Range(3, 7);
+        P1LIFE = (sbyte)UnityEngine.Random.Range(3, 7);
+        P2LIFE = (sbyte)UnityEngine.Random.Range(3, 7);
 
         LoadedInGame += () => _InGameLoaded = true;
 
@@ -275,13 +275,13 @@ public class Game : SingletonBehaviour<Game>
         if(name == "P1")
         {
             Debug.Log($"P1");
-            p2.MyEntity.Health = (sbyte)health;
+            p2.MyEntity.Health = health;
             MapCompo.P2Health.text = $"{Server.OtherName} health : {health}";
         }
         else if(name == "P2")
         {
             Debug.Log($"P1");
-            p1.MyEntity.Health = (sbyte)health;
+            p1.MyEntity.Health = health;
             MapCompo.P1Health.text = $"{Server.MyName} health : {health}";
         }
     }
@@ -299,7 +299,7 @@ public class Game : SingletonBehaviour<Game>
         byte[] bff = Server.Instance.SerializationStartEndData(mapIndex, P1LIFE, P2LIFE);
         Server.Instance.Send(bff);
     }
-    public void EndDataReceive(byte hitCount)
+    public void EndDataReceive(sbyte hitCount)
     {
         string otherNick = Server.OtherName;
         string myNick = Server.MyName;
@@ -322,7 +322,7 @@ public class Game : SingletonBehaviour<Game>
         gameOverUI.SetActive(true);
         Time.timeScale = 0;
     }
-    public void EndDataSend(byte hitCount)
+    public void EndDataSend(sbyte hitCount)
     {
         byte[] bff = Server.Instance.SerializationStartEndData(hitCount);
         Server.Instance.Send(bff);

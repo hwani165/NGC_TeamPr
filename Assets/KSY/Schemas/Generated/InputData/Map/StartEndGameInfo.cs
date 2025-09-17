@@ -20,38 +20,28 @@ public struct StartEndGameInfo : IFlatbufferObject
   public StartEndGameInfo __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
   public byte MapIndex { get { int o = __p.__offset(4); return o != 0 ? __p.bb.Get(o + __p.bb_pos) : (byte)0; } }
-  public byte P1Life { get { int o = __p.__offset(6); return o != 0 ? __p.bb.Get(o + __p.bb_pos) : (byte)0; } }
-  public byte P2Life { get { int o = __p.__offset(8); return o != 0 ? __p.bb.Get(o + __p.bb_pos) : (byte)0; } }
-  public byte GameEnd { get { int o = __p.__offset(10); return o != 0 ? __p.bb.Get(o + __p.bb_pos) : (byte)0; } }
-  public string GameWinner { get { int o = __p.__offset(12); return o != 0 ? __p.__string(o + __p.bb_pos) : null; } }
-#if ENABLE_SPAN_T
-  public Span<byte> GetGameWinnerBytes() { return __p.__vector_as_span<byte>(12, 1); }
-#else
-  public ArraySegment<byte>? GetGameWinnerBytes() { return __p.__vector_as_arraysegment(12); }
-#endif
-  public byte[] GetGameWinnerArray() { return __p.__vector_as_array<byte>(12); }
+  public sbyte P1Life { get { int o = __p.__offset(6); return o != 0 ? __p.bb.GetSbyte(o + __p.bb_pos) : (sbyte)0; } }
+  public sbyte P2Life { get { int o = __p.__offset(8); return o != 0 ? __p.bb.GetSbyte(o + __p.bb_pos) : (sbyte)0; } }
+  public sbyte HitCount { get { int o = __p.__offset(10); return o != 0 ? __p.bb.GetSbyte(o + __p.bb_pos) : (sbyte)0; } }
 
   public static Offset<InputData.Map.StartEndGameInfo> CreateStartEndGameInfo(FlatBufferBuilder builder,
       byte map_index = 0,
-      byte p1_life = 0,
-      byte p2_life = 0,
-      byte game_end = 0,
-      StringOffset game_winnerOffset = default(StringOffset)) {
-    builder.StartTable(5);
-    StartEndGameInfo.AddGameWinner(builder, game_winnerOffset);
-    StartEndGameInfo.AddGameEnd(builder, game_end);
+      sbyte p1_life = 0,
+      sbyte p2_life = 0,
+      sbyte hit_count = 0) {
+    builder.StartTable(4);
+    StartEndGameInfo.AddHitCount(builder, hit_count);
     StartEndGameInfo.AddP2Life(builder, p2_life);
     StartEndGameInfo.AddP1Life(builder, p1_life);
     StartEndGameInfo.AddMapIndex(builder, map_index);
     return StartEndGameInfo.EndStartEndGameInfo(builder);
   }
 
-  public static void StartStartEndGameInfo(FlatBufferBuilder builder) { builder.StartTable(5); }
+  public static void StartStartEndGameInfo(FlatBufferBuilder builder) { builder.StartTable(4); }
   public static void AddMapIndex(FlatBufferBuilder builder, byte mapIndex) { builder.AddByte(0, mapIndex, 0); }
-  public static void AddP1Life(FlatBufferBuilder builder, byte p1Life) { builder.AddByte(1, p1Life, 0); }
-  public static void AddP2Life(FlatBufferBuilder builder, byte p2Life) { builder.AddByte(2, p2Life, 0); }
-  public static void AddGameEnd(FlatBufferBuilder builder, byte gameEnd) { builder.AddByte(3, gameEnd, 0); }
-  public static void AddGameWinner(FlatBufferBuilder builder, StringOffset gameWinnerOffset) { builder.AddOffset(4, gameWinnerOffset.Value, 0); }
+  public static void AddP1Life(FlatBufferBuilder builder, sbyte p1Life) { builder.AddSbyte(1, p1Life, 0); }
+  public static void AddP2Life(FlatBufferBuilder builder, sbyte p2Life) { builder.AddSbyte(2, p2Life, 0); }
+  public static void AddHitCount(FlatBufferBuilder builder, sbyte hitCount) { builder.AddSbyte(3, hitCount, 0); }
   public static Offset<InputData.Map.StartEndGameInfo> EndStartEndGameInfo(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<InputData.Map.StartEndGameInfo>(o);
@@ -65,10 +55,9 @@ static public class StartEndGameInfoVerify
   {
     return verifier.VerifyTableStart(tablePos)
       && verifier.VerifyField(tablePos, 4 /*MapIndex*/, 1 /*byte*/, 1, false)
-      && verifier.VerifyField(tablePos, 6 /*P1Life*/, 1 /*byte*/, 1, false)
-      && verifier.VerifyField(tablePos, 8 /*P2Life*/, 1 /*byte*/, 1, false)
-      && verifier.VerifyField(tablePos, 10 /*GameEnd*/, 1 /*byte*/, 1, false)
-      && verifier.VerifyString(tablePos, 12 /*GameWinner*/, false)
+      && verifier.VerifyField(tablePos, 6 /*P1Life*/, 1 /*sbyte*/, 1, false)
+      && verifier.VerifyField(tablePos, 8 /*P2Life*/, 1 /*sbyte*/, 1, false)
+      && verifier.VerifyField(tablePos, 10 /*HitCount*/, 1 /*sbyte*/, 1, false)
       && verifier.VerifyTableEnd(tablePos);
   }
 }

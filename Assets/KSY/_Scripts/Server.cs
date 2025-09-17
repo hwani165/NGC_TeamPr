@@ -148,13 +148,13 @@ public class Server : SingletonBehaviour<Server>
     {
         return _bfInGame.SerializationItemDes(id);
     }
-    public byte[] SerializationStartEndData(byte hitCount)
-    {
-        return _bfInGame.SerializationStartEndData(hitCount);
-    }
-    public byte[] SerializationStartEndData(byte mapIndex, byte P1LIFE, byte P2LIFE)
+    public byte[] SerializationStartEndData(byte mapIndex, sbyte P1LIFE, sbyte P2LIFE)
     {
         return _bfInGame.SerializationEndData(mapIndex, P1LIFE, P2LIFE);
+    }
+    public byte[] SerializationStartEndData(sbyte hitCount)
+    {
+        return _bfInGame.SerializationStartEndData(hitCount);
     }
     public byte[] SerializationPlatformStateData(byte id, bool isOnPlatform, bool isBrokenPlatform)
     {

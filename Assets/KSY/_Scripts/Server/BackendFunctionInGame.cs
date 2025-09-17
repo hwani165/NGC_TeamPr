@@ -63,7 +63,7 @@ public class BackendFunctionInGame : MonoBehaviour
         //1 
         GameEnd = 0b0001
     }
-    public byte[] SerializationStartEndData(byte hitCount)
+    public byte[] SerializationStartEndData(sbyte hitCount)
     {
         _gameStartEndBuilder.Clear();
 
@@ -76,7 +76,6 @@ public class BackendFunctionInGame : MonoBehaviour
         Debug.Log("SerializationStartEndData");
         return bff;
     }
-
     public byte[] SerializationItemDes(ushort id)
     {
         _itemPDesBuilder.Clear();
@@ -89,11 +88,11 @@ public class BackendFunctionInGame : MonoBehaviour
 
         return bff;
     }
-    public byte[] SerializationEndData(byte mapIndex, byte P1LIFE, byte P2LIFE)
+    public byte[] SerializationEndData(byte mapIndex, sbyte P1LIFE, sbyte P2LIFE)
     {
         _gameStartEndBuilder.Clear();
 
-        Offset<StartEndGameInfo> offsetStartGameEnd = StartEndGameInfo.CreateStartEndGameInfo(_gameStartEndBuilder, mapIndex, P1LIFE, P2LIFE);
+        Offset<StartEndGameInfo> offsetStartGameEnd = StartEndGameInfo.CreateStartEndGameInfo(_gameStartEndBuilder, mapIndex, P1LIFE, P2LIFE, 9);
         Offset<MapMessage> offsetResult = MapMessage.CreateMapMessage(_gameStartEndBuilder, MapMessageType.start_end_game_info, offsetStartGameEnd.Value);
 
         _gameStartEndBuilder.Finish(offsetResult.Value, "MAPP");
@@ -303,7 +302,7 @@ public class BackendFunctionInGame : MonoBehaviour
                     {
                         Debug.Log("Receive Game End");
 
-                        byte hitCount = data.GameEnd;
+                        sbyte hitCount = data.HitCount;
                         Game.Instance.EndDataReceive(hitCount);
                     }
                     break;

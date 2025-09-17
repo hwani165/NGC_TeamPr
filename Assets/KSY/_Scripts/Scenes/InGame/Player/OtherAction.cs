@@ -107,7 +107,7 @@ public class OtherAction : Player
             Debug.Log($"Other Eat End");
             return;
         }
-        else if (throwDir == Vector2.zero) return;
+        if (throwDir == Vector2.zero && throwDir == Vector2.down) return;
 
         //방향 노말라이즈
         throwDir.Normalize();

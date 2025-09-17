@@ -11,10 +11,16 @@ public class Return : MonoBehaviour
         {
             Entity e = collision.gameObject.GetComponent<Entity>();
 
-            Game.Instance.OtherHitCount -= 1;
+            if(e.gameObject.name == "P1")
+            {
+                sbyte c = Game.Instance.OtherHitCount -= 1;
+                Game.Instance.MapCompo.HitCountT.text = $"Hit Count : {c}";
+            }
 
             int rand = Random.Range(0, responPos.Length);
-            collision.transform.position = responPos[rand].position;
+            Rigidbody2D _rb = collision.GetComponent<Rigidbody2D>();
+            _rb.linearVelocity = Vector2.zero;
+            _rb.MovePosition(responPos[rand].position);
         }
     }
 }
