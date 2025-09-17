@@ -168,7 +168,7 @@ public class Server : SingletonBehaviour<Server>
     {
         return _bfInGame.SerializationActionData(itemId, isHolding, isThrowing, chargeGauge, throwDir);
     }
-    public byte[] SerializationCurrentData(string name, byte health)
+    public byte[] SerializationCurrentData(string name, sbyte health)
     {
         return _bfInGame.SerializetionCurrentData(name, health);
     }

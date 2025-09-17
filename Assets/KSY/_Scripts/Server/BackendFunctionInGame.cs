@@ -100,7 +100,7 @@ public class BackendFunctionInGame : MonoBehaviour
         byte[] bff = _gameStartEndBuilder.SizedByteArray();
         return bff;
     }
-    public byte[] SerializetionCurrentData(string playerName, byte playerLife)
+    public byte[] SerializetionCurrentData(string playerName, sbyte playerLife)
     {
         _gameCurrentBuilder.Clear();
 
@@ -304,7 +304,7 @@ public class BackendFunctionInGame : MonoBehaviour
                         Debug.Log("Receive Game End");
 
                         byte hitCount = data.GameEnd;
-                        Game.Instance.EndGame(hitCount);
+                        Game.Instance.EndDataReceive(hitCount);
                     }
                     break;
                 }
@@ -378,12 +378,12 @@ public class BackendFunctionInGame : MonoBehaviour
             case PlayerMessageType.current_player_info:
                 {
                     CurrentPlayerInfo data = message.DataAscurrent_player_info();
-                    byte playerLife = data.PlayerLife;
+                    sbyte playerLife = data.PlayerLife;
 
                     if (playerLife != 9)
                     {
                         string playerName = data.PlayerName;
-                        Game.Instance.SendPlayerHealth(playerName, playerLife);
+                        Game.Instance.ReceivePlayerHealth(playerName, playerLife);
                     }
                     break;
                 }

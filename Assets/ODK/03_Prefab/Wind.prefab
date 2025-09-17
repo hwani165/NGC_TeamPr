@@ -196,7 +196,7 @@ MonoBehaviour:
   thisisnoforceobject: 0
   thisownerfading: 1
   isHolding: 0
-  damage: 5
+  damage: -1
   knockbackmulti: 4
 --- !u!82 &7015729440776693016
 AudioSource:

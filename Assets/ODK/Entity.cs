@@ -7,7 +7,7 @@ public class Entity : MonoBehaviour
     [SerializeField] private AudioClip healSound;
     [SerializeField] private AudioSource audioSource;
 
-    public byte Health;
+    public sbyte Health;
     public bool IsMyPlayer;
 
     public void Awake()
@@ -16,13 +16,13 @@ public class Entity : MonoBehaviour
 
 
         IsMyPlayer = gameObject.name == "P1";
-        Health = IsMyPlayer ? Game.P1LIFE : Game.P2LIFE;
+        Health = IsMyPlayer ? (sbyte)Game.P1LIFE : (sbyte)Game.P2LIFE;
     }
     private void Update()
     {
         if(Health <= 0)
         {
-            Game.Instance.EndGameServer(Game.Instance.OtherHitCount);
+            Game.Instance.EndDataSend(Game.Instance.OtherHitCount);
         }
     }
     public void UpdateHealthUI()
@@ -42,18 +42,19 @@ public class Entity : MonoBehaviour
         yield return new WaitForSeconds(1f);
         GetComponent<SpriteRenderer>().color = Color.white;
     }
-    public void Attack(Transform tra, float damage, float knockback)
+    public void Attack(Transform tra, sbyte damage, float knockback)
     {
-        if (damage >= 1)
+        if (damage <= 0)
             audioSource.PlayOneShot(hitSound);
         else 
             audioSource.PlayOneShot(healSound);
 
         // HP °¨¼Ò
-        Health -= 1;
+        Health += damage;
+        
         Game.Instance.SendPlayerHealth(gameObject.name, Health);
 
-        if(!IsMyPlayer)
+        if(!IsMyPlayer && damage > 0)
         {
             Game.Instance.OtherHitCount += 1;
             Game.Instance.MapCompo.HitCountT.text = $"hit count : {Game.Instance.OtherHitCount}";
@@ -85,7 +86,7 @@ public class Entity : MonoBehaviour
             Vector2 force = new Vector2(
                 knockbackDir.x * baseForceX,
                 knockbackDir.y * baseForceY
-            ) * 1;
+            ) * 2f;
 
             rb.AddForce(force, ForceMode2D.Impulse);
         }

@@ -19,7 +19,7 @@ public struct CurrentPlayerInfo : IFlatbufferObject
   public void __init(int _i, ByteBuffer _bb) { __p = new Table(_i, _bb); }
   public CurrentPlayerInfo __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-  public byte PlayerLife { get { int o = __p.__offset(4); return o != 0 ? __p.bb.Get(o + __p.bb_pos) : (byte)0; } }
+  public sbyte PlayerLife { get { int o = __p.__offset(4); return o != 0 ? __p.bb.GetSbyte(o + __p.bb_pos) : (sbyte)0; } }
   public string PlayerName { get { int o = __p.__offset(6); return o != 0 ? __p.__string(o + __p.bb_pos) : null; } }
 #if ENABLE_SPAN_T
   public Span<byte> GetPlayerNameBytes() { return __p.__vector_as_span<byte>(6, 1); }
@@ -29,7 +29,7 @@ public struct CurrentPlayerInfo : IFlatbufferObject
   public byte[] GetPlayerNameArray() { return __p.__vector_as_array<byte>(6); }
 
   public static Offset<InputData.Player.CurrentPlayerInfo> CreateCurrentPlayerInfo(FlatBufferBuilder builder,
-      byte player_life = 0,
+      sbyte player_life = 0,
       StringOffset player_nameOffset = default(StringOffset)) {
     builder.StartTable(2);
     CurrentPlayerInfo.AddPlayerName(builder, player_nameOffset);
@@ -38,7 +38,7 @@ public struct CurrentPlayerInfo : IFlatbufferObject
   }
 
   public static void StartCurrentPlayerInfo(FlatBufferBuilder builder) { builder.StartTable(2); }
-  public static void AddPlayerLife(FlatBufferBuilder builder, byte playerLife) { builder.AddByte(0, playerLife, 0); }
+  public static void AddPlayerLife(FlatBufferBuilder builder, sbyte playerLife) { builder.AddSbyte(0, playerLife, 0); }
   public static void AddPlayerName(FlatBufferBuilder builder, StringOffset playerNameOffset) { builder.AddOffset(1, playerNameOffset.Value, 0); }
   public static Offset<InputData.Player.CurrentPlayerInfo> EndCurrentPlayerInfo(FlatBufferBuilder builder) {
     int o = builder.EndTable();
@@ -52,7 +52,7 @@ static public class CurrentPlayerInfoVerify
   static public bool Verify(Google.FlatBuffers.Verifier verifier, uint tablePos)
   {
     return verifier.VerifyTableStart(tablePos)
-      && verifier.VerifyField(tablePos, 4 /*PlayerLife*/, 1 /*byte*/, 1, false)
+      && verifier.VerifyField(tablePos, 4 /*PlayerLife*/, 1 /*sbyte*/, 1, false)
       && verifier.VerifyString(tablePos, 6 /*PlayerName*/, false)
       && verifier.VerifyTableEnd(tablePos);
   }

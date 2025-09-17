@@ -156,6 +156,7 @@ public class OtherAction : Player
         {
             Release(HoldObject);
         }
+
         HoldObject = Game.Instance.MapCompo.SpawnerCompo.FindItem(id);
     }
     public override void ApplyByteData(byte state, byte charge)

@@ -70,7 +70,7 @@ public class MyMovement : Player
             Send();
         }
 
-        if (_currentTime >= 0.6f)
+        if (_currentTime >= 0.5f)
         {
             _currentTime = 0f;
             Serialize();

@@ -174,9 +174,12 @@ public class MyAction : Player
     // 아이템 던지기
     private void ThrowItem()
     {
-        if (HoldObject == null) return;
         _throwDir = GetInputDirection(); // 입력 방향
 
+        if (HoldObject == null) return;
+        else if (_throwDir == Vector2.zero) return;
+
+        IsThrowing = true;
         Item itemScript = HoldObject.GetComponent<Item>();
         Rigidbody2D hrb = HoldObject.GetComponent<Rigidbody2D>();
 
@@ -185,8 +188,9 @@ public class MyAction : Player
         // 차지 게이지가 2 이상이라면 먹기
         if (_chargeGauge >= 3)
         {
-            Debug.Log($"MyAction Eat");
-            IsThrowing = true;
+            Debug.Log($"My Eat");
+            IsHolding = false;
+
             Send();
 
             itemScript.preowner = transform;
@@ -194,12 +198,8 @@ public class MyAction : Player
             itemScript.Eat();
             HoldObject = null;
             IsThrowing = false;
-            Debug.Log($"My Eat End");
             return;
         }
-        // 방향이 없으면 던지지 않음
-        else if (_throwDir == Vector2.zero) return;
-
         //내 상태를 던지는 상태로 갱신
         IsHolding = false;
         IsThrowing = true;

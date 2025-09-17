@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bomb : Item
 {
-    public float damage = 2;
+    public sbyte damage = -1;
     public float knockbackmulti = 0.5f;
 
     public GameObject explosion;

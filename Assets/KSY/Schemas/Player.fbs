@@ -14,7 +14,7 @@ table ItemAction{
 }
 
 table CurrentPlayerInfo{
-	player_life:ubyte;
+	player_life:byte;
 	player_name:string;
 }
 
