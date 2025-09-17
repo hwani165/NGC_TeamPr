@@ -75,9 +75,20 @@ public class Player : MonoBehaviour, IReceiver, ISender
 
                 switch (messageType)
                 {
+                    case PlayerMessageType.player_pos:
+                        {
+                            Server.Instance.ApplyData(message, _otherMovement, messageType);
+                            break;
+                        }
                     case PlayerMessageType.movement:
                         {
                             Server.Instance.ApplyData(message, _otherMovement, messageType);
+                            break;
+                        }
+                    case PlayerMessageType.current_player_info:
+                        {
+                            Debug.Log("Receive current_player_info");
+                            Server.Instance.ApplyData(message, null, messageType);
                             break;
                         }
                     case PlayerMessageType.item_action:
@@ -85,22 +96,13 @@ public class Player : MonoBehaviour, IReceiver, ISender
                             Server.Instance.ApplyData(message, _otherAction, messageType);
                             break;
                         }
-                    case PlayerMessageType.player_pos:
-                        {
-                            Server.Instance.ApplyData(message, _otherMovement, messageType);
-                            break;
-                        }
+
                     case PlayerMessageType.item_pos:
                         {
                             Server.Instance.ApplyData(message, null, messageType);
                             break;
                         }
                     case PlayerMessageType.item_des:
-                        {
-                            Server.Instance.ApplyData(message, null, messageType);
-                            break;
-                        }
-                    case PlayerMessageType.current_player_info:
                         {
                             Server.Instance.ApplyData(message, null, messageType);
                             break;

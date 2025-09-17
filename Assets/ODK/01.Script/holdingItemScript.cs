@@ -26,7 +26,6 @@ public abstract class Item : MonoBehaviour
     //netWork
     [SerializeField] public bool isHolding = false;
     private float _synkTime = 0f;
-    private float _synkTime2 = 0f;
     byte[] _bff;
     public virtual void Awake()
     {
@@ -37,7 +36,7 @@ public abstract class Item : MonoBehaviour
     private void Update()
     {
         _synkTime += Time.deltaTime;
-        if (_synkTime >= 0.7)
+        if (_synkTime >= 1)
         {
             if (Server.IsSuperGamer)
             {
@@ -94,8 +93,6 @@ public abstract class Item : MonoBehaviour
     public virtual void Grab()
     {
         audioSource.PlayOneShot(grabsound);
-        
-
     }
     public virtual IEnumerator Attacking(GameObject target)
     {
@@ -110,11 +107,15 @@ public abstract class Item : MonoBehaviour
 
     public virtual void Eat()
     {
+        Debug.Log("Eat");
+
         Entity targetEntity = owner.GetComponent<Entity>();
 
-        if(targetEntity.name == "P1" && targetEntity.Health <= 1)
+        Debug.Log($"{targetEntity.Health}, {owner.gameObject.name}");
+
+        if (targetEntity.Health > 1 && owner.gameObject.name == "P1")
         {
-            targetEntity.Attack(transform, 10, 0f);
+            targetEntity.Attack(transform, 0, 0f);
         }
 
         isShooting = false;

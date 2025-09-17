@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class HealPack : Item
 {
-    public float damage = 5;
+    public sbyte damage = 1;
     public float knockbackmulti = 1;
 
     public override void Eat()
     {
-        owner.GetComponent<Entity>().Attack(transform, damage * 1.5f, 0f);
+        owner.GetComponent<Entity>().Attack(transform, damage, 0f);
         isShooting = false;
         Instantiate(effect[0], owner.transform.position, Quaternion.identity);
         owner = null;
@@ -18,10 +18,10 @@ public class HealPack : Item
     {
         base.Attacking(target);
 
-        if (target.GetComponent<Entity>() != null)
-        {
-            target.GetComponent<Entity>().Attack(preowner, damage, knockbackmulti);
-        }
+        //if (target.GetComponent<Entity>() != null)
+        //{
+        //    target.GetComponent<Entity>().Attack(preowner, damage, knockbackmulti);
+        //}
         Destroy(gameObject);
         yield return null;
         

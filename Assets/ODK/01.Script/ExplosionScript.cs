@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ExplosionScript : MonoBehaviour
 {
-    public float damage = 20;
+    public sbyte damage = 1;
     public float knockbackmulti = 3;
 
     public float lifetime = 0.2f;
@@ -28,7 +28,7 @@ public class ExplosionScript : MonoBehaviour
 
                 if (collision.transform == preowner)
                 {
-                    player.Attack(preowner, damage / 1.5f, knockbackmulti);
+                    player.Attack(preowner, damage, knockbackmulti);
                 }
                 else
                 {

@@ -7,7 +7,7 @@ public class Boomaerang : Item
 {
     [SerializeField] private Ease easeType = Ease.OutCubic;
     [SerializeField] private Ease lasteaseType = Ease.InCubic;
-    public float damage = 5;
+    public sbyte damage = -1;
     public float knockbackmulti = 1;
     public float firstmovetime = 1f;
     public float lastmovetime = 1f;

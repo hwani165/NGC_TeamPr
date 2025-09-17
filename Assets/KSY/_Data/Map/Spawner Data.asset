@@ -18,5 +18,7 @@ MonoBehaviour:
   - {fileID: 4069005640951247961, guid: 2fe2f4cfb1810cf428cd84fb801ba4a5, type: 3}
   - {fileID: 4069005640951247961, guid: dd10b904f879c1642a43fe3bf062891d, type: 3}
   - {fileID: 4069005640951247961, guid: f18ed291c4307e5498ac7f5d88ac8aab, type: 3}
+  - {fileID: 4069005640951247961, guid: 08f48c3f804d2f441b9ac716db0371e7, type: 3}
+  - {fileID: 4069005640951247961, guid: ae77f016dcbe27c41a6c337c94fe9fc9, type: 3}
   SpawnSecconds: 2
   MaxCount: 3

@@ -50,8 +50,6 @@ public class OtherMovement : Player
     private void Update()
     {
         OnGround();
-
-
     }
     private void DownDash()
     {

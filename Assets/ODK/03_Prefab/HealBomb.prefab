@@ -196,7 +196,7 @@ MonoBehaviour:
   thisisnoforceobject: 0
   thisownerfading: 1
   isHolding: 0
-  damage: -35
+  damage: -1
   knockbackmulti: 3
   explosion: {fileID: 8299260641495768406, guid: bf69bb84027656448baa2e32a65f6d58, type: 3}
 --- !u!82 &5210385354135269050

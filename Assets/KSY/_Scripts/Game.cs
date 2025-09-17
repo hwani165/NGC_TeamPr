@@ -118,7 +118,6 @@ public class Game : SingletonBehaviour<Game>
             //플랫폼 관련 데이터라면 넘겨주기;
             if (MapMessage.MapMessageBufferHasIdentifier(_receiveBff))
             {
-                Debug.Log("MapMessageBufferHasIdentifier");
                 MapMessage message = MapMessage.GetRootAsMapMessage(_receiveBff);
                 MapMessageType messageType = message.MapMessageTypeType;
 
@@ -265,23 +264,25 @@ public class Game : SingletonBehaviour<Game>
                 }
         }   
     }
-    public void SendPlayerHealth(string damagedPlayerName, byte playerHealth)
+    public void SendPlayerHealth(string damagedPlayerName, sbyte playerHealth)
     {
         byte[] bff = Server.Instance.SerializationCurrentData(damagedPlayerName, playerHealth);
         Server.Instance.Send(bff);
         //플레이어 체력이 깎였을 때 호출 
     }
-    public void ReceivePlayerHealth(string name, byte health)
+    public void ReceivePlayerHealth(string name, sbyte health)
     {
         if(name == "P1")
         {
-            p2.MyEntity.Health = health;
-            MapCompo.P1Health.text = $"{Server.OtherName} health : {health}";
+            Debug.Log($"P1");
+            p2.MyEntity.Health = (sbyte)health;
+            MapCompo.P2Health.text = $"{Server.OtherName} health : {health}";
         }
         else if(name == "P2")
         {
-            p1.MyEntity.Health = health;
-            MapCompo.P2Health.text = $"{Server.MyName} health : {health}";
+            Debug.Log($"P1");
+            p1.MyEntity.Health = (sbyte)health;
+            MapCompo.P1Health.text = $"{Server.MyName} health : {health}";
         }
     }
     public void UpdateTime(byte Time)
@@ -298,16 +299,8 @@ public class Game : SingletonBehaviour<Game>
         byte[] bff = Server.Instance.SerializationStartEndData(mapIndex, P1LIFE, P2LIFE);
         Server.Instance.Send(bff);
     }
-    public void EndGameServer(byte hitCount)
+    public void EndDataReceive(byte hitCount)
     {
-        Debug.Log($"<color=pink>Game End<color>");
-        isEndedGame = true;
-        EndDataSend(hitCount);
-    }
-    public void EndGame(byte hitCount)
-    {
-        if (isEndedGame) return;
-
         string otherNick = Server.OtherName;
         string myNick = Server.MyName;
         GameObject gameOverUI = MapCompo.GameOverUI;
@@ -322,14 +315,14 @@ public class Game : SingletonBehaviour<Game>
         }
         else
         {
-            gameOverUI.GetComponentInChildren<TMP_Text>().text = $"이긴 사람 : 없음 ㅋㅋ";
+            gameOverUI.GetComponentInChildren<TMP_Text>().text = $"무승부";
 
         }
 
         gameOverUI.SetActive(true);
         Time.timeScale = 0;
     }
-    private void EndDataSend(byte hitCount)
+    public void EndDataSend(byte hitCount)
     {
         byte[] bff = Server.Instance.SerializationStartEndData(hitCount);
         Server.Instance.Send(bff);

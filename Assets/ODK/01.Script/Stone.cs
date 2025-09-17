@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Stone : Item
 {
-    public float damage = 5;
+    public sbyte damage = -1;
     public float knockbackmulti = 1;
     public override IEnumerator Attacking(GameObject target)
     {
