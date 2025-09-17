@@ -1353,7 +1353,7 @@ PrefabInstance:
       objectReference: {fileID: 1309262954}
     - target: {fileID: 2789125830753675212, guid: 60045c066558b2048a47db051521df3c, type: 3}
       propertyPath: m_SortingOrder
-      value: 5
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 6822957108669125255, guid: 60045c066558b2048a47db051521df3c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1996,7 +1996,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3745189702770732481, guid: 0ecdcd177f052de45b39f64fdb823903, type: 3}
       propertyPath: m_SortingOrder
-      value: 5
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 5822240849622324189, guid: 0ecdcd177f052de45b39f64fdb823903, type: 3}
       propertyPath: groundMask.m_Bits

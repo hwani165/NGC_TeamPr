@@ -87,7 +87,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 11
   m_Sprite: {fileID: 21300000, guid: 50a5b511c9881b8408cb27a877bf324a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -186,6 +186,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Nickname>k__BackingField: 
   InputSetting: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  MyEntity: {fileID: 0}
 --- !u!114 &-5878438068652748384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,7 +202,8 @@ MonoBehaviour:
   hitSound: {fileID: 0}
   healSound: {fileID: 0}
   audioSource: {fileID: 1100186284020589761}
-  PlayerLife: 0
+  Health: 0
+  IsMyPlayer: 0
 --- !u!114 &5822240849622324189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,22 +218,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Nickname>k__BackingField: 
   InputSetting: {fileID: 0}
+  MyEntity: {fileID: 0}
   _movementData: {fileID: 11400000, guid: a93b85cda72cc2040a9cb7418c8156e4, type: 2}
   speed: 4
-  jumpForce: 6
-  gravity: 9.8
+  jumpForce: 8
+  gravity: 9
   groundCheckVecSize: {x: 0.5, y: 1.1}
   groundCheckVec: {x: 0, y: 0}
   groundMask:
     serializedVersion: 2
     m_Bits: 0
-  dashForce: 6.5
-  dashDuration: 0.2
+  dashForce: 0
+  dashDuration: 0
   maxJumpCount: 2
   _usingJump: 0
-  _isDashing: 0
-  _dashDir: {x: 0, y: 0}
-  _usingDash: 0
   _usingDownDash: 0
   _moveX: 0
 --- !u!114 &1818194576719011869
@@ -248,6 +248,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Nickname>k__BackingField: 
   InputSetting: {fileID: 0}
+  MyEntity: {fileID: 0}
   IsHolding: 0
   IsThrowing: 0
   HoldTransform: {fileID: 6507584662252668062}
