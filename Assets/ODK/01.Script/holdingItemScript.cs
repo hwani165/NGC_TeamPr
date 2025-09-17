@@ -113,9 +113,13 @@ public abstract class Item : MonoBehaviour
 
         Debug.Log($"{targetEntity.Health}, {owner.gameObject.name}");
 
-        if (targetEntity.Health > 1 && owner.gameObject.name == "P1")
+        if (targetEntity.Health == 1)
         {
             targetEntity.Attack(transform, 0, 0f);
+        }
+        else
+        {
+            targetEntity.Attack(transform, -1, 0f);
         }
 
         isShooting = false;
