@@ -1134,9 +1134,6 @@ PrefabInstance:
       insertIndex: 3
       addedObject: {fileID: 254696981}
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1196348958569845068, guid: 523968b9636851d4f8cb8e27580fbde6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1957313744}
     - targetCorrespondingSourceObject: {fileID: 4596578682864356221, guid: 523968b9636851d4f8cb8e27580fbde6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1472861738}
@@ -1701,7 +1698,7 @@ PolygonCollider2D:
       - {x: 6.334724, y: 0.54981774}
       - {x: 6.3411098, y: 0.6204022}
       - {x: 6.343688, y: 0.6645301}
-      - {x: 6.364721, y: 0.75736505}
+      - {x: 6.348643, y: 0.75736505}
       - {x: 6.3455496, y: 0.8770748}
       - {x: 6.3136, y: 0.93634415}
       - {x: 6.2458906, y: 0.9474494}
@@ -2233,6 +2230,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 7381168062736268047, guid: e910c3ec8d63335488cc399732765bc2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2403,11 +2404,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1605038322}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1462638094 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1196348958569845068, guid: 523968b9636851d4f8cb8e27580fbde6, type: 3}
-  m_PrefabInstance: {fileID: 705059747}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1472648556 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4596578682864356221, guid: 523968b9636851d4f8cb8e27580fbde6, type: 3}
@@ -3571,22 +3567,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2933723299434433567, guid: 523968b9636851d4f8cb8e27580fbde6, type: 3}
   m_PrefabInstance: {fileID: 705059747}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1957313744
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1462638094}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72b747440d995974dbaed19a6698a2a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Id>k__BackingField: 0
-  breakable: 1
-  childBlock: {fileID: 0}
-  IsBroken: 0
 --- !u!1 &1986880218
 GameObject:
   m_ObjectHideFlags: 0
