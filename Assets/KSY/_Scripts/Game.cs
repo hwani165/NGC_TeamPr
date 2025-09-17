@@ -299,11 +299,13 @@ public class Game : SingletonBehaviour<Game>
     }
     public void EndDataReceive(sbyte hitCount)
     {
+        EndDataSend(OtherHitCount);
+
         string otherNick = Server.OtherName;
         string myNick = Server.MyName;
         GameObject gameOverUI = MapCompo.GameOverUI;
         TMP_Text overInfoT = MapCompo.OverInfoT;
-        TMP_Text HitCountT = MapCompo.HitCountT;
+        TMP_Text hitCountT = MapCompo.HitCountT;
 
         if (hitCount > OtherHitCount)
         {
@@ -320,11 +322,13 @@ public class Game : SingletonBehaviour<Game>
         {
             gameOverUI.GetComponentInChildren<TMP_Text>().text = $"¹«½ÂºÎ";
             overInfoT.text = $"¼­·Î°¡ ¼­·Î¿¡°Ô ¸ÂÃá È½¼ö°¡ µ¿ÀÏÇÕ´Ï´Ù. ÃÑ È½¼ö : {hitCount}";
-            ;
         }
 
-        HitCountT.gameObject.SetActive(false);
+        hitCountT.transform.parent.gameObject.SetActive(false);
+
+        overInfoT.gameObject.SetActive(true);
         gameOverUI.SetActive(true);
+
         Time.timeScale = 0;
     }
     public void EndDataSend(sbyte hitCount)

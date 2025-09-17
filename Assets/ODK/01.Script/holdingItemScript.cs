@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Linq;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
 public abstract class Item : MonoBehaviour
 {
     public AudioClip launchesound;
@@ -108,6 +107,7 @@ public abstract class Item : MonoBehaviour
     public virtual void Eat()
     {
         Debug.Log("Eat");
+        Debug.Log(owner);
 
         Entity targetEntity = owner.GetComponent<Entity>();
 

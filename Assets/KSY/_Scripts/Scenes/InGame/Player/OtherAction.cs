@@ -55,6 +55,7 @@ public class OtherAction : Player
         //아이템 들기 처리
         if (obj.TryGetComponent(out Item itemSc))
         {
+            Debug.Log("other hold");
             HoldObject = obj;
             itemSc.owner = gameObject;
             itemSc.Grab();
@@ -99,12 +100,10 @@ public class OtherAction : Player
 
         if (chargeGuage >= 3)
         {
-            Debug.Log($"OtherAction Eat");
             itemScript.preowner = transform;
             itemScript.shootingdir = Vector2.zero;
             itemScript.Eat();
             HoldObject = null;
-            Debug.Log($"Other Eat End");
             return;
         }
         if (throwDir == Vector2.zero && throwDir == Vector2.down) return;
@@ -157,20 +156,15 @@ public class OtherAction : Player
             Release(HoldObject);
         }
 
-        HoldObject = Game.Instance.MapCompo.SpawnerCompo.FindItem(id);
+        GameObject hdIt = Game.Instance.MapCompo.SpawnerCompo.FindItem(id);
+        Hold(hdIt);
     }
     public override void ApplyByteData(byte state, byte charge)
     {
-        //Debug.Log("Success Apply Byte data");
-        bool isHolding = (state & (byte)flagActionState.IsHolding) != 0;
         bool isThrowing = (state & (byte)flagActionState.IsThrowing) != 0;
 
         _chargeGauge = charge;
 
-        if (isHolding)
-        {
-            Hold(HoldObject);
-        }
         if (isThrowing)
         {
             ThrowItem(HoldObject, _throwDir, _chargeGauge);

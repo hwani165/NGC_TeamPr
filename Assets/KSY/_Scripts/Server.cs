@@ -156,17 +156,13 @@ public class Server : SingletonBehaviour<Server>
     {
         return _bfInGame.SerializationStartEndData(hitCount);
     }
-    public byte[] SerializationPlatformStateData(byte id, bool isOnPlatform, bool isBrokenPlatform)
-    {
-        return _bfInGame.SerializationPlatformStateData(id, isOnPlatform, isBrokenPlatform);
-    }
     public byte[] SerializationSpawnerInfoData(ushort spawnItemId, byte spawnItemIndex,byte spawnPotinIndex)
     {
         return _bfInGame.SerializationSpawnerInfoData(spawnItemId, spawnItemIndex, spawnPotinIndex);
     }
-    public byte[] SerializationActionData(ushort itemId, bool isHolding, bool isThrowing, byte chargeGauge, Vector2 throwDir)
+    public byte[] SerializationActionData(ushort itemId, bool isThrowing, byte chargeGauge, Vector2 throwDir)
     {
-        return _bfInGame.SerializationActionData(itemId, isHolding, isThrowing, chargeGauge, throwDir);
+        return _bfInGame.SerializationActionData(itemId, isThrowing, chargeGauge, throwDir);
     }
     public byte[] SerializationCurrentData(string name, sbyte health)
     {

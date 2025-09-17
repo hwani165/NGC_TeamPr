@@ -36,6 +36,8 @@ public class Entity : MonoBehaviour
     }
     public void Attack(Transform tra, sbyte damage, float knockback)
     {
+        Debug.Log($"{gameObject.name} has damage : {damage}");
+
         if (damage <= 0)
             audioSource.PlayOneShot(hitSound);
         else 
@@ -43,6 +45,7 @@ public class Entity : MonoBehaviour
 
         //HP Αυ°¨
         Health += damage;
+        Debug.Log($"{gameObject.name} has damage : {damage}");
 
         if (Health <= 0)
         {
@@ -51,7 +54,8 @@ public class Entity : MonoBehaviour
 
         Game.Instance.SendPlayerHealth(gameObject.name, Health);
 
-        if(!IsMyPlayer && damage < 0)
+        Debug.Log($"{gameObject.name} has damage : {damage}");
+        if (!IsMyPlayer && damage < 0)
         {
             Game.Instance.OtherHitCount += 1;
             Game.Instance.MapCompo.HitCountT.text = $"hit count : {Game.Instance.OtherHitCount}";

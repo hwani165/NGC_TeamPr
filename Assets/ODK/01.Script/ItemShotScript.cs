@@ -174,7 +174,7 @@ public class ItemShotScript : MonoBehaviour
         Item itemScript = holdObject.GetComponent<Item>();
         itemScript.isShooting = true;
         Rigidbody2D hrb = holdObject.GetComponent<Rigidbody2D>();
-        if (charge >= 2.5)
+        if (charge >= 3)
         {
             itemScript.preowner = transform;
             itemScript.shootingdir = Vector2.zero;

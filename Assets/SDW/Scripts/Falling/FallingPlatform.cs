@@ -60,7 +60,6 @@ public class FallingPlatform : Platform
 
         //플랫폼 위에 올라왔다면 이벤트 시작.
         OnStepped?.Invoke();
-        Send();
     }
 
     private void duration()

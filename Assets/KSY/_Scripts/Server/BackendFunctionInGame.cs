@@ -48,10 +48,7 @@ public class BackendFunctionInGame : MonoBehaviour
         //0
         None = 0b0000,
 
-        //1 
-        IsHolding = 0b0001,
-
-        //2
+        //1
         IsThrowing = 0b0010,
     }
     [Flags]
@@ -111,31 +108,30 @@ public class BackendFunctionInGame : MonoBehaviour
         byte[] bff = _gameCurrentBuilder.SizedByteArray();
         return bff;
     }
+    ////데이터 직렬화
+    //public byte[] SerializationPlatformStateData(byte id, bool isOnPlatform, bool isBrokenPlatform)
+    //{
+    //    //버퍼 재사용
+    //    _platformStateBuilder.Clear();
 
-    //데이터 직렬화
-    public byte[] SerializationPlatformStateData(byte id, bool isOnPlatform, bool isBrokenPlatform)
-    {
-        //버퍼 재사용
-        _platformStateBuilder.Clear();
+    //    //비트 마스킹
+    //    byte platformState = 0b0000;
 
-        //비트 마스킹
-        byte platformState = 0b0000;
+    //    if (isOnPlatform) platformState |= (byte)flagPlatformState.IsOnPlatform;
+    //    if (isBrokenPlatform) platformState |= (byte)flagPlatformState.IsBrokenPlatform;
 
-        if (isOnPlatform) platformState |= (byte)flagPlatformState.IsOnPlatform;
-        if (isBrokenPlatform) platformState |= (byte)flagPlatformState.IsBrokenPlatform;
+    //    //오프셋 세팅
+    //    Offset<PlatformState> offsetPlatformState = PlatformState.CreatePlatformState(_platformStateBuilder, id, platformState);
 
-        //오프셋 세팅
-        Offset<PlatformState> offsetPlatformState = PlatformState.CreatePlatformState(_platformStateBuilder, id, platformState);
+    //    ////데이터 할당
+    //    Offset<MapMessage> offsetResult = MapMessage.CreateMapMessage(_platformStateBuilder, MapMessageType.platform_state, offsetPlatformState.Value);
 
-        ////데이터 할당
-        Offset<MapMessage> offsetResult = MapMessage.CreateMapMessage(_platformStateBuilder, MapMessageType.platform_state, offsetPlatformState.Value);
+    //    //스키마 버퍼화
+    //    _platformStateBuilder.Finish(offsetResult.Value, "MAPP");
+    //    byte[] bff = _platformStateBuilder.SizedByteArray();
 
-        //스키마 버퍼화
-        _platformStateBuilder.Finish(offsetResult.Value, "MAPP");
-        byte[] bff = _platformStateBuilder.SizedByteArray();
-
-        return bff;
-    }
+    //    return bff;
+    //}
     public byte[] SerializationSpawnerInfoData(ushort spawnItemId, byte spawnItemIndex, byte spawnPotinIndex)
     {
         //버퍼 재사용
@@ -169,7 +165,7 @@ public class BackendFunctionInGame : MonoBehaviour
 
         return bff;
     }
-    public byte[] SerializationActionData(ushort itemId, bool isHolding, bool isThrowing, byte chargeGauge, Vector2 throwDir)
+    public byte[] SerializationActionData(ushort itemId, bool isThrowing, byte chargeGauge, Vector2 throwDir)
     {
         //버퍼 재사용
         _itemActionBuilder.Clear();
@@ -181,7 +177,6 @@ public class BackendFunctionInGame : MonoBehaviour
         //비트 마스킹
         byte state = 0b0000;
 
-        if (isHolding) state |= (byte)flagActionState.IsHolding;
         if (isThrowing) state |= (byte)flagActionState.IsThrowing;
 
         //오프셋 세팅 + 데이터 할당

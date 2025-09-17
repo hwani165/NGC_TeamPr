@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using static BackendFunctionInGame;
 
-public class Platform : MonoBehaviour, IReceiver, ISender
+public class Platform : MonoBehaviour, IReceiver
 {
     public static byte Counter = 0;
     [field: SerializeField] public byte Id { get; private set; } = 0;
@@ -56,21 +56,6 @@ public class Platform : MonoBehaviour, IReceiver, ISender
 
             //확인 여부를 적용.
             _breakablePlatform.IsBroken = isBroken;
-        }
-    }
-    public void Send()
-    {
-        if (_fallingPlatform != null)
-        {
-            bool isOnPlatform = _fallingPlatform.IsOnPlatform;
-            byte[] bff = Server.Instance.SerializationPlatformStateData(Id, isOnPlatform, false);
-            Server.Instance.Send(bff);
-        }
-        else if (_breakablePlatform != null)
-        {
-            bool IsBreaking = _breakablePlatform.IsBroken;
-            byte[] bff = Server.Instance.SerializationPlatformStateData(Id, false, IsBreaking);
-            Server.Instance.Send(bff);
         }
     }
     public void ApplyByteData(byte byteData1, byte byteData2)

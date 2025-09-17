@@ -302,7 +302,7 @@ public class MyAction : Player
     {
         ushort id = HoldObject.GetComponent<Item>().Id;
         byte chargeGauge = _chargeGauge;
-        byte[] bff = Server.Instance.SerializationActionData(id, IsHolding, IsThrowing, chargeGauge, _throwDir);
+        byte[] bff = Server.Instance.SerializationActionData(id, IsThrowing, chargeGauge, _throwDir);
         Server.Instance.Send(bff);
     }
 }

@@ -80,7 +80,7 @@ public class BackendFunctionMatch : MonoBehaviour
         }
         else
         {
-            Debug.LogError($"<faild>\n<color=red>IsMatchServerConnect</color> : {Backend.Match.IsMatchServerConnect()}");
+            Debug.Log($"<faild>\n<color=red>IsMatchServerConnect</color> : {Backend.Match.IsMatchServerConnect()}");
         }
     }
     public void JoinInGameServer(string serverAddress, ushort serverPort, string roomToken, bool isReconnecting)

@@ -80,7 +80,6 @@ public class OtherMovement : Player
         bool UsingJump = (state & (byte)flagPlayerMovementState.UsingJump) != 0;
         if (UsingJump)
         {
-            //Debug.Log($"isjumping : {UsingJump}");
             OnJump();
         }
 
