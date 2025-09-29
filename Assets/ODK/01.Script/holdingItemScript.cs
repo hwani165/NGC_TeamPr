@@ -34,15 +34,15 @@ public abstract class Item : MonoBehaviour
     }
     private void Update()
     {
-        //_synkTime += Time.deltaTime;
-        //if (_synkTime >= 1)
-        //{
-        //    if (Server.IsSuperGamer)
-        //    {
-        //        _synkTime = 0f;
-        //        Send();
-        //    }
-        //}
+        _synkTime += Time.deltaTime;
+        if (_synkTime >= 1)
+        {
+            if (Server.IsSuperGamer)
+            {
+                _synkTime = 0f;
+                Send();
+            }
+        }
     }
 
     public void Send()

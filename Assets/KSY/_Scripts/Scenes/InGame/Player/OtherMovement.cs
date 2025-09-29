@@ -43,6 +43,7 @@ public class OtherMovement : Player
     }
     private void FixedUpdate()
     {
+        _rbCompo.MovePosition(Vector2.Lerp(_rbCompo.position, _targetPos, 0.3f));
         Vector2 velocity = _rbCompo.linearVelocity;
         velocity.x = _moveVec.x * speed;
         _rbCompo.linearVelocityX = velocity.x;
@@ -91,9 +92,10 @@ public class OtherMovement : Player
             DownDash();
         }
     }
+    private Vector2 _targetPos;
     public override void ApplyPosData(float x, float y)
     {
-        _rbCompo.MovePosition(new Vector3(x, y));
+        _targetPos = new Vector2(x, y);
     }
     public override void ApplySbyteData(sbyte moveX, sbyte dashX, sbyte dashY)
     {
